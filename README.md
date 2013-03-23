@@ -1,3 +1,1 @@
-# This is my README
-# This is my README
-# This is my README
+Heard Here is a music player that tracks where and when the user listens to music, and allows the user to re-create a playlist based on a particular moment or location where the music was played.
