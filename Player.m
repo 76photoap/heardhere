@@ -17,8 +17,6 @@
 
 @implementation Player
 
-@synthesize musicPlayer;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -36,7 +34,7 @@
     
     // Music player setup
     
-    musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [self registerMediaPlayerNotifications];
     
     // Custom UI
@@ -59,17 +57,6 @@
     [self showNWLocation];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    
-    // Back Button
-    
-    [backButton addTarget:self action:@selector(popViewControllerWithAnimation) forControlEvents:UIControlEventTouchDown];
-}
-
--(void)popViewControllerWithAnimation {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -77,7 +64,7 @@
     
     // update control button
 	
-	if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+	if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
 	} else {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
@@ -85,11 +72,11 @@
     
     // Update volume slider
     
-    [volumeSlider setValue:[musicPlayer volume]];
+    [volumeSlider setValue:[self.musicPlayer volume]];
     
     // Update now playing info
     
-    MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
+    MPMediaItem *currentItem = [self.musicPlayer nowPlayingItem];
     
     NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
     if (titleString) {
@@ -106,6 +93,18 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    
+    // Back Button
+    
+    [backButton addTarget:self action:@selector(popViewControllerWithAnimation) forControlEvents:UIControlEventTouchDown];
+}
+
+-(void)popViewControllerWithAnimation {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Register media player notifications
 
 - (void) registerMediaPlayerNotifications
@@ -115,25 +114,25 @@
 	[notificationCenter addObserver: self
 						   selector: @selector (handle_NowPlayingItemChanged:)
 							   name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-							 object: musicPlayer];
+							 object: self.musicPlayer];
 	
 	[notificationCenter addObserver: self
 						   selector: @selector (handle_PlaybackStateChanged:)
 							   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-							 object: musicPlayer];
+							 object: self.musicPlayer];
     
     [notificationCenter addObserver: self
 						   selector: @selector (handle_VolumeChanged:)
 							   name: MPMusicPlayerControllerVolumeDidChangeNotification
-							 object: musicPlayer];
+							 object: self.musicPlayer];
     
-	[musicPlayer beginGeneratingPlaybackNotifications];
+	[self.musicPlayer beginGeneratingPlaybackNotifications];
 }
 
 - (void) handle_NowPlayingItemChanged: (id) notification
 {
-    if ([musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
-        MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
+    if ([self.musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
+        MPMediaItem *currentItem = [self.musicPlayer nowPlayingItem];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {
@@ -153,7 +152,7 @@
 
 - (void) handle_PlaybackStateChanged: (id) notification
 {
-    MPMusicPlaybackState playbackState = [musicPlayer playbackState];
+    MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
 	
 	if (playbackState == MPMusicPlaybackStatePaused) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
@@ -163,7 +162,7 @@
         
 	} else if (playbackState == MPMusicPlaybackStateStopped) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
-		[musicPlayer stop];
+		[self.musicPlayer stop];
         
         [self.navigationController popViewControllerAnimated:YES];
 	}
@@ -171,7 +170,7 @@
 
 - (void) handle_VolumeChanged: (id) notification
 {
-    [volumeSlider setValue:[musicPlayer volume]];
+    [volumeSlider setValue:[self.musicPlayer volume]];
 }
 
 
@@ -181,44 +180,44 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-												  object: musicPlayer];
+												  object: self.musicPlayer];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-												  object: musicPlayer];
+												  object: self.musicPlayer];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerVolumeDidChangeNotification
-												  object: musicPlayer];
+												  object: self.musicPlayer];
     
-	[musicPlayer endGeneratingPlaybackNotifications];
+	[self.musicPlayer endGeneratingPlaybackNotifications];
 }
 
 #pragma mark - Controls
 
 - (IBAction)playPause:(id)sender
 {
-    if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
-        [musicPlayer pause];
+    if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+        [self.musicPlayer pause];
         
     } else {
-        [musicPlayer play];
+        [self.musicPlayer play];
     }
 }
 
 - (IBAction)nextSong:(id)sender
 {
-    [musicPlayer skipToNextItem];
+    [self.musicPlayer skipToNextItem];
 }
 
 - (IBAction)previousSong:(id)sender
 {
-    [musicPlayer skipToPreviousItem];
+    [self.musicPlayer skipToPreviousItem];
 }
 
 - (IBAction)volumeSliderChanged:(id)sender
 {
-    [musicPlayer setVolume:volumeSlider.value];
+    [self.musicPlayer setVolume:volumeSlider.value];
 }
 
 #pragma Map

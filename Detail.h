@@ -10,9 +10,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface Detail : UITableViewController
-{
-    NSString *playlistTitle;
-}
 
 @property NSString *playlistTitle;
 

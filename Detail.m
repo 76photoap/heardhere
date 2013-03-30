@@ -12,12 +12,9 @@
 {
     UIButton *backButton;
 }
-
 @end
 
 @implementation Detail
-
-@synthesize playlistTitle;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,7 +38,7 @@
     
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
-    label.text = playlistTitle;
+    label.text = self.playlistTitle;
     label.frame = CGRectMake(0, 0, 100, 35);
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor colorWithRed:0.2549 green:0.8 blue:0.70589 alpha:1.0];
