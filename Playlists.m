@@ -8,6 +8,7 @@
 
 #import "Playlists.h"
 #import "Detail.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface Playlists ()
 

@@ -210,9 +210,6 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="x6c-S3-SFp" kind="push" identifier="NowPlaying" id="V0z-t0-tN4"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cRB-WI-X3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -322,7 +319,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sy3-uC-SyT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1498" y="197"/>
+            <point key="canvasLocation" x="1534" y="184"/>
         </scene>
     </scenes>
     <resources>
@@ -347,9 +344,7 @@
                 <relationship kind="action" name="playPause:"/>
                 <relationship kind="action" name="previousSong:"/>
                 <relationship kind="action" name="volumeSliderChanged:"/>
-                <relationship kind="outlet" name="albumLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="artistLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="artworkImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="map" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="playPauseButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
@@ -366,6 +361,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="V0z-t0-tN4"/>
+        <segue reference="jDm-pq-DRR"/>
     </inferredMetricsTieBreakers>
 </document>

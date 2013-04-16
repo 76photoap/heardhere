@@ -7,6 +7,7 @@
 //
 
 #import "Detail.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface Detail ()
 {
