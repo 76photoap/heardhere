@@ -11,4 +11,6 @@
 
 @interface Playlists : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *logoButton;
+
 @end

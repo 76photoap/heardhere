@@ -36,6 +36,9 @@
     UIBarButtonItem *addPlaylist = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
     
     self.navigationItem.rightBarButtonItem = addPlaylist;
+
+    [[self.logoButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [self.logoButton setBackgroundImage:[UIImage imageNamed:@"ddlogo_black-sm.png"] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
