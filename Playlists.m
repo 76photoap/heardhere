@@ -109,6 +109,7 @@
         
         [detailViewController setPlaylistTitle:playlistTitle];
     }
-  }
+}
+ 
 
 @end

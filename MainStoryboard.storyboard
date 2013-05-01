@@ -314,9 +314,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="vZE-s8-YJW"/>
-                    <connections>
-                        <segue destination="x6c-S3-SFp" kind="push" identifier="NowPlaying" id="jDm-pq-DRR"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sy3-uC-SyT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -363,7 +360,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="jDm-pq-DRR"/>
-    </inferredMetricsTieBreakers>
 </document>
