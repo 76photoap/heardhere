@@ -38,14 +38,6 @@
     self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [self registerMediaPlayerNotifications];
     
-    // Custom UI
-    
-    artistLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
-    artistLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
-    
-    titleLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
-    titleLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
-    
     // Back Button
     
     UIImage *backImage = [UIImage imageNamed:@"ddplayer-back.png"];
@@ -54,10 +46,23 @@
     self.navigationItem.hidesBackButton = TRUE;
     UIBarButtonItem *barBackItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = barBackItem;
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
+    
+    // Custom UI
+    
+    artistLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
+    artistLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
+    
+    titleLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
     
     [self showNWLocation];
 }
 
+-(void)back {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -94,17 +99,7 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    
-    // Back Button
-    
-    [backButton addTarget:self action:@selector(popViewControllerWithAnimation) forControlEvents:UIControlEventTouchDown];
-}
 
--(void)popViewControllerWithAnimation {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 #pragma mark - Register media player notifications
 
@@ -165,7 +160,7 @@
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
 		[self.musicPlayer stop];
         
-        [self.navigationController popViewControllerAnimated:YES];
+        //[self.navigationController popViewControllerAnimated:YES];
 	}
 }
 

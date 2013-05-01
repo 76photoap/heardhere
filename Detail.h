@@ -10,6 +10,9 @@
 
 
 @interface Detail : UITableViewController
+{
+    UIButton *backButton;
+}
 
 @property NSString *playlistTitle;
 

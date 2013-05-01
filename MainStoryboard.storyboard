@@ -327,34 +327,6 @@
         <image name="ddplayer-button-forward.png" width="208" height="151"/>
         <image name="ddplayer-button-play.png" width="208" height="151"/>
     </resources>
-    <classes>
-        <class className="Detail" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/Detail.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="Player" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/Player.h"/>
-            <relationships>
-                <relationship kind="action" name="nextSong:"/>
-                <relationship kind="action" name="playPause:"/>
-                <relationship kind="action" name="previousSong:"/>
-                <relationship kind="action" name="volumeSliderChanged:"/>
-                <relationship kind="outlet" name="artistLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="map" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="playPauseButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="volumeSlider" candidateClass="UISlider"/>
-            </relationships>
-        </class>
-        <class className="Playlists" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/Playlists.h"/>
-            <relationships>
-                <relationship kind="outlet" name="logoButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

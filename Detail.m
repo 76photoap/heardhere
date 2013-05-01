@@ -10,9 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface Detail ()
-{
-    UIButton *backButton;
-}
+
 @end
 
 @implementation Detail
@@ -55,13 +53,10 @@
     self.navigationItem.hidesBackButton = TRUE;
     UIBarButtonItem *barBackItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = barBackItem;
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [backButton addTarget:self action:@selector(popViewControllerWithAnimation) forControlEvents:UIControlEventTouchDown];
-}
-
--(void)popViewControllerWithAnimation {
+-(void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
