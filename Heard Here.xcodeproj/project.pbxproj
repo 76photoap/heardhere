@@ -40,11 +40,12 @@
 		60AB8204169FFFF200529DFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB8200169FFFF200529DFB /* main.m */; };
 		60AB821116A0077C00529DFB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60AB821016A0077C00529DFB /* Default-568h@2x.png */; };
 		60C6219516F88FCA007CF5E1 /* ddplayer-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 60C6219416F88FCA007CF5E1 /* ddplayer-back.png */; };
+		60CD4E19177C8FE80038F9F8 /* heardhere-logo-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 60CD4E18177C8FE80038F9F8 /* heardhere-logo-57.png */; };
 		60F45492169B13B900686965 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F4541B169B0F2500686965 /* AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6017CF7D1644088F00F9F4FB /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6017CF7D1644088F00F9F4FB /* Heard Here.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heard Here.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6017CF811644088F00F9F4FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6017CF831644088F00F9F4FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6017CF851644088F00F9F4FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -79,10 +80,11 @@
 		60AB818D169C919500529DFB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		60AB81FF169FFFF200529DFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		60AB8200169FFFF200529DFB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		60AB8201169FFFF200529DFB /* Music-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Music-Info.plist"; sourceTree = "<group>"; };
-		60AB8202169FFFF200529DFB /* Music-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Music-Prefix.pch"; sourceTree = "<group>"; };
+		60AB8201169FFFF200529DFB /* Heard Here-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Heard Here-Info.plist"; sourceTree = "<group>"; };
+		60AB8202169FFFF200529DFB /* Heard Here-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Heard Here-Prefix.pch"; sourceTree = "<group>"; };
 		60AB821016A0077C00529DFB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		60C6219416F88FCA007CF5E1 /* ddplayer-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddplayer-back.png"; sourceTree = "<group>"; };
+		60CD4E18177C8FE80038F9F8 /* heardhere-logo-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heardhere-logo-57.png"; sourceTree = "<group>"; };
 		60F4541A169B0F2500686965 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		60F4541B169B0F2500686965 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,7 +129,7 @@
 		6017CF7E1644088F00F9F4FB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6017CF7D1644088F00F9F4FB /* Music.app */,
+				6017CF7D1644088F00F9F4FB /* Heard Here.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,8 +153,8 @@
 			children = (
 				60AB81FE169FFFF200529DFB /* InfoPlist.strings */,
 				60AB8200169FFFF200529DFB /* main.m */,
-				60AB8201169FFFF200529DFB /* Music-Info.plist */,
-				60AB8202169FFFF200529DFB /* Music-Prefix.pch */,
+				60AB8201169FFFF200529DFB /* Heard Here-Info.plist */,
+				60AB8202169FFFF200529DFB /* Heard Here-Prefix.pch */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -173,6 +175,7 @@
 				602BDD4A16FC814800D607E9 /* ddplayer-button-forward.png */,
 				6094B42316F7A15300806F92 /* ddplus-sign.png */,
 				6052259916F865AD0013807C /* dddetail-back.png */,
+				60CD4E18177C8FE80038F9F8 /* heardhere-logo-57.png */,
 				6052259A16F865AD0013807C /* dddetail-edit.png */,
 				604B323F16F7675700B9E55E /* ddnavigation-bar-black.png */,
 				604B324016F7675800B9E55E /* ddnavigation-bar-black@2x.png */,
@@ -187,9 +190,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6017CF7C1644088F00F9F4FB /* Music */ = {
+		6017CF7C1644088F00F9F4FB /* Heard Here */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6017CF9B1644088F00F9F4FB /* Build configuration list for PBXNativeTarget "Music" */;
+			buildConfigurationList = 6017CF9B1644088F00F9F4FB /* Build configuration list for PBXNativeTarget "Heard Here" */;
 			buildPhases = (
 				6017CF791644088F00F9F4FB /* Sources */,
 				6017CF7A1644088F00F9F4FB /* Frameworks */,
@@ -199,9 +202,9 @@
 			);
 			dependencies = (
 			);
-			name = Music;
+			name = "Heard Here";
 			productName = Music;
-			productReference = 6017CF7D1644088F00F9F4FB /* Music.app */;
+			productReference = 6017CF7D1644088F00F9F4FB /* Heard Here.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +217,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Dianna Mertz";
 			};
-			buildConfigurationList = 6017CF771644088F00F9F4FB /* Build configuration list for PBXProject "Music" */;
+			buildConfigurationList = 6017CF771644088F00F9F4FB /* Build configuration list for PBXProject "Heard Here" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -226,7 +229,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6017CF7C1644088F00F9F4FB /* Music */,
+				6017CF7C1644088F00F9F4FB /* Heard Here */,
 			);
 		};
 /* End PBXProject section */
@@ -258,6 +261,7 @@
 				602BDD5216FCA2BD00D607E9 /* ddmusic-controls-background.png in Resources */,
 				602BDD5316FCA2BD00D607E9 /* ddmusic-controls-background@2x.png in Resources */,
 				602BDD5516FCA76400D607E9 /* ddmap-mask-sm.png in Resources */,
+				60CD4E19177C8FE80038F9F8 /* heardhere-logo-57.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,9 +348,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Resources/Music-Prefix.pch";
-				INFOPLIST_FILE = "Resources/Music-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Resources/Heard Here-Prefix.pch";
+				INFOPLIST_FILE = "Resources/Heard Here-Info.plist";
+				PRODUCT_NAME = "Heard Here";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -355,9 +359,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Resources/Music-Prefix.pch";
-				INFOPLIST_FILE = "Resources/Music-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Resources/Heard Here-Prefix.pch";
+				INFOPLIST_FILE = "Resources/Heard Here-Info.plist";
+				PRODUCT_NAME = "Heard Here";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -365,7 +369,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6017CF771644088F00F9F4FB /* Build configuration list for PBXProject "Music" */ = {
+		6017CF771644088F00F9F4FB /* Build configuration list for PBXProject "Heard Here" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6017CF991644088F00F9F4FB /* Debug */,
@@ -374,7 +378,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6017CF9B1644088F00F9F4FB /* Build configuration list for PBXNativeTarget "Music" */ = {
+		6017CF9B1644088F00F9F4FB /* Build configuration list for PBXNativeTarget "Heard Here" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6017CF9C1644088F00F9F4FB /* Debug */,
