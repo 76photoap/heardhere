@@ -28,17 +28,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UIImage *plusImage = [UIImage imageNamed:@"ddplus-sign.png"];
-    UIButton *plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    plusButton.bounds = CGRectMake(0,0,(plusImage.size.width)*.5, (plusImage.size.width)*.5);
-    [plusButton setImage:plusImage forState:UIControlStateNormal];
-    UIBarButtonItem *addPlaylist = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
-    
-    self.navigationItem.rightBarButtonItem = addPlaylist;
-
-    [[self.logoButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
-    [self.logoButton setBackgroundImage:[UIImage imageNamed:@"ddlogo_black-sm.png"] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning

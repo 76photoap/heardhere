@@ -25,8 +25,8 @@
     [[UINavigationBar appearance] setBackgroundImage:navBarImage forBarMetrics:UIBarMetricsDefault];
     
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-        [UIColor colorWithRed:1.0 green:0.4863 blue:0.3647 alpha:1.0], UITextAttributeTextColor,
-        [UIFont fontWithName:@"Arial" size:25.0], UITextAttributeFont, nil]];
+        [UIColor colorWithRed:1.0 green:0.4863 blue:0.3647 alpha:1.0], NSForegroundColorAttributeName,
+        [UIFont fontWithName:@"Arial" size:25.0], NSForegroundColorAttributeName, nil]];
     
     // Table 
     
