@@ -6,17 +6,17 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-#import "Player.h"
+#import "PlayerViewController.h"
 
 
-@interface Player ()
+@interface PlayerViewController ()
 {
     UIButton *backButton;
 }
 
 @end
 
-@implementation Player
+@implementation PlayerViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

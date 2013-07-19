@@ -12,7 +12,7 @@
 		6017CF861644088F00F9F4FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF851644088F00F9F4FB /* CoreGraphics.framework */; };
 		6017CF9F1644094D00F9F4FB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF9E1644094D00F9F4FB /* MediaPlayer.framework */; };
 		6017CFA1164409CF00F9F4FB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6017CFA0164409CF00F9F4FB /* MainStoryboard.storyboard */; };
-		6017CFD51644317700F9F4FB /* Playlists.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017CFD41644317700F9F4FB /* Playlists.m */; };
+		6017CFD51644317700F9F4FB /* MomentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017CFD41644317700F9F4FB /* MomentsTableViewController.m */; };
 		602BDD4916FC784A00D607E9 /* ddplayer-button-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 602BDD4816FC784A00D607E9 /* ddplayer-button-back.png */; };
 		602BDD4B16FC814800D607E9 /* ddplayer-button-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 602BDD4A16FC814800D607E9 /* ddplayer-button-forward.png */; };
 		602BDD4D16FC921100D607E9 /* ddplayer-button-play.png in Resources */ = {isa = PBXBuildFile; fileRef = 602BDD4C16FC921100D607E9 /* ddplayer-button-play.png */; };
@@ -29,10 +29,10 @@
 		604B323E16F7551300B9E55E /* ddlogo_black-sm.png in Resources */ = {isa = PBXBuildFile; fileRef = 604B323D16F7551200B9E55E /* ddlogo_black-sm.png */; };
 		604B324116F7675900B9E55E /* ddnavigation-bar-black.png in Resources */ = {isa = PBXBuildFile; fileRef = 604B323F16F7675700B9E55E /* ddnavigation-bar-black.png */; };
 		604B324216F7675900B9E55E /* ddnavigation-bar-black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 604B324016F7675800B9E55E /* ddnavigation-bar-black@2x.png */; };
-		6050DBDD1647B36B00D45395 /* Detail.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050DBDC1647B36B00D45395 /* Detail.m */; };
+		6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050DBDC1647B36B00D45395 /* DetailTableViewController.m */; };
 		6052259B16F865AD0013807C /* dddetail-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 6052259916F865AD0013807C /* dddetail-back.png */; };
 		6052259C16F865AD0013807C /* dddetail-edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 6052259A16F865AD0013807C /* dddetail-edit.png */; };
-		60615B01165694260046840A /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 60615B00165694260046840A /* Player.m */; };
+		60615B01165694260046840A /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60615B00165694260046840A /* PlayerViewController.m */; };
 		6094B42416F7A15300806F92 /* ddplus-sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 6094B42316F7A15300806F92 /* ddplus-sign.png */; };
 		60AB818B169C913400529DFB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AB818A169C913400529DFB /* CoreLocation.framework */; };
 		60AB8193169C91F100529DFB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AB818D169C919500529DFB /* CoreData.framework */; };
@@ -51,8 +51,8 @@
 		6017CF851644088F00F9F4FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6017CF9E1644094D00F9F4FB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		6017CFA0164409CF00F9F4FB /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		6017CFD31644317700F9F4FB /* Playlists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playlists.h; sourceTree = "<group>"; };
-		6017CFD41644317700F9F4FB /* Playlists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playlists.m; sourceTree = "<group>"; };
+		6017CFD31644317700F9F4FB /* MomentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentsTableViewController.h; sourceTree = "<group>"; };
+		6017CFD41644317700F9F4FB /* MomentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentsTableViewController.m; sourceTree = "<group>"; };
 		602BDD4816FC784A00D607E9 /* ddplayer-button-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddplayer-button-back.png"; sourceTree = "<group>"; };
 		602BDD4A16FC814800D607E9 /* ddplayer-button-forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddplayer-button-forward.png"; sourceTree = "<group>"; };
 		602BDD4C16FC921100D607E9 /* ddplayer-button-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddplayer-button-play.png"; sourceTree = "<group>"; };
@@ -69,12 +69,12 @@
 		604B323D16F7551200B9E55E /* ddlogo_black-sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddlogo_black-sm.png"; sourceTree = "<group>"; };
 		604B323F16F7675700B9E55E /* ddnavigation-bar-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddnavigation-bar-black.png"; sourceTree = "<group>"; };
 		604B324016F7675800B9E55E /* ddnavigation-bar-black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddnavigation-bar-black@2x.png"; sourceTree = "<group>"; };
-		6050DBDB1647B36B00D45395 /* Detail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Detail.h; sourceTree = "<group>"; };
-		6050DBDC1647B36B00D45395 /* Detail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Detail.m; sourceTree = "<group>"; };
+		6050DBDB1647B36B00D45395 /* DetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTableViewController.h; sourceTree = "<group>"; };
+		6050DBDC1647B36B00D45395 /* DetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTableViewController.m; sourceTree = "<group>"; };
 		6052259916F865AD0013807C /* dddetail-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dddetail-back.png"; sourceTree = "<group>"; };
 		6052259A16F865AD0013807C /* dddetail-edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dddetail-edit.png"; sourceTree = "<group>"; };
-		60615AFF165694260046840A /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		60615B00165694260046840A /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		60615AFF165694260046840A /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		60615B00165694260046840A /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		6094B42316F7A15300806F92 /* ddplus-sign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddplus-sign.png"; sourceTree = "<group>"; };
 		60AB818A169C913400529DFB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		60AB818D169C919500529DFB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -113,12 +113,12 @@
 				6017CFA0164409CF00F9F4FB /* MainStoryboard.storyboard */,
 				60F4541A169B0F2500686965 /* AppDelegate.h */,
 				60F4541B169B0F2500686965 /* AppDelegate.m */,
-				6017CFD31644317700F9F4FB /* Playlists.h */,
-				6017CFD41644317700F9F4FB /* Playlists.m */,
-				6050DBDB1647B36B00D45395 /* Detail.h */,
-				6050DBDC1647B36B00D45395 /* Detail.m */,
-				60615AFF165694260046840A /* Player.h */,
-				60615B00165694260046840A /* Player.m */,
+				6017CFD31644317700F9F4FB /* MomentsTableViewController.h */,
+				6017CFD41644317700F9F4FB /* MomentsTableViewController.m */,
+				6050DBDB1647B36B00D45395 /* DetailTableViewController.h */,
+				6050DBDC1647B36B00D45395 /* DetailTableViewController.m */,
+				60615AFF165694260046840A /* PlayerViewController.h */,
+				60615B00165694260046840A /* PlayerViewController.m */,
 				60AB81FD169FFFF000529DFB /* Resources */,
 				60F45422169B0FE800686965 /* Images */,
 				6017CF801644088F00F9F4FB /* Frameworks */,
@@ -273,9 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				60F45492169B13B900686965 /* AppDelegate.m in Sources */,
-				6017CFD51644317700F9F4FB /* Playlists.m in Sources */,
-				6050DBDD1647B36B00D45395 /* Detail.m in Sources */,
-				60615B01165694260046840A /* Player.m in Sources */,
+				6017CFD51644317700F9F4FB /* MomentsTableViewController.m in Sources */,
+				6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */,
+				60615B01165694260046840A /* PlayerViewController.m in Sources */,
 				60AB8204169FFFF200529DFB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

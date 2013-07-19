@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface Playlists : UITableViewController
+@interface MomentsTableViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *logoButton;
 

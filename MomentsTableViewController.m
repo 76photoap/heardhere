@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-#import "Playlists.h"
-#import "Detail.h"
+#import "MomentsTableViewController.h"
+#import "DetailTableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface Playlists ()
+@interface MomentsTableViewController ()
 
 @end
 
-@implementation Playlists
+@implementation MomentsTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -97,7 +97,7 @@
 {
     if ([[segue identifier] isEqualToString:@"AlbumSelected"])
     {
-        Detail *detailViewController = [segue destinationViewController];
+        DetailTableViewController *detailViewController = [segue destinationViewController];
         
         MPMediaQuery *ddPlaylistsQuery = [MPMediaQuery playlistsQuery];
         NSArray *playlists = [ddPlaylistsQuery collections];

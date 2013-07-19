@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-#import "Detail.h"
+#import "DetailTableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface Detail ()
+@interface DetailTableViewController ()
 
 @end
 
-@implementation Detail
+@implementation DetailTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

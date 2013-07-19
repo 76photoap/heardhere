@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface Detail : UITableViewController
+@interface DetailTableViewController : UITableViewController
 {
     UIButton *backButton;
 }

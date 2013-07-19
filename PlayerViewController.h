@@ -10,7 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <MapKit/MapKit.h>
 
-@interface Player : UIViewController <MKMapViewDelegate>
+@interface PlayerViewController : UIViewController <MKMapViewDelegate>
 {
     IBOutlet UIButton *playPauseButton;
     IBOutlet UISlider *volumeSlider;
