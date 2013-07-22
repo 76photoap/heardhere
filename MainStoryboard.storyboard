@@ -217,10 +217,10 @@
             </objects>
             <point key="canvasLocation" x="544" y="184"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Moment View Controller-->
         <scene sceneID="adV-RL-OyL">
             <objects>
-                <viewController id="KzP-38-urT" sceneMemberID="viewController">
+                <viewController id="KzP-38-urT" customClass="CreateMomentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aPT-a3-EAD"/>
                         <viewControllerLayoutGuide type="bottom" id="d3U-Lr-oml"/>

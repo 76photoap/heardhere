@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CreateMomentViewController.h"
 
+@class Playlist;
 
-@interface MomentsTableViewController : UITableViewController
+@interface MomentsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;

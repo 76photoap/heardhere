@@ -25,6 +25,7 @@
 		60387816179D7E58008DCC66 /* heardhere.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60387814179D7E57008DCC66 /* heardhere.xcdatamodeld */; };
 		60387825179D9FEB008DCC66 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60387824179D9FEB008DCC66 /* Playlist.m */; };
 		60387828179D9FEC008DCC66 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 60387827179D9FEC008DCC66 /* Song.m */; };
+		6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6038782A179DB896008DCC66 /* CreateMomentViewController.m */; };
 		603D0BF216F90486008A0577 /* ddTable-view-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 603D0BF016F90486008A0577 /* ddTable-view-background.png */; };
 		603D0BF316F90486008A0577 /* ddTable-view-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603D0BF116F90486008A0577 /* ddTable-view-background@2x.png */; };
 		604B323B16F71F5E00B9E55E /* ddnavigation-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 604B323916F71F5B00B9E55E /* ddnavigation-bar.png */; };
@@ -70,6 +71,8 @@
 		60387824179D9FEB008DCC66 /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playlist.m; sourceTree = "<group>"; };
 		60387826179D9FEC008DCC66 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		60387827179D9FEC008DCC66 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		60387829179DB896008DCC66 /* CreateMomentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateMomentViewController.h; sourceTree = "<group>"; };
+		6038782A179DB896008DCC66 /* CreateMomentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateMomentViewController.m; sourceTree = "<group>"; };
 		603D0BF016F90486008A0577 /* ddTable-view-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddTable-view-background.png"; sourceTree = "<group>"; };
 		603D0BF116F90486008A0577 /* ddTable-view-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddTable-view-background@2x.png"; sourceTree = "<group>"; };
 		604B323916F71F5B00B9E55E /* ddnavigation-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddnavigation-bar.png"; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				60F4541B169B0F2500686965 /* AppDelegate.m */,
 				6017CFD31644317700F9F4FB /* MomentsTableViewController.h */,
 				6017CFD41644317700F9F4FB /* MomentsTableViewController.m */,
+				60387829179DB896008DCC66 /* CreateMomentViewController.h */,
+				6038782A179DB896008DCC66 /* CreateMomentViewController.m */,
 				6050DBDB1647B36B00D45395 /* DetailTableViewController.h */,
 				6050DBDC1647B36B00D45395 /* DetailTableViewController.m */,
 				60615AFF165694260046840A /* PlayerViewController.h */,
@@ -290,6 +295,7 @@
 				60F45492169B13B900686965 /* AppDelegate.m in Sources */,
 				60387825179D9FEB008DCC66 /* Playlist.m in Sources */,
 				6017CFD51644317700F9F4FB /* MomentsTableViewController.m in Sources */,
+				6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */,
 				6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */,
 				60615B01165694260046840A /* PlayerViewController.m in Sources */,
 				60AB8204169FFFF200529DFB /* main.m in Sources */,
