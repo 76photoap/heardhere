@@ -26,6 +26,7 @@
 		60387825179D9FEB008DCC66 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60387824179D9FEB008DCC66 /* Playlist.m */; };
 		60387828179D9FEC008DCC66 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 60387827179D9FEC008DCC66 /* Song.m */; };
 		6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6038782A179DB896008DCC66 /* CreateMomentViewController.m */; };
+		6038782E179EB93A008DCC66 /* MomentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6038782D179E83E3008DCC66 /* MomentTableViewCell.m */; };
 		603D0BF216F90486008A0577 /* ddTable-view-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 603D0BF016F90486008A0577 /* ddTable-view-background.png */; };
 		603D0BF316F90486008A0577 /* ddTable-view-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603D0BF116F90486008A0577 /* ddTable-view-background@2x.png */; };
 		604B323B16F71F5E00B9E55E /* ddnavigation-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 604B323916F71F5B00B9E55E /* ddnavigation-bar.png */; };
@@ -73,6 +74,8 @@
 		60387827179D9FEC008DCC66 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		60387829179DB896008DCC66 /* CreateMomentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateMomentViewController.h; sourceTree = "<group>"; };
 		6038782A179DB896008DCC66 /* CreateMomentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateMomentViewController.m; sourceTree = "<group>"; };
+		6038782C179E83E3008DCC66 /* MomentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MomentTableViewCell.h; sourceTree = "<group>"; };
+		6038782D179E83E3008DCC66 /* MomentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MomentTableViewCell.m; sourceTree = "<group>"; };
 		603D0BF016F90486008A0577 /* ddTable-view-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddTable-view-background.png"; sourceTree = "<group>"; };
 		603D0BF116F90486008A0577 /* ddTable-view-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddTable-view-background@2x.png"; sourceTree = "<group>"; };
 		604B323916F71F5B00B9E55E /* ddnavigation-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddnavigation-bar.png"; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 				6017CFD41644317700F9F4FB /* MomentsTableViewController.m */,
 				60387829179DB896008DCC66 /* CreateMomentViewController.h */,
 				6038782A179DB896008DCC66 /* CreateMomentViewController.m */,
+				6038782C179E83E3008DCC66 /* MomentTableViewCell.h */,
+				6038782D179E83E3008DCC66 /* MomentTableViewCell.m */,
 				6050DBDB1647B36B00D45395 /* DetailTableViewController.h */,
 				6050DBDC1647B36B00D45395 /* DetailTableViewController.m */,
 				60615AFF165694260046840A /* PlayerViewController.h */,
@@ -290,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6038782E179EB93A008DCC66 /* MomentTableViewCell.m in Sources */,
 				60387828179D9FEC008DCC66 /* Song.m in Sources */,
 				60387816179D7E58008DCC66 /* heardhere.xcdatamodeld in Sources */,
 				60F45492169B13B900686965 /* AppDelegate.m in Sources */,

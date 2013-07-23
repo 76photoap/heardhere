@@ -8,6 +8,8 @@
 
 #import "MomentsTableViewController.h"
 #import "DetailTableViewController.h"
+#import "Playlist.h"
+#import "MomentTableViewCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface MomentsTableViewController ()
@@ -15,6 +17,8 @@
 @end
 
 @implementation MomentsTableViewController
+
+@synthesize managedObjectContext, fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -43,21 +47,41 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    NSInteger count = [[fetchedResultsController sections] count];
+    if (count == 0) {
+		count = 1;
+	}
+	
+    return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    MPMediaQuery *ddPlaylistsQuery = [MPMediaQuery playlistsQuery];
-    NSArray *playlists = [ddPlaylistsQuery collections];
+    NSInteger numberOfRows = 0;
+	
+    if ([[fetchedResultsController sections] count] > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
+        numberOfRows = [sectionInfo numberOfObjects];
+    }
     
-    return [playlists count];
+    return numberOfRows;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"MomentCell";
+    
+    MomentTableViewCell *momentCell = (MomentTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(momentCell == nil) {
+        momentCell = [[MomentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        momentCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    [self configureCell:momentCell atIndexPath:indexPath];
+    return momentCell;
+    
+    /*
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
@@ -78,14 +102,24 @@
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
     return cell;
+     */
 }
+
+-(void)configureCell:(MomentTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    Playlist *playlist = (Playlist *)[fetchedResultsController objectAtIndexPath:indexPath];
+    cell.playlist = playlist;
+}
+
+
 
 #pragma mark - Segue
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"AlbumSelected"])
+    if ([[segue identifier] isEqualToString:@"MomentSelected"])
     {
+       /*
         DetailTableViewController *detailViewController = [segue destinationViewController];
         
         MPMediaQuery *ddPlaylistsQuery = [MPMediaQuery playlistsQuery];
@@ -97,6 +131,21 @@
         NSString *playlistTitle = [selectedItem valueForProperty:MPMediaPlaylistPropertyName];
         
         [detailViewController setPlaylistTitle:playlistTitle];
+        */
+        /*
+        Playlist *playlist = (Playlist *)[fetchedResultsController objectAtIndexPath:indexPath];
+        [self showPlaylist:playlist animated:YES];
+        */
+        
+        //DetailTableViewController *detailViewController = [segue destinationViewController];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        Playlist *playlist = (Playlist *)[fetchedResultsController objectAtIndexPath:indexPath];
+        
+        
+        [self showPlaylist:playlist animated:YES];
+        
     }
 }
  

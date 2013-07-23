@@ -168,7 +168,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="fQS-Sg-hOE" style="IBUITableViewCellStyleDefault" id="Swt-6K-xpH">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MomentCell" textLabel="fQS-Sg-hOE" style="IBUITableViewCellStyleDefault" id="Swt-6K-xpH">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Swt-6K-xpH" id="hB7-1l-iGq">
@@ -184,7 +184,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="gmh-JW-10i" kind="push" identifier="AlbumSelected" id="6T3-Nt-iUd"/>
+                                    <segue destination="gmh-JW-10i" kind="push" identifier="MomentSelected" id="6T3-Nt-iUd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
