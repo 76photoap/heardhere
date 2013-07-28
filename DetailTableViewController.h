@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Playlist;
 
-
-@interface DetailTableViewController : UITableViewController
+@interface DetailTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
 {
     UIButton *backButton;
 }
 
 @property NSString *playlistTitle;
-
+@property Playlist *playlist;
 @end

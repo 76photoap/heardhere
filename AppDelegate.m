@@ -9,16 +9,26 @@
 #import "AppDelegate.h"
 #import "MomentsTableViewController.h"
 
+@interface AppDelegate ()
+
+@property (readonly, nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (readonly, nonatomic, retain) NSManagedObjectModel *managedObjectModel;
+@property (readonly, nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+@end
+
 @implementation AppDelegate
+
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize momentsController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self createCustomUI];
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    MomentsTableViewController *momentsController = (MomentsTableViewController *)navigationController.topViewController;
     momentsController.managedObjectContext = self.managedObjectContext;
     return YES;
 }
@@ -121,7 +131,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"coretest.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"heardhere.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -162,6 +172,11 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+-(void)dealloc
+{
+    self.window = nil;
 }
 
 @end

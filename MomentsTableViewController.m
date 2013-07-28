@@ -43,11 +43,32 @@
 	[[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
-#pragma mark - 
+- (NSManagedObjectContext *)managedObjectContext
+{
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
+
+#pragma mark - Playlist support
+
+-(void)createMomentViewController:(CreateMomentViewController *)createMomentViewController didAddMoment:(Playlist *)playlist
+{
+    if (playlist) {
+        [self showPlaylist:playlist animated:NO];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 -(void)showPlaylist:(Playlist *)playlist animated:(BOOL)animated
 {
+    DetailTableViewController *detailViewController = [[DetailTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    detailViewController.playlist = playlist;
     
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 
@@ -154,6 +175,19 @@
         
         [self showPlaylist:playlist animated:YES];
         
+    } else if ([segue.identifier isEqualToString:@"createMomentSegue"]) {
+        // here
+        CreateMomentViewController *addController = [segue destinationViewController];
+        addController.momentDelegate = self;
+         
+        Playlist *newPlaylist = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
+        addController.playlist = newPlaylist;
+        
+       // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
+        //[self presentViewController:navigationController animated:YES completion:nil];
+         
+
+        // and here
     }
 }
 

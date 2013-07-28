@@ -192,7 +192,7 @@
                     <navigationItem key="navigationItem" title="Moments" id="M5y-c3-yXY">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="tFv-b6-ZdJ">
                             <connections>
-                                <segue destination="KzP-38-urT" kind="modal" modalTransitionStyle="flipHorizontal" id="RLX-78-8kB"/>
+                                <segue destination="KzP-38-urT" kind="modal" identifier="createMomentSegue" modalTransitionStyle="flipHorizontal" id="RLX-78-8kB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
