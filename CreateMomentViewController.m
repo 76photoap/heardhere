@@ -14,6 +14,9 @@
 
 @implementation CreateMomentViewController
 
+@synthesize playlist;
+@synthesize momentDelegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
