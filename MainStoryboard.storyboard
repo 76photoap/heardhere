@@ -15,27 +15,30 @@
                         <viewControllerLayoutGuide type="bottom" id="LP7-AV-mZB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="huQ-5F-XU1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MRq-f6-ptp">
                                 <rect key="frame" x="0.0" y="126" width="320" height="202"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="291" id="aSc-M4-4Jd"/>
+                                    <constraint firstAttribute="height" constant="202" id="aSc-M4-4Jd"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="x6c-S3-SFp" id="IhD-to-qBJ"/>
                                 </connections>
                             </mapView>
-                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ePu-eR-4R8">
-                                <rect key="frame" x="46" y="432" width="228" height="29"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ePu-eR-4R8">
+                                <rect key="frame" x="46" y="452" width="228" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="224" id="kWa-tm-os4"/>
+                                </constraints>
                                 <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="volumeSliderChanged:" destination="x6c-S3-SFp" eventType="valueChanged" id="18X-rJ-fyK"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03b-oF-DF2">
-                                <rect key="frame" x="0.0" y="344" width="106" height="76"/>
+                                <rect key="frame" x="0.0" y="355" width="106" height="76"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="106" id="DAg-cF-5x3"/>
                                     <constraint firstAttribute="height" constant="76" id="cSC-W5-iuD"/>
@@ -53,7 +56,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTu-Us-0B4">
-                                <rect key="frame" x="106" y="344" width="109" height="76"/>
+                                <rect key="frame" x="106" y="355" width="109" height="76"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="109" id="10T-rs-px6"/>
                                     <constraint firstAttribute="width" constant="109" id="Ws1-SL-VNf"/>
@@ -72,7 +75,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCB-uX-u0d">
-                                <rect key="frame" x="214" y="344" width="106" height="76"/>
+                                <rect key="frame" x="214" y="355" width="106" height="76"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="106" id="E9g-Gj-NeI"/>
                                     <constraint firstAttribute="height" constant="76" id="Gds-t9-3vX"/>
@@ -108,17 +111,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="03b-oF-DF2" secondAttribute="bottom" constant="49" id="4It-7Z-MJe"/>
+                            <constraint firstAttribute="bottom" secondItem="03b-oF-DF2" secondAttribute="bottom" constant="137" id="4It-7Z-MJe"/>
                             <constraint firstItem="NTu-Us-0B4" firstAttribute="centerX" secondItem="ePu-eR-4R8" secondAttribute="centerX" id="EVp-4G-oBg"/>
-                            <constraint firstAttribute="bottom" secondItem="ePu-eR-4R8" secondAttribute="bottom" constant="12" id="H5P-eY-ulG"/>
-                            <constraint firstItem="LY6-1X-gdW" firstAttribute="centerX" secondItem="NTu-Us-0B4" secondAttribute="centerX" id="LDO-LT-yd3"/>
+                            <constraint firstAttribute="bottom" secondItem="ePu-eR-4R8" secondAttribute="bottom" constant="108" id="H5P-eY-ulG"/>
+                            <constraint firstItem="LY6-1X-gdW" firstAttribute="centerX" secondItem="NTu-Us-0B4" secondAttribute="centerX" constant="-60.5" id="LDO-LT-yd3"/>
                             <constraint firstItem="VCB-uX-u0d" firstAttribute="trailing" secondItem="huQ-5F-XU1" secondAttribute="trailing" id="VKi-yU-ugQ"/>
-                            <constraint firstItem="LY6-1X-gdW" firstAttribute="centerX" secondItem="MRq-f6-ptp" secondAttribute="centerX" id="cgj-di-cBf"/>
+                            <constraint firstItem="LY6-1X-gdW" firstAttribute="centerX" secondItem="MRq-f6-ptp" secondAttribute="centerX" constant="-60" id="cgj-di-cBf"/>
                             <constraint firstItem="MRq-f6-ptp" firstAttribute="trailing" secondItem="huQ-5F-XU1" secondAttribute="trailing" id="dMG-rf-2YZ"/>
                             <constraint firstItem="MRq-f6-ptp" firstAttribute="leading" secondItem="huQ-5F-XU1" secondAttribute="leading" id="f6T-MQ-kOk"/>
-                            <constraint firstItem="MRq-f6-ptp" firstAttribute="top" secondItem="huQ-5F-XU1" secondAttribute="top" constant="1" id="stM-YI-mEk"/>
+                            <constraint firstItem="MRq-f6-ptp" firstAttribute="top" secondItem="huQ-5F-XU1" secondAttribute="top" constant="126" id="stM-YI-mEk"/>
                             <constraint firstItem="03b-oF-DF2" firstAttribute="leading" secondItem="huQ-5F-XU1" secondAttribute="leading" id="uz2-2e-4HS"/>
-                            <constraint firstItem="LY6-1X-gdW" firstAttribute="top" secondItem="huQ-5F-XU1" secondAttribute="top" constant="13" id="wIQ-Na-WlQ"/>
+                            <constraint firstItem="LY6-1X-gdW" firstAttribute="top" secondItem="huQ-5F-XU1" secondAttribute="top" constant="80" id="wIQ-Na-WlQ"/>
                             <constraint firstItem="NTu-Us-0B4" firstAttribute="bottom" secondItem="VCB-uX-u0d" secondAttribute="bottom" id="wT1-EL-CCN"/>
                             <constraint firstItem="NTu-Us-0B4" firstAttribute="bottom" secondItem="03b-oF-DF2" secondAttribute="bottom" id="xvP-1i-yrh"/>
                         </constraints>
@@ -164,7 +167,7 @@
             <objects>
                 <tableViewController id="pnx-D9-1zb" customClass="MomentsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p9M-F7-XMB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -226,7 +229,7 @@
                         <viewControllerLayoutGuide type="bottom" id="d3U-Lr-oml"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3kP-rP-Xsk">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9MJ-1f-oEw">
@@ -365,7 +368,7 @@
             <objects>
                 <tableViewController id="gmh-JW-10i" customClass="DetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="skk-EJ-O8h">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -458,6 +461,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>
