@@ -53,6 +53,7 @@
     return context;
 }
 
+
 #pragma mark - Playlist support
 
 -(void)createMomentViewController:(CreateMomentViewController *)createMomentViewController didAddMoment:(Playlist *)playlist
@@ -282,8 +283,8 @@
 
 -(void)dealloc
 {
-    fetchedResultsController = nil;
-    managedObjectContext = nil;
+    //fetchedResultsController = nil;
+   // managedObjectContext = nil;
 }
 
 @end

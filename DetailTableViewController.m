@@ -8,12 +8,17 @@
 
 #import "DetailTableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "Playlist.h"
+#import "Song.h"
 
 @interface DetailTableViewController ()
 
 @end
 
 @implementation DetailTableViewController
+
+@synthesize playlist;
+@synthesize songs;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -80,9 +85,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    /*
     MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
     NSArray *songs = [songsQuery items];
     return [songs count];
+     */
+    NSInteger rows = 0;
+    rows = [playlist.songs count];
+    if (self.editing) {
+        rows++;
+    }
+    return rows;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,10 +116,10 @@
         return cell;
         
     } else {
-     
-        static NSString *CellIdentifier = @"Cell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
+        static NSString *CellIdentifier = @"SongsCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        /*
         MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
         NSArray *songs = [songsQuery items];
         
@@ -126,6 +139,33 @@
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         
         return cell;
+         */
+        
+        NSUInteger songCount = [playlist.songs count];
+        NSInteger row = indexPath.row;
+        
+        if (indexPath.row < songCount) {
+            static NSString *SongsCellIdentifier = @"SongsCell";
+            
+            cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SongsCellIdentifier];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
+            }
+            Song *song = [songs objectAtIndex:row];
+            cell.textLabel.text = song.title;
+            cell.detailTextLabel.text = song.artist;
+        } else {
+            static NSString *addSongCellIdentifier = @"AddSongCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:addSongCellIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addSongCellIdentifier];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            cell.textLabel.text = @"Add Song";
+    }
+    return cell;
     }
 }
 
@@ -136,11 +176,11 @@
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
         MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-        NSArray *songs = [songsQuery items];
+        NSArray *songsList = [songsQuery items];
         
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         
-        MPMediaItem *selectedItem = [[songs objectAtIndex:selectedIndex] representativeItem];
+        MPMediaItem *selectedItem = [[songsList objectAtIndex:selectedIndex] representativeItem];
         
         MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
         

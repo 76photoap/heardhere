@@ -15,5 +15,8 @@
 }
 
 @property NSString *playlistTitle;
-@property Playlist *playlist;
+
+@property (nonatomic, retain) Playlist *playlist;
+@property (nonatomic, retain) NSMutableArray *songs;
+
 @end

@@ -236,10 +236,15 @@
                                     <navigationItem title="Create Moment" id="cwa-ZR-Kbn">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lq4-5c-LZg">
                                             <connections>
+                                                <action selector="cancel:" destination="KzP-38-urT" id="S3z-ju-1CR"/>
                                                 <segue destination="W82-qz-etJ" kind="modal" modalTransitionStyle="flipHorizontal" id="aH8-BM-SlL"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="OhL-af-cBU"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="OhL-af-cBU">
+                                            <connections>
+                                                <action selector="save:" destination="KzP-38-urT" id="F2D-mw-YvB"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -407,7 +412,7 @@
                                     <constraint firstItem="c14-jb-8Sg" firstAttribute="top" secondItem="Q6v-AL-Nhg" secondAttribute="top" id="mBd-QU-3YQ"/>
                                 </constraints>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="fLy-eY-HJ9" detailTextLabel="q77-e9-dIF" style="IBUITableViewCellStyleSubtitle" id="yvj-g8-DmP">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SongsCell" textLabel="fLy-eY-HJ9" detailTextLabel="q77-e9-dIF" style="IBUITableViewCellStyleSubtitle" id="yvj-g8-DmP">
                                 <rect key="frame" x="0.0" y="206" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yvj-g8-DmP" id="76H-br-FxS">

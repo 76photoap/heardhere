@@ -12,18 +12,21 @@
 
 @interface CreateMomentViewController : UIViewController <UITextFieldDelegate>
 
-@property(nonatomic, retain) Playlist *playlist;
-@property (weak, nonatomic) IBOutlet UITextField *momentName;
+@property (strong, nonatomic) Playlist *playlist;
+@property (strong, nonatomic) IBOutlet UITextField *momentName;
 @property (strong, nonatomic) IBOutlet UIButton *fromButton;
 @property (strong, nonatomic) IBOutlet UIButton *untilButton;
 @property (strong, nonatomic) IBOutlet UIButton *fromTime;
 @property (strong, nonatomic) IBOutlet UIButton *untilTime;
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 
+
 @property(nonatomic, assign) id <MomentAddDelegate> momentDelegate;
 
--(void)save;
--(void)cancel;
+- (void)savePlaylist;
+- (IBAction)cancel:(id)sender;
+- (IBAction)save:(id)sender;
+
 
 @end
 

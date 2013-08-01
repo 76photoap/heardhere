@@ -7,6 +7,7 @@
 //
 
 #import "CreateMomentViewController.h"
+#import "Playlist.h"
 
 @interface CreateMomentViewController ()
 
@@ -14,9 +15,7 @@
 
 @implementation CreateMomentViewController
 
-@synthesize playlist;
-@synthesize momentDelegate;
-
+/*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,11 +24,14 @@
     }
     return self;
 }
+ */
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [_momentName becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,14 +40,49 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)save
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    
+    if (textField == _momentName) {
+        [_momentName resignFirstResponder];
+        [self savePlaylist];
+    }
+    return YES;
 }
 
--(void)cancel
+-(void)savePlaylist
 {
+    _playlist.name = _momentName.text;
     
+    NSError *error = nil;
+    if (![_playlist.managedObjectContext save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    [self.momentDelegate createMomentViewController:self didAddMoment:_playlist];
+}
+
+- (IBAction)save:(id)sender
+{
+    _playlist.name = _momentName.text;
+    
+    NSError *error = nil;
+    if (![_playlist.managedObjectContext save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    [self.momentDelegate createMomentViewController:self didAddMoment:_playlist];
+}
+
+- (IBAction)cancel:(id)sender
+{
+    [_playlist.managedObjectContext deleteObject:_playlist];
+    
+    NSError *error = nil;
+    if (![_playlist.managedObjectContext save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    [self.momentDelegate createMomentViewController:self didAddMoment:nil];
 }
 
 @end
