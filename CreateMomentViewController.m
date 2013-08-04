@@ -15,6 +15,10 @@
 
 @implementation CreateMomentViewController
 
+@synthesize playlist;
+@synthesize momentName;
+@synthesize momentDelegate;
+
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,7 +35,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [_momentName becomeFirstResponder];
+    [momentName becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,8 +46,8 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == _momentName) {
-        [_momentName resignFirstResponder];
+    if (textField == momentName) {
+        [momentName resignFirstResponder];
         [self savePlaylist];
     }
     return YES;
@@ -51,34 +55,34 @@
 
 -(void)savePlaylist
 {
-    _playlist.name = _momentName.text;
+    playlist.name = momentName.text;
     
     NSError *error = nil;
-    if (![_playlist.managedObjectContext save:&error]) {
+    if (![playlist.managedObjectContext save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    [self.momentDelegate createMomentViewController:self didAddMoment:_playlist];
+    [self.momentDelegate createMomentViewController:self didAddMoment:playlist];
 }
 
 - (IBAction)save:(id)sender
 {
-    _playlist.name = _momentName.text;
+    playlist.name = momentName.text;
     
     NSError *error = nil;
-    if (![_playlist.managedObjectContext save:&error]) {
+    if (![playlist.managedObjectContext save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    [self.momentDelegate createMomentViewController:self didAddMoment:_playlist];
+    [self.momentDelegate createMomentViewController:self didAddMoment:playlist];
 }
 
 - (IBAction)cancel:(id)sender
 {
-    [_playlist.managedObjectContext deleteObject:_playlist];
+    [playlist.managedObjectContext deleteObject:playlist];
     
     NSError *error = nil;
-    if (![_playlist.managedObjectContext save:&error]) {
+    if (![playlist.managedObjectContext save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }

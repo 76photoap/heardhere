@@ -110,9 +110,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([indexPath row] == 0) {
-        static NSString *CellIdentifier = @"InfoCell";
+        static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddme_binocs.jpg"]];
+        UIImageView *playlistImage = (UIImageView *)[cell viewWithTag:120];
+        playlistImage.image = playlist.photo;
         return cell;
         
     } else {
@@ -156,6 +157,7 @@
             Song *song = [songs objectAtIndex:row];
             cell.textLabel.text = song.title;
             cell.detailTextLabel.text = song.artist;
+         
         } else {
             static NSString *addSongCellIdentifier = @"AddSongCell";
             cell = [tableView dequeueReusableCellWithIdentifier:addSongCellIdentifier];
@@ -175,6 +177,8 @@
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
+        //NSIndexPath *rowToSelect = [self.tableView indexPathForSelectedRow];
+        //Playlist *playlistQuery = (self.playlistArray)[rowToSelect.row];
         MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
         NSArray *songsList = [songsQuery items];
         
@@ -188,6 +192,22 @@
         [musicPlayer setNowPlayingItem:selectedItem];
         
         [musicPlayer play];
+        
+        /*
+        MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
+        NSArray *songsList = [songsQuery items];
+        
+        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
+        
+        MPMediaItem *selectedItem = [[songsList objectAtIndex:selectedIndex] representativeItem];
+        
+        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        
+        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
+        [musicPlayer setNowPlayingItem:selectedItem];
+        
+        [musicPlayer play];
+         */
     }
 }
 
