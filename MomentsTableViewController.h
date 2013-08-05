@@ -10,7 +10,7 @@
 #import "CreateMomentViewController.h"
 
 @class Playlist;
-@class MomentTableViewCell;
+//@class MomentTableViewCell;
 
 @interface MomentsTableViewController : UITableViewController <MomentAddDelegate, NSFetchedResultsControllerDelegate>
 
@@ -19,6 +19,6 @@
 
 //@property (weak, nonatomic) IBOutlet UIButton *logoButton;
 -(void)showPlaylist:(Playlist *)playlist animated:(BOOL)animated;
--(void)configureCell:(MomentTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+//-(void)configureCell:(MomentTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end

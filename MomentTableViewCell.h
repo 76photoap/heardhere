@@ -10,9 +10,6 @@
 #import "Playlist.h"
 
 @interface MomentTableViewCell : UITableViewCell
-{
-   Playlist *playlist;
-}
 
 @property (nonatomic, retain) Playlist *playlist;
 
