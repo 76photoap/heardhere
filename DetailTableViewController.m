@@ -20,15 +20,6 @@
 @synthesize playlist;
 @synthesize songs;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -59,6 +50,8 @@
     UIBarButtonItem *barBackItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = barBackItem;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
+    
+    
 }
 
 -(void)back {
@@ -90,6 +83,7 @@
     NSArray *songs = [songsQuery items];
     return [songs count];
      */
+    
     NSInteger rows = 0;
     rows = [playlist.songs count];
     if (self.editing) {
@@ -113,22 +107,40 @@
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         UIImageView *playlistImage = (UIImageView *)[cell viewWithTag:120];
-        playlistImage.image = playlist.photo;
+        //playlistImage.image = playlist.photo;
+        playlistImage.image = [UIImage imageNamed:@"ddme_binocs.jpg"];
         return cell;
         
     } else {
         
         static NSString *CellIdentifier = @"SongsCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
         /*
         MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
         NSArray *songs = [songsQuery items];
         
         MPMediaItem *rowItem = [songs objectAtIndex:indexPath.row];
+        */
         
-        cell.textLabel.text = [rowItem valueForProperty:MPMediaItemPropertyTitle];
-        cell.detailTextLabel.text = [rowItem valueForProperty:MPMediaItemPropertyArtist];
-    
+
+        //NSUInteger songCount = [playlist.songs count];
+        NSInteger row = indexPath.row;
+        
+        
+        static NSString *SongsCellIdentifier = @"SongsCell";
+            
+        cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
+            
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SongsCellIdentifier];
+            cell.accessoryType = UITableViewCellAccessoryDetailButton;
+        }
+        
+        Song *song = [songs objectAtIndex:row];
+        cell.textLabel.text = song.title;
+        cell.detailTextLabel.text = song.artist;
+        
         cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
         
         cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
@@ -139,34 +151,6 @@
         cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         
-        return cell;
-         */
-        
-        NSUInteger songCount = [playlist.songs count];
-        NSInteger row = indexPath.row;
-        
-        if (indexPath.row < songCount) {
-            static NSString *SongsCellIdentifier = @"SongsCell";
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
-            
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SongsCellIdentifier];
-                cell.accessoryType = UITableViewCellAccessoryDetailButton;
-            }
-            Song *song = [songs objectAtIndex:row];
-            cell.textLabel.text = song.title;
-            cell.detailTextLabel.text = song.artist;
-         
-        } else {
-            static NSString *addSongCellIdentifier = @"AddSongCell";
-            cell = [tableView dequeueReusableCellWithIdentifier:addSongCellIdentifier];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addSongCellIdentifier];
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-            cell.textLabel.text = @"Add Song";
-    }
     return cell;
     }
 }

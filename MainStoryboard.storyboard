@@ -191,6 +191,10 @@
                                 </connections>
                             </tableViewCell>
                         </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="pnx-D9-1zb" id="bDe-EP-ngE"/>
+                            <outlet property="delegate" destination="pnx-D9-1zb" id="Fk3-hG-Hbr"/>
+                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Moments" id="M5y-c3-yXY">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="tFv-b6-ZdJ">
@@ -426,8 +430,8 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="gmh-JW-10i" id="d38-vd-OF2"/>
-                            <outlet property="delegate" destination="gmh-JW-10i" id="GU9-jz-cVP"/>
+                            <outlet property="dataSource" destination="gmh-JW-10i" id="081-zD-f5B"/>
+                            <outlet property="delegate" destination="gmh-JW-10i" id="LJV-2R-DKM"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="vZE-s8-YJW"/>

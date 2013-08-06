@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
+
 #import "MomentsTableViewController.h"
 #import "DetailTableViewController.h"
 #import "Playlist.h"
-//#import "MomentTableViewCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface MomentsTableViewController ()
@@ -20,18 +20,8 @@
 
 @implementation MomentsTableViewController
 
-@synthesize managedObjectContext, fetchedResultsController;
-
-/*
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
+@synthesize managedObjectContext;
+@synthesize fetchedResultsController;
 
 - (void)viewDidLoad
 {
@@ -39,9 +29,9 @@
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    /*
-     Fetch existing events. Create a fetch request, add a sort descriptor, then execute the fetch.
-     */
+    id delegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [delegate managedObjectContext];
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
@@ -56,11 +46,8 @@
         // Handle the error
     }
     
-    
-    
     // Set self's events array to the mutable array, then clean up
     [self setPlaylistArray:mutableFetchResults];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -88,7 +75,6 @@
     return context;
 }
 
-
 #pragma mark - Playlist support
 
 -(void)createMomentViewController:(CreateMomentViewController *)createMomentViewController didAddMoment:(Playlist *)playlist
@@ -112,8 +98,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSInteger count = [[fetchedResultsController sections] count];
-    if (count == 0) {
+     NSInteger count = [[fetchedResultsController sections] count];
+    
+	if (count == 0) {
 		count = 1;
 	}
 	
@@ -122,16 +109,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
-    NSInteger numberOfRows = 0;
-	
-    if ([[fetchedResultsController sections] count] > 0) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
-        numberOfRows = [sectionInfo numberOfObjects];
-    }
-    
-    return numberOfRows;
-     */
     return [self.playlistArray count];
 }
 
@@ -140,7 +117,7 @@
 {
     static NSString *CellIdentifier = @"MomentCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Playlist *playlist = (Playlist *)(self.playlistArray)[indexPath.row];
     
@@ -155,37 +132,7 @@
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     return cell;
-    
-    /*
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    MPMediaQuery *ddPlaylistsQuery = [MPMediaQuery playlistsQuery];
-    NSArray *playlists = [ddPlaylistsQuery collections];
-    
-    MPMediaPlaylist *playlist = [playlists objectAtIndex:indexPath.row];
-    [cell.textLabel setText:[playlist valueForProperty:MPMediaPlaylistPropertyName]];
-
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
-    cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
-    
-    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
-    
-    cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
-    cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    
-    return cell;
-     */
 }
-/*
--(void)configureCell:(MomentTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    Playlist *playlist = (Playlist *)[fetchedResultsController objectAtIndexPath:indexPath];
-    cell.playlist = playlist;
-}
-*/
 
 
 #pragma mark - Segue
@@ -194,54 +141,18 @@
 {
     if ([[segue identifier] isEqualToString:@"MomentSelected"])
     {
-       /*
-        DetailTableViewController *detailViewController = [segue destinationViewController];
-        
-        MPMediaQuery *ddPlaylistsQuery = [MPMediaQuery playlistsQuery];
-        NSArray *playlists = [ddPlaylistsQuery collections];
-        
-        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
-        
-        MPMediaPlaylist *selectedItem = [playlists objectAtIndex:selectedIndex];
-        NSString *playlistTitle = [selectedItem valueForProperty:MPMediaPlaylistPropertyName];
-        
-        [detailViewController setPlaylistTitle:playlistTitle];
-        */
-        /*
-        Playlist *playlist = (Playlist *)[fetchedResultsController objectAtIndexPath:indexPath];
-        [self showPlaylist:playlist animated:YES];
-        */
-        
-        //DetailTableViewController *detailViewController = [segue destinationViewController];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Playlist *playlist = (self.playlistArray)[indexPath.row];
-        
-        //Playlist *playlist = (Playlist *)[fetchedResultsController objectAtIndexPath:indexPath];
-        
         DetailTableViewController *detailcontroller = (DetailTableViewController *)[segue destinationViewController];
-        detailcontroller.playlist = playlist;
-        
-       // [self showPlaylist:playlist animated:YES];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+        detailcontroller.playlist = playlistSpecified;
         
     } else if ([segue.identifier isEqualToString:@"createMomentSegue"]) {
-        // here
-        
-        
-        
+
         CreateMomentViewController *addController = [segue destinationViewController];
         addController.momentDelegate = self;
-        
-        
 
         Playlist *newPlaylist = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
         addController.playlist = newPlaylist;
-        
-       // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
-        //[self presentViewController:navigationController animated:YES completion:nil];
-         
-
-        // and here
     }
 }
 
@@ -305,12 +216,13 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [tableView cellForRowAtIndexPath:indexPath];
-           
+            //[tableView cellForRowAtIndexPath:indexPath];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
             
             
             //[self configureCell:(MomentTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
+           // break;
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];

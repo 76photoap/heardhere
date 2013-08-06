@@ -36,6 +36,7 @@
 	// Do any additional setup after loading the view.
     
     [momentName becomeFirstResponder];
+    
 }
 
 - (void)didReceiveMemoryWarning
