@@ -244,7 +244,6 @@
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lq4-5c-LZg">
                                             <connections>
                                                 <action selector="cancel:" destination="KzP-38-urT" id="S3z-ju-1CR"/>
-                                                <segue destination="W82-qz-etJ" kind="modal" modalTransitionStyle="flipHorizontal" id="aH8-BM-SlL"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Save" id="OhL-af-cBU">
@@ -370,7 +369,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1007" y="946"/>
+            <point key="canvasLocation" x="1525" y="854"/>
         </scene>
         <!--Detail Table View Controller-->
         <scene sceneID="pea-ul-Mta">
