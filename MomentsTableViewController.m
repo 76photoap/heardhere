@@ -13,47 +13,70 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface MomentsTableViewController ()
-
-@property (nonatomic) NSMutableArray *playlistArray;
-
 @end
 
 @implementation MomentsTableViewController
 
-@synthesize managedObjectContext;
-@synthesize fetchedResultsController;
+@synthesize fetchedResultsController = _fetchedResultsController;
+
+-(void)createMomentViewControllerDidCancel:(Playlist*)playlistToDelete
+{
+    NSManagedObjectContext *context = self.managedObjectContext;
+   
+    [context deleteObject:playlistToDelete];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)createMomentViewControllerDidSave
+{
+    NSError *error = nil;
+    NSManagedObjectContext *context = self.managedObjectContext;
+    if (![context save:&error]) {
+        NSLog(@"Error! %@", error);
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"createMomentSegue"]) {
+        
+        CreateMomentViewController *addController = (CreateMomentViewController*)[segue destinationViewController];
+        addController.momentDelegate = self;
+        
+        Playlist *newPlaylist = (Playlist *) [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
+        addController.currentPlaylist = newPlaylist;
+    }
+    
+    if ([[segue identifier] isEqualToString:@"MomentSelected"]) {
+        DetailTableViewController *detailcontroller = (DetailTableViewController *)[segue destinationViewController];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+        detailcontroller.currentPlaylist = playlistSpecified;
+    }
+}
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    
-    id delegate = [[UIApplication sharedApplication] delegate];
-    self.managedObjectContext = [delegate managedObjectContext];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
-    [request setEntity:entity];
-    
-    // Order the events by creation date, most recent first.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
+
     NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if (mutableFetchResults == nil) {
-        // Handle the error
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Error! %@",error);
+        abort();
     }
     
-    // Set self's events array to the mutable array, then clean up
-    [self setPlaylistArray:mutableFetchResults];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.tableView reloadData];
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,40 +88,11 @@
 	[[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    return context;
-}
-
-#pragma mark - Playlist support
-
--(void)createMomentViewController:(CreateMomentViewController *)createMomentViewController didAddMoment:(Playlist *)playlist
-{
-    if (playlist) {
-        [self showPlaylist:playlist animated:NO];
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)showPlaylist:(Playlist *)playlist animated:(BOOL)animated
-{
-    DetailTableViewController *detailViewController = [[DetailTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    detailViewController.playlist = playlist;
-    
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-     NSInteger count = [[fetchedResultsController sections] count];
+     NSInteger count = [[self.fetchedResultsController sections] count];
     
 	if (count == 0) {
 		count = 1;
@@ -109,19 +103,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.playlistArray count];
+    id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [secInfo numberOfObjects];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"MomentCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    Playlist *playlist = (Playlist *)(self.playlistArray)[indexPath.row];
-    
+    Playlist *playlist = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [playlist name];
+    
     cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
     cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
     
@@ -134,46 +128,24 @@
     return cell;
 }
 
-
-#pragma mark - Segue
-
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[segue identifier] isEqualToString:@"MomentSelected"])
-    {
-        DetailTableViewController *detailcontroller = (DetailTableViewController *)[segue destinationViewController];
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-        detailcontroller.playlist = playlistSpecified;
-        
-    } else if ([segue.identifier isEqualToString:@"createMomentSegue"]) {
-
-        CreateMomentViewController *addController = [segue destinationViewController];
-        addController.momentDelegate = self;
-
-        Playlist *newPlaylist = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
-        addController.playlist = newPlaylist;
-    }
+    return YES;
 }
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the managed object for the given index path
-		NSManagedObjectContext *context = [fetchedResultsController managedObjectContext];
-		[context deleteObject:[fetchedResultsController objectAtIndexPath:indexPath]];
+		NSManagedObjectContext *context = [self managedObjectContext];
+        Playlist *playlistToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [context deleteObject:playlistToDelete];
 		
-		// Save the context.
-		NSError *error;
-		if (![context save:&error]) {
-			/*
-			 Replace this implementation with code to handle the error appropriately.
-			 
-			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-			 */
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			abort();
-		}
+		NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Error! %@",error);
+        }
 	}
 }
 
@@ -181,26 +153,34 @@
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
-    if (fetchedResultsController == nil) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:managedObjectContext];
-        [fetchRequest setEntity:entity];
-        
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"song" ascending:YES];
-        NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-        
-        [fetchRequest setSortDescriptors:sortDescriptors];
-        
-        NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
-        aFetchedResultsController.delegate = self;
-        self.fetchedResultsController = aFetchedResultsController;
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
     }
-    return fetchedResultsController;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:[self managedObjectContext]];
+    [fetchRequest setEntity:entity];
+        
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+        
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
 }
 
 -(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView beginUpdates];
+}
+
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
 }
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
@@ -215,14 +195,12 @@
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
-        case NSFetchedResultsChangeUpdate:
-            //[tableView cellForRowAtIndexPath:indexPath];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        case NSFetchedResultsChangeUpdate: {
+            Playlist *changedPlaylist = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.textLabel.text = changedPlaylist.name;
+        }
             break;
-            
-            
-            //[self configureCell:(MomentTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-           // break;
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -245,15 +223,17 @@
     }
 }
 
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
+#pragma mark - Table view delegate
 
--(void)dealloc
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //fetchedResultsController = nil;
-   // managedObjectContext = nil;
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     */
 }
 
 @end

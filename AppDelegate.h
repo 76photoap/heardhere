@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MomentsTableViewController.h"
 
-@class MomentsTableViewController;
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>
+@property (strong, nonatomic) UIWindow *window;
 
-@property (retain, nonatomic) UIWindow *window;
-@property (nonatomic, retain) MomentsTableViewController *momentsController;
-@property (readonly, nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (readonly, nonatomic, retain) NSManagedObjectModel *managedObjectModel;
-@property (readonly, nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (readonly, nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (readonly, nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (NSString *)applicationDocumentsDirectory;
+-(void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
 
 @end
 

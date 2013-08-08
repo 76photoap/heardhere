@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MomentsTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -15,15 +14,15 @@
 
 @implementation AppDelegate
 
-@synthesize window;
-@synthesize momentsController;
-@synthesize managedObjectContext;
-@synthesize managedObjectModel;
-@synthesize persistentStoreCoordinator;
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    momentsController.managedObjectContext = self.managedObjectContext;
+    UINavigationController *nav = (UINavigationController*)self.window.rootViewController;
+    MomentsTableViewController *mtvc = (MomentsTableViewController *)[[nav viewControllers]objectAtIndex:0];
+    mtvc.managedObjectContext = self.managedObjectContext;
     [self createCustomUI];
     return YES;
 }
@@ -71,114 +70,113 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-    NSError *error;
+    [self saveContext];
+}
+
+-(void)saveContext
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-			/*
-			 Replace this implementation with code to handle the error appropriately.
-			 
-			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-			 */
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			abort();
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
         }
     }
 }
 
-#pragma mark -
-#pragma mark Core Data stack
+#pragma mark - Core Data stack
 
-/**
- Returns the managed object context for the application.
- If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- */
-- (NSManagedObjectContext *)managedObjectContext {
-	
-    if (managedObjectContext != nil) {
-        return managedObjectContext;
+// Returns the managed object context for the application.
+// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
     }
-	
+    
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        managedObjectContext = [NSManagedObjectContext new];
-        [managedObjectContext setPersistentStoreCoordinator: coordinator];
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
-    return managedObjectContext;
+    return _managedObjectContext;
 }
 
-
-/**
- Returns the managed object model for the application.
- If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
- */
-- (NSManagedObjectModel *)managedObjectModel {
-	
-    if (managedObjectModel != nil) {
-        return managedObjectModel;
+// Returns the managed object model for the application.
+// If the model doesn't already exist, it is created from the application's model.
+- (NSManagedObjectModel *)managedObjectModel
+{
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
     }
-    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    return managedObjectModel;
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"heardhere" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
 }
 
-
-/**
- Returns the persistent store coordinator for the application.
- If the coordinator doesn't already exist, it is created and the application's store added to it.
- */
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-	
-    if (persistentStoreCoordinator != nil) {
-        return persistentStoreCoordinator;
+// Returns the persistent store coordinator for the application.
+// If the coordinator doesn't already exist, it is created and the application's store added to it.
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
     }
     
-	NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:@"HeardHere.sqlite"];
-	/*
-	 Set up the store.
-	 For the sake of illustration, provide a pre-populated default store.
-	 */
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	// If the expected store doesn't exist, copy the default store.
-	if (![fileManager fileExistsAtPath:storePath]) {
-		NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"HeardHere" ofType:@"sqlite"];
-		if (defaultStorePath) {
-			[fileManager copyItemAtPath:defaultStorePath toPath:storePath error:NULL];
-		}
-	}
-	
-	NSURL *storeUrl = [NSURL fileURLWithPath:storePath];
-	
-	NSError *error;
-    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-		/*
-		 Replace this implementation with code to handle the error appropriately.
-		 
-		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-		 
-		 Typical reasons for an error here include:
-		 * The persistent store is not accessible
-		 * The schema for the persistent store is incompatible with current managed object model
-		 Check the error message to determine what the actual problem was.
-		 */
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Heard-Here.sqlite"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:[storeURL path]]) {
+        NSURL *defaultStoreURL = [[NSBundle mainBundle] URLForResource:@"Heard-Here"
+                                                         withExtension:@"sqldata"];
+        if (defaultStoreURL) {
+            [fileManager copyItemAtURL:defaultStoreURL toURL:storeURL error:NULL];
+        }
     }
     
-    return persistentStoreCoordinator;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES],NSInferMappingModelAutomaticallyOption, nil];
+    
+    
+    NSError *error = nil;
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+        
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+         
+         Typical reasons for an error here include:
+         * The persistent store is not accessible;
+         * The schema for the persistent store is incompatible with current managed object model.
+         Check the error message to determine what the actual problem was.
+         
+         
+         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+         
+         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
+         * Simply deleting the existing store:
+         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
+         
+         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
+         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
+         
+         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
+         
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _persistentStoreCoordinator;
 }
 
+#pragma mark - Application's Documents directory
 
-#pragma mark -
-#pragma mark Application's documents directory
-
-/**
- Returns the path to the application's documents directory.
- */
-- (NSString *)applicationDocumentsDirectory {
-	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+// Returns the URL to the application's Documents directory.
+- (NSURL *)applicationDocumentsDirectory
+{
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
-
 
 @end
-
-

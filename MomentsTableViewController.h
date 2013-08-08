@@ -13,9 +13,7 @@
 
 @interface MomentsTableViewController : UITableViewController <MomentAddDelegate, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
--(void)showPlaylist:(Playlist *)playlist animated:(BOOL)animated;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end

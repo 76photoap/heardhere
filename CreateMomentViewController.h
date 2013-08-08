@@ -19,18 +19,21 @@
 @property (strong, nonatomic) IBOutlet UIButton *fromTime;
 @property (strong, nonatomic) IBOutlet UIButton *untilTime;
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
+@property (strong, nonatomic) IBOutlet UIImageView *playlistImageViewThumb;
 
 
-@property(nonatomic, assign) id <MomentAddDelegate> momentDelegate;
+@property(nonatomic, weak) id <MomentAddDelegate> momentDelegate;
 
-- (void)savePlaylist;
+@property(nonatomic, strong) Playlist *currentPlaylist;
+
+//- (void)savePlaylist;
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 
 
 @end
 
-@protocol MomentAddDelegate <NSObject>
-
--(void)createMomentViewController:(CreateMomentViewController *)createMomentViewController didAddMoment:(Playlist *)playlist;
+@protocol MomentAddDelegate
+-(void)createMomentViewControllerDidSave;
+-(void)createMomentViewControllerDidCancel:(Playlist*)playlistToDelete;
 @end

@@ -18,6 +18,7 @@
 @synthesize playlist;
 @synthesize momentName;
 @synthesize momentDelegate;
+@synthesize playlistImageViewThumb;
 
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,7 +45,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/*
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField == momentName) {
@@ -65,29 +66,23 @@
     }
     [self.momentDelegate createMomentViewController:self didAddMoment:playlist];
 }
-
-- (IBAction)save:(id)sender
-{
-    playlist.name = momentName.text;
-    
-    NSError *error = nil;
-    if (![playlist.managedObjectContext save:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    [self.momentDelegate createMomentViewController:self didAddMoment:playlist];
-}
+*/
 
 - (IBAction)cancel:(id)sender
 {
-    [playlist.managedObjectContext deleteObject:playlist];
-    
-    NSError *error = nil;
-    if (![playlist.managedObjectContext save:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    [self.momentDelegate createMomentViewController:self didAddMoment:nil];
+    [self.momentDelegate createMomentViewControllerDidCancel:[self currentPlaylist]];
 }
+
+- (IBAction)save:(id)sender
+{
+    [self.currentPlaylist setName:momentName.text];
+    [self.currentPlaylist setPhoto:playlistImageViewThumb.image];
+    //[self.currentPlaylist setSongs:<#(NSSet *)#>];
+    [self.momentDelegate createMomentViewControllerDidSave];
+}
+
+
+
+
 
 @end

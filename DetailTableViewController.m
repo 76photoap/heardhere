@@ -17,7 +17,7 @@
 
 @implementation DetailTableViewController
 
-@synthesize playlist;
+@synthesize currentPlaylist;
 @synthesize songs;
 
 - (void)viewDidLoad
@@ -85,7 +85,7 @@
      */
     
     NSInteger rows = 0;
-    rows = [playlist.songs count];
+    rows = [self.currentPlaylist.songs count];
     if (self.editing) {
         rows++;
     }
