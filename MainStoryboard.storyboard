@@ -209,6 +209,9 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Songs" id="kEb-R1-5VU"/>
+                    <connections>
+                        <segue destination="x6c-S3-SFp" kind="push" identifier="NowPlaying" id="Jz9-OQ-KHG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="win-J3-XyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -538,6 +541,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="oO4-a5-5dA"/>
+        <segue reference="Jz9-OQ-KHG"/>
     </inferredMetricsTieBreakers>
 </document>
