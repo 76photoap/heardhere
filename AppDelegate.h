@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MomentsTableViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

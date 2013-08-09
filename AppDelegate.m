@@ -20,11 +20,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    /*
     UINavigationController *nav = (UINavigationController*)self.window.rootViewController;
+     */
+    UINavigationController *nav = (UINavigationController *)[[tabController viewControllers] objectAtIndex:1];
     MomentsTableViewController *mtvc = (MomentsTableViewController *)[[nav viewControllers]objectAtIndex:0];
     mtvc.managedObjectContext = self.managedObjectContext;
     [self createCustomUI];
     return YES;
+     
 }
 
 - (void) createCustomUI
@@ -55,6 +60,8 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
