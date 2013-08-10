@@ -20,5 +20,6 @@
 @dynamic latitude;
 @dynamic listenDate;
 @dynamic playlist;
+@dynamic persistentID;
 
 @end

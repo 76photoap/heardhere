@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <MapKit/MapKit.h>
+#import "Song.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface PlayerViewController : UIViewController <MKMapViewDelegate>
+@interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 {
     IBOutlet UIButton *playPauseButton;
     IBOutlet UISlider *volumeSlider;
@@ -19,8 +21,10 @@
     IBOutlet UILabel *titleLabel;
 }
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak) IBOutlet MKMapView *map;
 @property (nonatomic, retain) MPMusicPlayerController *musicPlayer;
+@property (nonatomic, strong) Song *saveSong;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;

@@ -12,7 +12,6 @@
 
 @interface CreateMomentViewController : UIViewController <UITextFieldDelegate>
 
-@property (strong, nonatomic) Playlist *playlist;
 @property (strong, nonatomic) IBOutlet UITextField *momentName;
 @property (strong, nonatomic) IBOutlet UIButton *fromButton;
 @property (strong, nonatomic) IBOutlet UIButton *untilButton;
@@ -21,15 +20,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIImageView *playlistImageViewThumb;
 
-
 @property(nonatomic, weak) id <MomentAddDelegate> momentDelegate;
 
 @property(nonatomic, strong) Playlist *currentPlaylist;
 
-//- (void)savePlaylist;
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
-
 
 @end
 

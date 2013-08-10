@@ -18,6 +18,8 @@
 
 @implementation PlayerViewController
 
+@synthesize managedObjectContext;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -142,7 +144,20 @@
             artistLabel.text = artistString;
         } else {
             artistLabel.text = @"Unknown artist";
-        }        
+        }
+        
+        
+        [self.saveSong setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
+        [self.saveSong setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
+        [self.saveSong setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
+        [self.saveSong setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
+        //[self.saveSong setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+        //[self.saveSong setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+        [self.saveSong setListenDate:[NSDate date]];
+        [self.saveSong setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
+        
+         NSLog(@"artist %@", [self.saveSong artist]);
+         NSLog(@"title %@", [self.saveSong title]);
     }
 }
 

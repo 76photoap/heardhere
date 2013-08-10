@@ -168,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E4m-Kf-nnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1983" y="-565"/>
+            <point key="canvasLocation" x="2123" y="-229"/>
         </scene>
         <!--Songs View Controller - Songs-->
         <scene sceneID="iLW-rw-duG">
@@ -203,7 +203,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="x6c-S3-SFp" kind="push" id="oO4-a5-5dA"/>
+                                    <segue destination="x6c-S3-SFp" kind="push" identifier="NewSong" id="oO4-a5-5dA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -541,6 +541,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Jz9-OQ-KHG"/>
+        <segue reference="oO4-a5-5dA"/>
     </inferredMetricsTieBreakers>
 </document>

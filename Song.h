@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSDate * listenDate;
 @property (nonatomic, retain) NSSet *playlist;
+@property (nonatomic, retain) NSNumber *persistentID;
 @end
 
 @interface Song (CoreDataGeneratedAccessors)
