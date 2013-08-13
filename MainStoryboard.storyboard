@@ -283,7 +283,7 @@
         <scene sceneID="x9h-Dj-nOh">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="Yf7-7m-C5m" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="65x-R9-qqi">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -459,7 +459,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1525" y="854"/>
+            <point key="canvasLocation" x="1467" y="1034"/>
         </scene>
         <!--Detail Table View Controller-->
         <scene sceneID="pea-ul-Mta">

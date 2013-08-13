@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * album;
 @property (nonatomic, retain) NSString * artist;
-@property (nonatomic, retain) NSNumber * genre;
+@property (nonatomic, retain) NSString * genre;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSNumber * latitude;

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 #import <UIKit/UIKit.h>
+#import "DetailTableViewController.h"
 
 @protocol MomentAddDelegate;
 @class Playlist;

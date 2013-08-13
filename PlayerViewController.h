@@ -12,7 +12,9 @@
 #import "Song.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+//@protocol AddSongToDBDelegate;
+
+@interface PlayerViewController : UIViewController <MKMapViewDelegate>
 {
     IBOutlet UIButton *playPauseButton;
     IBOutlet UISlider *volumeSlider;
@@ -21,10 +23,11 @@
     IBOutlet UILabel *titleLabel;
 }
 
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+//@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak) IBOutlet MKMapView *map;
-@property (nonatomic, retain) MPMusicPlayerController *musicPlayer;
-@property (nonatomic, strong) Song *saveSong;
+@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
+//@property (nonatomic, strong) Song *songToSaveInDB;
+//@property (assign) id <AddSongToDBDelegate> addSongDelegate;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;
@@ -36,3 +39,8 @@
 - (void)showNWLocation;
 
 @end
+/*
+@protocol AddSongToDBDelegate
+-(void)addSongToDB;
+@end
+ */

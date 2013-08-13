@@ -10,6 +10,7 @@
 #import "MomentsTableViewController.h"
 #import "DetailTableViewController.h"
 #import "Playlist.h"
+#import "Song.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface MomentsTableViewController ()
@@ -37,7 +38,18 @@
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+/*
+-(void)addSongToDB
+{
+    NSLog(@"hi");
+    NSError *error = nil;
+    NSManagedObjectContext *context = self.managedObjectContext;
+    if (![context save:&error]) {
+        NSLog(@"Error! %@", error);
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+*/
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"createMomentSegue"]) {
@@ -234,6 +246,42 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - Add Save Song Delegate
+
+-(void)addSongToDB:(Song *)song didFinishWithSave:(BOOL)save
+{
+    NSLog(@"reached moments");
+    {
+        if (save) {
+            /*
+             The new book is associated with the add controller's managed object context.
+             This means that any edits that are made don't affect the application's main managed object context -- it's a way of keeping disjoint edits in a separate scratchpad. Saving changes to that context, though, only push changes to the fetched results controller's context. To save the changes to the persistent store, you have to save the fetch results controller's context as well.
+             */
+            NSError *error;
+            NSManagedObjectContext *addingManagedObjectContext = [song managedObjectContext];
+            if (![addingManagedObjectContext save:&error]) {
+                /*
+                 Replace this implementation with code to handle the error appropriately.
+                 
+                 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                 */
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+            if (![[self.fetchedResultsController managedObjectContext] save:&error]) {
+                /*
+                 Replace this implementation with code to handle the error appropriately.
+                 
+                 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                 */
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+        }
+        
+    };
 }
 
 @end

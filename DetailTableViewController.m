@@ -10,6 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "Playlist.h"
 #import "Song.h"
+#import "AppDelegate.h"
 
 @interface DetailTableViewController ()
 

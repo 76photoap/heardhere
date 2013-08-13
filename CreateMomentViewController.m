@@ -19,6 +19,7 @@
 @synthesize momentDelegate;
 @synthesize playlistImageViewThumb;
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,7 +33,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (IBAction)cancel:(id)sender
 {

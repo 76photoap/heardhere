@@ -7,7 +7,7 @@
 //
 
 #import "PlayerViewController.h"
-
+#import "AppDelegate.h"
 
 @interface PlayerViewController ()
 {
@@ -17,9 +17,7 @@
 @end
 
 @implementation PlayerViewController
-
-@synthesize managedObjectContext;
-
+/*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,7 +26,7 @@
     }
     return self;
 }
-
+*/
 #pragma mark - UI Setup
 
 - (void)viewDidLoad
@@ -101,8 +99,6 @@
     }
 }
 
-
-
 #pragma mark - Register media player notifications
 
 - (void) registerMediaPlayerNotifications
@@ -145,19 +141,28 @@
         } else {
             artistLabel.text = @"Unknown artist";
         }
+        AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
+        Song *songToSaveInDB = [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
         
+        [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
+        [songToSaveInDB setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
+        [songToSaveInDB setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
+        [songToSaveInDB setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
+        //[self.songToSaveInDB setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+        //[self.songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+        [songToSaveInDB setListenDate:[NSDate date]];
+        [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
         
-        [self.saveSong setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
-        [self.saveSong setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
-        [self.saveSong setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
-        [self.saveSong setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
-        //[self.saveSong setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
-        //[self.saveSong setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
-        [self.saveSong setListenDate:[NSDate date]];
-        [self.saveSong setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
+
+        [myApp saveContext];
         
-         NSLog(@"artist %@", [self.saveSong artist]);
-         NSLog(@"title %@", [self.saveSong title]);
+        NSLog(@"artist %@", [songToSaveInDB artist]);
+        NSLog(@"album %@", [songToSaveInDB album]);
+        NSLog(@"genre %@", [songToSaveInDB genre]);
+        NSLog(@"title %@", [songToSaveInDB title]);
+        NSLog(@"date %@", [songToSaveInDB listenDate]);
+        NSLog(@"persistent id %@", [songToSaveInDB persistentID]);
+        //[self.addSongDelegate addSongToDB];
     }
 }
 
