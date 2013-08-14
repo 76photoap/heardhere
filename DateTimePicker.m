@@ -63,11 +63,17 @@
 -(NSString *)dateHasChanged:(id)sender
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterMediumStyle];
     self.myDateString = [[NSString alloc] init];
-    self.myDateString = [formatter stringFromDate:self.picker.date];
-    NSLog (@"%@", self.myDateString);
     
+    if (self.picker.datePickerMode == UIDatePickerModeDate) {
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+
+    } else if (self.picker.datePickerMode == UIDatePickerModeTime) {
+        [formatter setDateFormat:@"h:mm a"];
+    }
+    self.myDateString = [formatter stringFromDate:self.picker.date];
+    
+    NSLog (@"%@", self.myDateString);
     return [self myDateString];
 }
 
