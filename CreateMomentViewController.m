@@ -43,10 +43,11 @@
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
 
-    picker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight/2 - 35, screenWidth, screenHeight/2 + 35)];
+    //picker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight/2 - 35, screenWidth, screenHeight/2 + 35)];
+    picker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 35, screenWidth, screenHeight + 35)];
     [picker addTargetForDoneButton:self action:@selector(donePressed)];
     [self.view addSubview:picker];
-    picker.hidden = YES;
+    //picker.hidden = YES;
     [picker setMode:UIDatePickerModeDate];
     
     self.fromDate.text = @"From Date";
@@ -60,12 +61,22 @@
 
 -(void)donePressed {
     self.fromDate.text = [picker dateHasChanged:picker.myDateString];
-    picker.hidden = YES;
+    
+    [UIView beginAnimations:@"SlideOutPicker" context:nil];
+    [UIView setAnimationDuration:0.5];
+    self.picker.transform = CGAffineTransformMakeTranslation(0, 216);
+    [UIView commitAnimations];
+    //picker.hidden = YES;
 }
 
 -(void)buttonPressed:(id)sender {
     [self.momentName resignFirstResponder];
+    
+    [UIView beginAnimations:@"SlideInPicker" context:nil];
+    [UIView setAnimationDuration:0.5];
     picker.hidden = NO;
+    picker.transform = CGAffineTransformMakeTranslation(0, -216);
+    [UIView commitAnimations];
 }
 
 - (IBAction)cancel:(id)sender
