@@ -22,7 +22,10 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIImageView *playlistImageViewThumb;
-@property (strong, nonatomic) DateTimePicker *picker;
+@property (strong, nonatomic) DateTimePicker *fromDatePicker;
+@property (strong, nonatomic) DateTimePicker *untilDatePicker;
+@property (strong, nonatomic) DateTimePicker *fromTimePicker;
+@property (strong, nonatomic) DateTimePicker *untilTimePicker;
 
 @property(nonatomic, weak) id <MomentAddDelegate> momentDelegate;
 
