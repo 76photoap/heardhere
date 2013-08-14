@@ -7,6 +7,7 @@
 //
 #import <UIKit/UIKit.h>
 #import "DetailTableViewController.h"
+#import "DateTimePicker.h"
 
 @protocol MomentAddDelegate;
 @class Playlist;
@@ -14,12 +15,14 @@
 @interface CreateMomentViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *momentName;
-@property (strong, nonatomic) IBOutlet UIButton *fromButton;
-@property (strong, nonatomic) IBOutlet UIButton *untilButton;
-@property (strong, nonatomic) IBOutlet UIButton *fromTime;
-@property (strong, nonatomic) IBOutlet UIButton *untilTime;
+@property (strong, nonatomic) IBOutlet UILabel *fromDate;
+@property (strong, nonatomic) IBOutlet UILabel *fromTime;
+@property (strong, nonatomic) IBOutlet UILabel *untilDate;
+@property (strong, nonatomic) IBOutlet UILabel *untilTime;
+
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIImageView *playlistImageViewThumb;
+@property (strong, nonatomic) DateTimePicker *picker;
 
 @property(nonatomic, weak) id <MomentAddDelegate> momentDelegate;
 

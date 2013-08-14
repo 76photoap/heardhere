@@ -36,6 +36,7 @@
 		6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050DBDC1647B36B00D45395 /* DetailTableViewController.m */; };
 		6052259B16F865AD0013807C /* dddetail-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 6052259916F865AD0013807C /* dddetail-back.png */; };
 		6052259C16F865AD0013807C /* dddetail-edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 6052259A16F865AD0013807C /* dddetail-edit.png */; };
+		6060F48C17BAFA6100B678E2 /* DateTimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6060F48B17BAFA6100B678E2 /* DateTimePicker.m */; };
 		60615B01165694260046840A /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60615B00165694260046840A /* PlayerViewController.m */; };
 		608BCC7A17B583C400F98B94 /* SongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608BCC7917B583C400F98B94 /* SongsViewController.m */; };
 		6094B42416F7A15300806F92 /* ddplus-sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 6094B42316F7A15300806F92 /* ddplus-sign.png */; };
@@ -85,6 +86,8 @@
 		6050DBDC1647B36B00D45395 /* DetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTableViewController.m; sourceTree = "<group>"; };
 		6052259916F865AD0013807C /* dddetail-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dddetail-back.png"; sourceTree = "<group>"; };
 		6052259A16F865AD0013807C /* dddetail-edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dddetail-edit.png"; sourceTree = "<group>"; };
+		6060F48A17BAFA6100B678E2 /* DateTimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimePicker.h; sourceTree = "<group>"; };
+		6060F48B17BAFA6100B678E2 /* DateTimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimePicker.m; sourceTree = "<group>"; };
 		60615AFF165694260046840A /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		60615B00165694260046840A /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		608BCC7817B583C400F98B94 /* SongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongsViewController.h; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 				6017CFD41644317700F9F4FB /* MomentsTableViewController.m */,
 				60387829179DB896008DCC66 /* CreateMomentViewController.h */,
 				6038782A179DB896008DCC66 /* CreateMomentViewController.m */,
+				6060F48A17BAFA6100B678E2 /* DateTimePicker.h */,
+				6060F48B17BAFA6100B678E2 /* DateTimePicker.m */,
 				6050DBDB1647B36B00D45395 /* DetailTableViewController.h */,
 				6050DBDC1647B36B00D45395 /* DetailTableViewController.m */,
 				60615AFF165694260046840A /* PlayerViewController.h */,
@@ -301,6 +306,7 @@
 				60387825179D9FEB008DCC66 /* Playlist.m in Sources */,
 				6017CFD51644317700F9F4FB /* MomentsTableViewController.m in Sources */,
 				6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */,
+				6060F48C17BAFA6100B678E2 /* DateTimePicker.m in Sources */,
 				6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */,
 				608BCC7A17B583C400F98B94 /* SongsViewController.m in Sources */,
 				60615B01165694260046840A /* PlayerViewController.m in Sources */,

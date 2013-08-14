@@ -38,18 +38,7 @@
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-/*
--(void)addSongToDB
-{
-    NSLog(@"hi");
-    NSError *error = nil;
-    NSManagedObjectContext *context = self.managedObjectContext;
-    if (![context save:&error]) {
-        NSLog(@"Error! %@", error);
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-*/
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"createMomentSegue"]) {

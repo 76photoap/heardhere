@@ -17,16 +17,7 @@
 @end
 
 @implementation PlayerViewController
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
+
 #pragma mark - UI Setup
 
 - (void)viewDidLoad
@@ -162,7 +153,6 @@
         NSLog(@"title %@", [songToSaveInDB title]);
         NSLog(@"date %@", [songToSaveInDB listenDate]);
         NSLog(@"persistent id %@", [songToSaveInDB persistentID]);
-        //[self.addSongDelegate addSongToDB];
     }
 }
 
@@ -179,8 +169,6 @@
 	} else if (playbackState == MPMusicPlaybackStateStopped) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
 		[self.musicPlayer stop];
-        
-        //[self.navigationController popViewControllerAnimated:YES];
 	}
 }
 

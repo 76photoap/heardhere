@@ -15,5 +15,9 @@
 @dynamic name;
 @dynamic photo;
 @dynamic songs;
+@dynamic fromDatePlaylist;
+@dynamic fromTimePlaylist;
+@dynamic untilDatePlaylist;
+@dynamic untilTimePlaylist;
 
 @end

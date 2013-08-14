@@ -16,6 +16,10 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) id photo;
 @property (nonatomic, retain) NSSet *songs;
+@property (nonatomic, retain) NSDate *fromDatePlaylist;
+@property (nonatomic, retain) NSDate *fromTimePlaylist;
+@property (nonatomic, retain) NSDate *untilDatePlaylist;
+@property (nonatomic, retain) NSDate *untilTimePlaylist;
 @end
 
 @interface Playlist (CoreDataGeneratedAccessors)
