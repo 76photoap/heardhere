@@ -19,11 +19,25 @@
 @implementation DetailTableViewController
 
 @synthesize currentPlaylist;
-@synthesize songs;
+@synthesize songsInPlaylist;
+@synthesize songsInPlaylistArray;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.songsInPlaylist = [[NSMutableSet alloc] init];
+   // self.songsInPlaylist = self.currentPlaylist.songs;
+    
+    
+    NSError *error;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    
 
     // Nav Bar Edit Button
     UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
@@ -79,18 +93,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
-    MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-    NSArray *songs = [songsQuery items];
-    return [songs count];
-     */
-    
-    NSInteger rows = 0;
-    rows = [self.currentPlaylist.songs count];
-    if (self.editing) {
-        rows++;
-    }
-    return rows;
+        return [self.songsInPlaylist count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,6 +110,7 @@
     if ([indexPath row] == 0) {
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         UIImageView *playlistImage = (UIImageView *)[cell viewWithTag:120];
         //playlistImage.image = playlist.photo;
         playlistImage.image = [UIImage imageNamed:@"ddme_binocs.jpg"];
@@ -114,31 +118,17 @@
         
     } else {
         
-        static NSString *CellIdentifier = @"SongsCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        
-        /*
-        MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-        NSArray *songs = [songsQuery items];
-        
-        MPMediaItem *rowItem = [songs objectAtIndex:indexPath.row];
-        */
-        
-
-        //NSUInteger songCount = [playlist.songs count];
-        NSInteger row = indexPath.row;
-        
-        
         static NSString *SongsCellIdentifier = @"SongsCell";
             
-        cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier forIndexPath:indexPath];
             
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SongsCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryDetailButton;
         }
         
-        Song *song = [songs objectAtIndex:row];
+        Song *song = (Song *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    
         cell.textLabel.text = song.title;
         cell.detailTextLabel.text = song.artist;
         

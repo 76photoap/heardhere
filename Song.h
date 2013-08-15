@@ -2,7 +2,7 @@
 //  Song.h
 //  Heard Here
 //
-//  Created by Dianna Mertz on 7/22/13.
+//  Created by Dianna Mertz on 8/15/13.
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
@@ -16,12 +16,13 @@
 @property (nonatomic, retain) NSString * album;
 @property (nonatomic, retain) NSString * artist;
 @property (nonatomic, retain) NSString * genre;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSDate * listenDate;
+@property (nonatomic, retain) NSDate * listenTime;
+@property (nonatomic, retain) NSNumber * longitude;
+@property (nonatomic, retain) NSNumber * persistentID;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSSet *playlist;
-@property (nonatomic, retain) NSNumber *persistentID;
 @end
 
 @interface Song (CoreDataGeneratedAccessors)

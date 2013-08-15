@@ -2,7 +2,7 @@
 //  Playlist.m
 //  Heard Here
 //
-//  Created by Dianna Mertz on 7/22/13.
+//  Created by Dianna Mertz on 8/15/13.
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
@@ -12,12 +12,12 @@
 
 @implementation Playlist
 
-@dynamic name;
-@dynamic photo;
-@dynamic songs;
 @dynamic fromDatePlaylist;
 @dynamic fromTimePlaylist;
+@dynamic name;
+@dynamic photo;
 @dynamic untilDatePlaylist;
 @dynamic untilTimePlaylist;
+@dynamic songs;
 
 @end

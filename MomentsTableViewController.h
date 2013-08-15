@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CreateMomentViewController.h"
 #import "PlayerViewController.h"
+#import "Playlist.h"
 
-@class Playlist;
 @class Song;
 
 @interface MomentsTableViewController : UITableViewController <MomentAddDelegate,NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-
+@property (nonatomic, strong) Playlist *currentPlaylist;
 @end

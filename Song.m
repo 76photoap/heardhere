@@ -2,7 +2,7 @@
 //  Song.m
 //  Heard Here
 //
-//  Created by Dianna Mertz on 7/22/13.
+//  Created by Dianna Mertz on 8/15/13.
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
@@ -15,11 +15,12 @@
 @dynamic album;
 @dynamic artist;
 @dynamic genre;
-@dynamic title;
-@dynamic longitude;
 @dynamic latitude;
 @dynamic listenDate;
-@dynamic playlist;
+@dynamic listenTime;
+@dynamic longitude;
 @dynamic persistentID;
+@dynamic title;
+@dynamic playlist;
 
 @end

@@ -9,7 +9,6 @@
 
 #import "MomentsTableViewController.h"
 #import "DetailTableViewController.h"
-#import "Playlist.h"
 #import "Song.h"
 #import <MediaPlayer/MediaPlayer.h>
 
@@ -36,6 +35,7 @@
     if (![context save:&error]) {
         NSLog(@"Error! %@", error);
     }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -51,10 +51,32 @@
     }
     
     if ([[segue identifier] isEqualToString:@"MomentSelected"]) {
+        /*
         DetailTableViewController *detailcontroller = (DetailTableViewController *)[segue destinationViewController];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
         Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
         detailcontroller.currentPlaylist = playlistSpecified;
+        */
+        
+        DetailTableViewController *detailcontroller = [segue destinationViewController];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        NSSet *currentPlaylistSongs = self.currentPlaylist.songs;
+        NSMutableArray *songsInPlaylistArray = [[NSMutableArray alloc] initWithCapacity:self.currentPlaylist.songs.count];
+        
+        for (Song *song in currentPlaylistSongs) {
+            [songsInPlaylistArray addObject:song.title];
+        }
+        
+        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
+        playlistSpecified = [songsInPlaylistArray objectAtIndex:selectedIndex];
+        
+        
+        detailcontroller.currentPlaylist = playlistSpecified;
+        
     }
 }
 
@@ -162,7 +184,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
         
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         
     [fetchRequest setSortDescriptors:sortDescriptors];

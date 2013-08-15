@@ -23,8 +23,6 @@
 		6033457A16FB29D2003F59F1 /* ddme_binocs.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6033457916FB29D2003F59F1 /* ddme_binocs.jpg */; };
 		6033457C16FB6C84003F59F1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6033457B16FB6C84003F59F1 /* MapKit.framework */; };
 		60387816179D7E58008DCC66 /* heardhere.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60387814179D7E57008DCC66 /* heardhere.xcdatamodeld */; };
-		60387825179D9FEB008DCC66 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60387824179D9FEB008DCC66 /* Playlist.m */; };
-		60387828179D9FEC008DCC66 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 60387827179D9FEC008DCC66 /* Song.m */; };
 		6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6038782A179DB896008DCC66 /* CreateMomentViewController.m */; };
 		603D0BF216F90486008A0577 /* ddTable-view-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 603D0BF016F90486008A0577 /* ddTable-view-background.png */; };
 		603D0BF316F90486008A0577 /* ddTable-view-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603D0BF116F90486008A0577 /* ddTable-view-background@2x.png */; };
@@ -48,6 +46,8 @@
 		60C6219516F88FCA007CF5E1 /* ddplayer-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 60C6219416F88FCA007CF5E1 /* ddplayer-back.png */; };
 		60CD4E19177C8FE80038F9F8 /* heardhere-logo-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 60CD4E18177C8FE80038F9F8 /* heardhere-logo-57.png */; };
 		60F45492169B13B900686965 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F4541B169B0F2500686965 /* AppDelegate.m */; };
+		60FEABF917BD3F3300FD9196 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FEABF817BD3F3300FD9196 /* Song.m */; };
+		60FEABFC17BD3F3300FD9196 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FEABFB17BD3F3300FD9196 /* Playlist.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,10 +69,6 @@
 		6033457916FB29D2003F59F1 /* ddme_binocs.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ddme_binocs.jpg; sourceTree = "<group>"; };
 		6033457B16FB6C84003F59F1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		60387815179D7E57008DCC66 /* heardhere.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = heardhere.xcdatamodel; sourceTree = "<group>"; };
-		60387823179D9FEB008DCC66 /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playlist.h; sourceTree = "<group>"; };
-		60387824179D9FEB008DCC66 /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playlist.m; sourceTree = "<group>"; };
-		60387826179D9FEC008DCC66 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		60387827179D9FEC008DCC66 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		60387829179DB896008DCC66 /* CreateMomentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateMomentViewController.h; sourceTree = "<group>"; };
 		6038782A179DB896008DCC66 /* CreateMomentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateMomentViewController.m; sourceTree = "<group>"; };
 		603D0BF016F90486008A0577 /* ddTable-view-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ddTable-view-background.png"; sourceTree = "<group>"; };
@@ -104,6 +100,10 @@
 		60CD4E18177C8FE80038F9F8 /* heardhere-logo-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heardhere-logo-57.png"; sourceTree = "<group>"; };
 		60F4541A169B0F2500686965 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		60F4541B169B0F2500686965 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		60FEABF717BD3F3300FD9196 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		60FEABF817BD3F3300FD9196 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		60FEABFA17BD3F3300FD9196 /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playlist.h; sourceTree = "<group>"; };
+		60FEABFB17BD3F3300FD9196 /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playlist.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,11 +127,11 @@
 		6017CF721644088F00F9F4FB = {
 			isa = PBXGroup;
 			children = (
-				60387826179D9FEC008DCC66 /* Song.h */,
-				60387827179D9FEC008DCC66 /* Song.m */,
-				60387823179D9FEB008DCC66 /* Playlist.h */,
-				60387824179D9FEB008DCC66 /* Playlist.m */,
 				60387814179D7E57008DCC66 /* heardhere.xcdatamodeld */,
+				60FEABF717BD3F3300FD9196 /* Song.h */,
+				60FEABF817BD3F3300FD9196 /* Song.m */,
+				60FEABFA17BD3F3300FD9196 /* Playlist.h */,
+				60FEABFB17BD3F3300FD9196 /* Playlist.m */,
 				6017CFA0164409CF00F9F4FB /* MainStoryboard.storyboard */,
 				608BCC7817B583C400F98B94 /* SongsViewController.h */,
 				608BCC7917B583C400F98B94 /* SongsViewController.m */,
@@ -300,14 +300,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60387828179D9FEC008DCC66 /* Song.m in Sources */,
 				60387816179D7E58008DCC66 /* heardhere.xcdatamodeld in Sources */,
 				60F45492169B13B900686965 /* AppDelegate.m in Sources */,
-				60387825179D9FEB008DCC66 /* Playlist.m in Sources */,
 				6017CFD51644317700F9F4FB /* MomentsTableViewController.m in Sources */,
 				6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */,
+				60FEABF917BD3F3300FD9196 /* Song.m in Sources */,
 				6060F48C17BAFA6100B678E2 /* DateTimePicker.m in Sources */,
 				6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */,
+				60FEABFC17BD3F3300FD9196 /* Playlist.m in Sources */,
 				608BCC7A17B583C400F98B94 /* SongsViewController.m in Sources */,
 				60615B01165694260046840A /* PlayerViewController.m in Sources */,
 				60AB8204169FFFF200529DFB /* main.m in Sources */,

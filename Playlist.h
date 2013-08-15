@@ -2,7 +2,7 @@
 //  Playlist.h
 //  Heard Here
 //
-//  Created by Dianna Mertz on 7/22/13.
+//  Created by Dianna Mertz on 8/15/13.
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
@@ -13,13 +13,13 @@
 
 @interface Playlist : NSManagedObject
 
+@property (nonatomic, retain) NSDate * fromDatePlaylist;
+@property (nonatomic, retain) NSDate * fromTimePlaylist;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) id photo;
+@property (nonatomic, retain) NSDate * untilDatePlaylist;
+@property (nonatomic, retain) NSDate * untilTimePlaylist;
 @property (nonatomic, retain) NSSet *songs;
-@property (nonatomic, retain) NSDate *fromDatePlaylist;
-@property (nonatomic, retain) NSDate *fromTimePlaylist;
-@property (nonatomic, retain) NSDate *untilDatePlaylist;
-@property (nonatomic, retain) NSDate *untilTimePlaylist;
 @end
 
 @interface Playlist (CoreDataGeneratedAccessors)

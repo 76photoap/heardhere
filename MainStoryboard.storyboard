@@ -407,14 +407,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="fromDate" destination="f04-PZ-EU4" id="P80-5V-sER"/>
-                        <outlet property="fromTime" destination="xnM-pR-wFk" id="Lsu-iE-WeD"/>
-                        <outlet property="momentName" destination="uDg-aS-LRM" id="BVL-7o-r0U"/>
+                        <outlet property="fromDateLabel" destination="f04-PZ-EU4" id="7xJ-y3-7sv"/>
+                        <outlet property="fromTimeLabel" destination="xnM-pR-wFk" id="Tca-2a-5Vc"/>
+                        <outlet property="momentNameTextField" destination="uDg-aS-LRM" id="i9u-pr-gDh"/>
                         <outlet property="photoButton" destination="nv3-jC-Tns" id="Qzz-dp-hkY"/>
                         <outlet property="playlistImageViewThumb" destination="b78-JX-eEJ" id="FGs-mi-s4A"/>
                         <outlet property="searchDisplayController" destination="9zY-MW-3PH" id="ibJ-94-ysM"/>
-                        <outlet property="untilDate" destination="AfQ-QM-pUO" id="ec8-oz-A3V"/>
-                        <outlet property="untilTime" destination="Ecn-vx-Khe" id="X0q-1r-FRX"/>
+                        <outlet property="untilDateLabel" destination="AfQ-QM-pUO" id="atQ-He-Ew7"/>
+                        <outlet property="untilTimeLabel" destination="Ecn-vx-Khe" id="jnc-su-Skn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zi5-VY-pTI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -518,6 +518,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="oO4-a5-5dA"/>
+        <segue reference="bCV-dx-nkL"/>
     </inferredMetricsTieBreakers>
 </document>
