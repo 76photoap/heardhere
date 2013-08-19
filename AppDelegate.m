@@ -18,8 +18,10 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     /*
     UINavigationController *nav = (UINavigationController*)self.window.rootViewController;
@@ -27,7 +29,9 @@
     UINavigationController *nav = (UINavigationController *)[[tabController viewControllers] objectAtIndex:1];
     MomentsTableViewController *mtvc = (MomentsTableViewController *)[[nav viewControllers]objectAtIndex:0];
     mtvc.managedObjectContext = self.managedObjectContext;
+
     [self createCustomUI];
+    
     return YES;
      
 }

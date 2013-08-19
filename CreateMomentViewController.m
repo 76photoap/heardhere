@@ -14,24 +14,7 @@
 
 @implementation CreateMomentViewController
 
-@synthesize momentNameTextField;
-@synthesize momentDelegate;
-@synthesize playlistImageViewThumb;
-@synthesize fromDateLabel;
-@synthesize untilDateLabel;
-@synthesize fromTimeLabel;
-@synthesize untilTimeLabel;
-@synthesize fromDatePicker;
-@synthesize fromTimePicker;
-@synthesize untilTimePicker;
-@synthesize untilDatePicker;
-@synthesize fetchedResultsController = _fetchedResultsController;
-@synthesize managedObjectContext;
-@synthesize untilDate;
-@synthesize untilTime;
-@synthesize fromDate;
-@synthesize fromTime;
-@synthesize songsToBeInNewPlaylistMutableSet;
+@synthesize momentNameTextField, momentDelegate, playlistImageViewThumb, fromDateLabel, untilDateLabel, fromTimeLabel, untilTimeLabel, fromDatePicker, fromTimePicker, untilTimePicker, untilDatePicker, managedObjectContext, untilDate, untilTime, fromDate, fromTime,fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad
 {
@@ -44,6 +27,48 @@
     
     [momentNameTextField becomeFirstResponder];
     
+    [self setupDatePicker];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc
+{
+    self.momentNameTextField = nil;
+    self.fromDateLabel = nil;
+    self.fromTimeLabel = nil;
+    self.untilDateLabel = nil;
+    self.untilTimeLabel = nil;
+    self.photoButton = nil;
+    self.playlistImageViewThumb = nil;
+    
+    self.fromDatePicker = nil;
+    self.untilDatePicker = nil;
+    self.fromTimePicker = nil;
+    self.untilTimePicker = nil;
+    
+    self.fromDate = nil;
+    self.untilDate = nil;
+    self.fromTime = nil;
+    self.untilTime = nil;
+    
+    self.songsToBeInNewPlaylistSet = nil;
+    
+    self.momentDelegate = nil;
+    
+    self.songObject = nil;
+    self.currentPlaylist = nil;
+    
+    self.managedObjectContext = nil;
+    self.fetchedResultsController = nil;
+}
+
+-(void)setupDatePicker
+{
     // Date Picker
     self.fromDateLabel.userInteractionEnabled = YES;
     self.untilDateLabel.userInteractionEnabled = YES;
@@ -63,7 +88,7 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
-
+    
     fromDatePicker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 35, screenWidth, screenHeight + 35)];
     [fromDatePicker addTargetForDoneButton:self action:@selector(donePressedFromDate)];
     [self.view addSubview:fromDatePicker];
@@ -92,29 +117,6 @@
     self.fromTimeLabel.text = @"From Time";
     self.untilDateLabel.text = @"Until Date";
     self.untilTimeLabel.text = @"Until Time";
-    
-    // song set
-    self.songsToBeInNewPlaylistMutableSet = [[NSMutableSet alloc] init];
-    
-    // retrieve all songs
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    // Each song attached to the playlist is included in the array
-    NSSet *songs = self.currentPlaylist.songs;
-
-    for (Song *song in songs) {
-        [songsToBeInNewPlaylistMutableSet addObject:song];
-    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)donePressedFromDate {
@@ -205,21 +207,47 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    
-    AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
-    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song" inManagedObjectContext:self.currentPlaylist.managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entitySong = [NSEntityDescription entityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
-    
-    [fetchRequest setEntity:entitySong];
-    
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                              initWithKey:@"title" ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sort, nil];
+    [fetchRequest setEntity:entity];
+
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    // format Date
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.currentPlaylist.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        NSLog(@"Core data error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    NSArray *objects = [self.songObject.managedObjectContext executeFetchRequest:fetchRequest  error:&error];
+    self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[objects valueForKey:@"title"]];
+    [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
+     
+    NSLog(@"%@", _fetchedResultsController);
+    return _fetchedResultsController;
+}
+
+- (IBAction)cancel:(id)sender
+{
+    [self.momentDelegate createMomentViewControllerDidCancel:[self currentPlaylist]];
+}
+
+- (IBAction)save:(id)sender
+{    
+
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Error! %@",error);
+        abort();
+    }
+    NSLog(@"fetched results controller: %@", self.fetchedResultsController);
+
     NSDateFormatter *dateFormatterFromDate = [[NSDateFormatter alloc] init];
     [dateFormatterFromDate setDateStyle:NSDateFormatterMediumStyle];
     self.fromDate = [dateFormatterFromDate dateFromString:self.fromDateLabel.text];
@@ -231,54 +259,29 @@
     NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
     [dateFormatterFromTime setDateFormat:@"h:mm a"];
     self.fromTime = [dateFormatterFromTime dateFromString:self.fromTimeLabel.text];
-
+    
     NSDateFormatter *dateFormatterUntilTime = [[NSDateFormatter alloc] init];
     [dateFormatterUntilTime setDateFormat:@"h:mm a"];
     self.untilTime = [dateFormatterUntilTime dateFromString:self.untilTimeLabel.text];
     
-    //
+    NSLog(@"%@", [self.fetchedResultsController fetchedObjects]);
     
-    NSPredicate *pred;
+    self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[self.fetchedResultsController fetchedObjects]];
+    //self.songsToBeInNewPlaylistSet = ;
     
-    pred = [NSPredicate predicateWithFormat:@"title == %@", self.song.title];
-    
-    [fetchRequest setPredicate:pred];
-    
-    NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:myApp.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    
-    self.fetchedResultsController = theFetchedResultsController;
-    //_fetchedResultsController.delegate = self;
-    
-    NSError *error = nil;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return _fetchedResultsController;
-}
-
-- (IBAction)cancel:(id)sender
-{
-    [self.momentDelegate createMomentViewControllerDidCancel:[self currentPlaylist]];
-}
-
-- (IBAction)save:(id)sender
-{
-    NSError *error;
-	if (![[self fetchedResultsController] performFetch:&error]) {
-		NSLog(@"Error in search %@, %@", error, [error userInfo]);
-	}
-
     [self.currentPlaylist setName:momentNameTextField.text];
     [self.currentPlaylist setPhoto:playlistImageViewThumb.image];
     [self.currentPlaylist setFromDatePlaylist:fromDate];
     [self.currentPlaylist setFromTimePlaylist:fromTime];
     [self.currentPlaylist setUntilDatePlaylist:untilDate];
     [self.currentPlaylist setUntilTimePlaylist:untilTime];
-    [self.currentPlaylist setSongs:songsToBeInNewPlaylistMutableSet];
+    [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
+    
+    NSLog(@"songs: %@", self.currentPlaylist.songs);
+
     [self.momentDelegate createMomentViewControllerDidSave];
 }
+
 
 
 @end

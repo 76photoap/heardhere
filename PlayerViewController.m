@@ -132,9 +132,10 @@
         } else {
             artistLabel.text = @"Unknown artist";
         }
-        AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
-        Song *songToSaveInDB = [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
         
+        AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
+        Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
+    
         [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
         [songToSaveInDB setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
         [songToSaveInDB setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
@@ -143,16 +144,15 @@
         //[self.songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
         [songToSaveInDB setListenDate:[NSDate date]];
         [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
-        
-
-        [myApp saveContext];
-        
+        [songToSaveInDB.managedObjectContext save:nil];
+    
         NSLog(@"artist %@", [songToSaveInDB artist]);
         NSLog(@"album %@", [songToSaveInDB album]);
         NSLog(@"genre %@", [songToSaveInDB genre]);
         NSLog(@"title %@", [songToSaveInDB title]);
         NSLog(@"date %@", [songToSaveInDB listenDate]);
         NSLog(@"persistent id %@", [songToSaveInDB persistentID]);
+        
     }
 }
 

@@ -11,6 +11,7 @@
 #import "DetailTableViewController.h"
 #import "Song.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "AppDelegate.h"
 
 @interface MomentsTableViewController ()
 @end
@@ -35,7 +36,7 @@
     if (![context save:&error]) {
         NSLog(@"Error! %@", error);
     }
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -46,19 +47,13 @@
         CreateMomentViewController *addController = (CreateMomentViewController*)[segue destinationViewController];
         addController.momentDelegate = self;
         
+        //AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
         Playlist *newPlaylist = (Playlist *) [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
         addController.currentPlaylist = newPlaylist;
     }
     
     if ([[segue identifier] isEqualToString:@"MomentSelected"]) {
-        /*
-        DetailTableViewController *detailcontroller = (DetailTableViewController *)[segue destinationViewController];
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
-        Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-        detailcontroller.currentPlaylist = playlistSpecified;
-        */
-        
+
         DetailTableViewController *detailcontroller = [segue destinationViewController];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
@@ -74,9 +69,7 @@
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         playlistSpecified = [songsInPlaylistArray objectAtIndex:selectedIndex];
         
-        
         detailcontroller.currentPlaylist = playlistSpecified;
-        
     }
 }
 
@@ -244,55 +237,6 @@
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
-
-#pragma mark - Add Save Song Delegate
-
--(void)addSongToDB:(Song *)song didFinishWithSave:(BOOL)save
-{
-    NSLog(@"reached moments");
-    {
-        if (save) {
-            /*
-             The new book is associated with the add controller's managed object context.
-             This means that any edits that are made don't affect the application's main managed object context -- it's a way of keeping disjoint edits in a separate scratchpad. Saving changes to that context, though, only push changes to the fetched results controller's context. To save the changes to the persistent store, you have to save the fetch results controller's context as well.
-             */
-            NSError *error;
-            NSManagedObjectContext *addingManagedObjectContext = [song managedObjectContext];
-            if (![addingManagedObjectContext save:&error]) {
-                /*
-                 Replace this implementation with code to handle the error appropriately.
-                 
-                 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 */
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                abort();
-            }
-            if (![[self.fetchedResultsController managedObjectContext] save:&error]) {
-                /*
-                 Replace this implementation with code to handle the error appropriately.
-                 
-                 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 */
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                abort();
-            }
-        }
-        
-    };
 }
 
 @end

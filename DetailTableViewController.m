@@ -20,7 +20,7 @@
 
 @synthesize currentPlaylist;
 @synthesize songsInPlaylist;
-@synthesize songsInPlaylistArray;
+//@synthesize songsInPlaylistArray;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad
@@ -88,7 +88,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    NSInteger count = [[self.fetchedResultsController sections] count];
+    
+	if (count == 0) {
+		count = 1;
+	}
+	
+    return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -124,13 +130,15 @@
             
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SongsCellIdentifier];
-            cell.accessoryType = UITableViewCellAccessoryDetailButton;
+            //cell.accessoryType = UITableViewCellAccessoryDetailButton;
         }
         
-        Song *song = (Song *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-        cell.textLabel.text = song.title;
-        cell.detailTextLabel.text = song.artist;
+        self.currentPlaylist = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.section];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+        NSArray *sortedSongs = [self.currentPlaylist.songs sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+        Song *songForRow = [sortedSongs objectAtIndex:indexPath.row];
+        cell.textLabel.text = songForRow.title;
+        //cell.detailTextLabel = songForRow.artist;
         
         cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
         

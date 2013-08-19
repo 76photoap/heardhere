@@ -73,7 +73,6 @@
     }
     self.myDateString = [formatter stringFromDate:self.picker.date];
     
-    NSLog (@"%@", self.myDateString);
     return [self myDateString];
 }
 

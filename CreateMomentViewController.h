@@ -12,7 +12,6 @@
 #import "Song.h"
 
 @protocol MomentAddDelegate;
-//@class Playlist;
 
 @interface CreateMomentViewController : UIViewController <UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 
@@ -21,23 +20,26 @@
 @property (strong, nonatomic) IBOutlet UILabel *fromTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *untilDateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *untilTimeLabel;
-
 @property (strong, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) IBOutlet UIImageView *playlistImageViewThumb;
+
 @property (strong, nonatomic) DateTimePicker *fromDatePicker;
 @property (strong, nonatomic) DateTimePicker *untilDatePicker;
 @property (strong, nonatomic) DateTimePicker *fromTimePicker;
 @property (strong, nonatomic) DateTimePicker *untilTimePicker;
+
 @property (strong, nonatomic) NSDate *fromDate;
 @property (strong, nonatomic) NSDate *untilDate;
 @property (strong, nonatomic) NSDate *fromTime;
 @property (strong, nonatomic) NSDate *untilTime;
-@property (strong, nonatomic) NSMutableSet *songsToBeInNewPlaylistMutableSet;
+
+@property (strong, nonatomic) NSSet *songsToBeInNewPlaylistSet;
 
 @property(nonatomic, weak) id <MomentAddDelegate> momentDelegate;
 
-@property(nonatomic, strong) Song *song;
+@property(nonatomic, strong) Song *songObject;
 @property(nonatomic, strong) Playlist *currentPlaylist;
+
 @property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
