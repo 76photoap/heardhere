@@ -267,7 +267,7 @@
     NSLog(@"%@", [self.fetchedResultsController fetchedObjects]);
     
     self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[self.fetchedResultsController fetchedObjects]];
-    //self.songsToBeInNewPlaylistSet = ;
+
     
     [self.currentPlaylist setName:momentNameTextField.text];
     [self.currentPlaylist setPhoto:playlistImageViewThumb.image];

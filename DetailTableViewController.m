@@ -8,37 +8,39 @@
 
 #import "DetailTableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "Playlist.h"
-#import "Song.h"
 #import "AppDelegate.h"
 
 @interface DetailTableViewController ()
-
 @end
 
 @implementation DetailTableViewController
 
 @synthesize currentPlaylist;
-@synthesize songsInPlaylist;
-//@synthesize songsInPlaylistArray;
+@synthesize songInPlaylist;
+@synthesize songsInPlaylistMutableArray;
 @synthesize fetchedResultsController = _fetchedResultsController;
+
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = delegate.managedObjectContext;
     
-    self.songsInPlaylist = [[NSMutableSet alloc] init];
-   // self.songsInPlaylist = self.currentPlaylist.songs;
-    
-    
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Error! %@",error);
         abort();
     }
     
-    
-
     // Nav Bar Edit Button
     UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
     UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,editImage.size.width*.5, editImage.size.height*.5) ];
@@ -66,7 +68,7 @@
     self.navigationItem.leftBarButtonItem = barBackItem;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
     
-    
+    [super viewDidLoad];
 }
 
 -(void)back {
@@ -99,7 +101,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-        return [self.songsInPlaylist count];
+    id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [secInfo numberOfObjects];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,7 +116,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath row] == 0) {
+   if ([indexPath row] == 0) {
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -123,34 +126,25 @@
         return cell;
         
     } else {
-        
+    
         static NSString *SongsCellIdentifier = @"SongsCell";
-            
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier forIndexPath:indexPath];
-            
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SongsCellIdentifier];
-            //cell.accessoryType = UITableViewCellAccessoryDetailButton;
-        }
         
-        self.currentPlaylist = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.section];
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-        NSArray *sortedSongs = [self.currentPlaylist.songs sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-        Song *songForRow = [sortedSongs objectAtIndex:indexPath.row];
-        cell.textLabel.text = songForRow.title;
-        //cell.detailTextLabel = songForRow.artist;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
+        
+        Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        cell.textLabel.text = [song title];
+        cell.detailTextLabel.text = [song artist];
         
         cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
+        cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
         
-        cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
-        cell.detailTextLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
         cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
         
-        cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
+        cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-        
-    return cell;
+        return cell;
     }
 }
 
@@ -175,23 +169,28 @@
         [musicPlayer setNowPlayingItem:selectedItem];
         
         [musicPlayer play];
-        
-        /*
-        MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-        NSArray *songsList = [songsQuery items];
-        
-        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
-        
-        MPMediaItem *selectedItem = [[songsList objectAtIndex:selectedIndex] representativeItem];
-        
-        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-        
-        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
-        [musicPlayer setNowPlayingItem:selectedItem];
-        
-        [musicPlayer play];
-         */
     }
 }
 
+-(NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song" inManagedObjectContext:self.currentPlaylist.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"title" cacheName:@"Root"];
+    
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
+}
 @end

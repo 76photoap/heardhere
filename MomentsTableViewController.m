@@ -47,20 +47,30 @@
         CreateMomentViewController *addController = (CreateMomentViewController*)[segue destinationViewController];
         addController.momentDelegate = self;
         
-        //AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
         Playlist *newPlaylist = (Playlist *) [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.managedObjectContext];
         addController.currentPlaylist = newPlaylist;
     }
     
     if ([[segue identifier] isEqualToString:@"MomentSelected"]) {
-
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        Playlist *playlistSelected = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSLog(@"playlistSelected: %@", playlistSelected);
+        NSLog(@"playlistSelected songs: %@", playlistSelected.songs);
+        
+        DetailTableViewController *detailcontroller = [segue destinationViewController];
+        detailcontroller.currentPlaylist = playlistSelected;
+        detailcontroller.playlistTitle = playlistSelected.name;
+        
+        /*
         DetailTableViewController *detailcontroller = [segue destinationViewController];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
         
-        NSSet *currentPlaylistSongs = self.currentPlaylist.songs;
-        NSMutableArray *songsInPlaylistArray = [[NSMutableArray alloc] initWithCapacity:self.currentPlaylist.songs.count];
+        NSLog(@"log playlistspecified.songs: %@", playlistSpecified.songs);
+        NSSet *currentPlaylistSongs = playlistSpecified.songs;
+        NSMutableArray *songsInPlaylistArray = [[NSMutableArray alloc] initWithCapacity:playlistSpecified.songs.count];
         
         for (Song *song in currentPlaylistSongs) {
             [songsInPlaylistArray addObject:song.title];
@@ -70,6 +80,9 @@
         playlistSpecified = [songsInPlaylistArray objectAtIndex:selectedIndex];
         
         detailcontroller.currentPlaylist = playlistSpecified;
+         */
+        
+        
     }
 }
 
@@ -85,6 +98,9 @@
 - (void)viewDidLoad
 {
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = delegate.managedObjectContext;
 
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
@@ -182,7 +198,7 @@
         
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"name" cacheName:@"Root"];
         
     _fetchedResultsController.delegate = self;
     

@@ -7,18 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Playlist;
+#import "Playlist.h"
+#import "Song.h"
 
-@interface DetailTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
+@interface DetailTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 {
     UIButton *backButton;
 }
 
 @property NSString *playlistTitle;
 
-@property (nonatomic, retain) Playlist *currentPlaylist;
-@property (nonatomic, strong) NSSet *songsInPlaylist;
-//@property (nonatomic, strong) NSMutableArray *songsInPlaylistArray;
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) Playlist *currentPlaylist;
+@property (nonatomic, strong) Song *songInPlaylist;
+@property (nonatomic, strong) NSMutableArray *songsInPlaylistMutableArray;
+@property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @end
