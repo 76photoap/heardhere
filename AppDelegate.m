@@ -17,10 +17,59 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
+- (void)insertPlaylistWithPlaylistName:(NSString *)playlistName
+{
+    Playlist *playlist = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist"
+                                               inManagedObjectContext:self.managedObjectContext];
+    
+    playlist.name = playlistName;
+    
+    [self.managedObjectContext save:nil];
+}
 
+- (void)importCoreDataDefaultRoles {
+    
+    NSLog(@"Importing Core Data Default Values for Roles...");
+    [self insertPlaylistWithPlaylistName:@"Sample"];
+
+    NSLog(@"Importing Core Data Default Values for Roles Completed!");
+}
+- (void)setupFetchedResultsController
+{
+    // 1 - Decide what Entity you want
+    NSString *entityName = @"Playlist"; // Put your entity name here
+    NSLog(@"Setting up a Fetched Results Controller for the Entity named %@", entityName);
+    
+    // 2 - Request that Entity
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    
+    // 3 - Filter it if you want
+    //request.predicate = [NSPredicate predicateWithFormat:@"Person.name = Blah"];
+    
+    // 4 - Sort it if you want
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                                                     ascending:YES
+                                                                                      selector:@selector(localizedCaseInsensitiveCompare:)]];
+    // 5 - Fetch it
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                        managedObjectContext:self.managedObjectContext
+                                                                          sectionNameKeyPath:nil
+                                                                                   cacheName:nil];
+    [self.fetchedResultsController performFetch:nil];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self setupFetchedResultsController];
+    
+    if (![[self.fetchedResultsController fetchedObjects] count] > 0 ) {
+        NSLog(@"!!!!! ~~> There's nothing in the database so defaults will be inserted");
+        [self importCoreDataDefaultRoles];
+    }
+    else {
+        NSLog(@"There's stuff in the database so skipping the import of default data");
+    }
     
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     /*

@@ -61,28 +61,6 @@
         DetailTableViewController *detailcontroller = [segue destinationViewController];
         detailcontroller.currentPlaylist = playlistSelected;
         detailcontroller.playlistTitle = playlistSelected.name;
-        
-        /*
-        DetailTableViewController *detailcontroller = [segue destinationViewController];
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
-        Playlist *playlistSpecified = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        NSLog(@"log playlistspecified.songs: %@", playlistSpecified.songs);
-        NSSet *currentPlaylistSongs = playlistSpecified.songs;
-        NSMutableArray *songsInPlaylistArray = [[NSMutableArray alloc] initWithCapacity:playlistSpecified.songs.count];
-        
-        for (Song *song in currentPlaylistSongs) {
-            [songsInPlaylistArray addObject:song.title];
-        }
-        
-        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
-        playlistSpecified = [songsInPlaylistArray objectAtIndex:selectedIndex];
-        
-        detailcontroller.currentPlaylist = playlistSpecified;
-         */
-        
-        
     }
 }
 
@@ -135,8 +113,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [secInfo numberOfObjects];
+    /*
+     id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    if (![sectionInfo numberOfObjects]) {
+        return 1;
+    } else {
+        return [sectionInfo numberOfObjects];
+    }
+     */
+    return 1;
 }
 
 
