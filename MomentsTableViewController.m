@@ -113,15 +113,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
+    
      id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     if (![sectionInfo numberOfObjects]) {
         return 1;
     } else {
         return [sectionInfo numberOfObjects];
     }
-     */
-    return 1;
+     
+    //return 1;
 }
 
 

@@ -157,8 +157,63 @@
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
-        //NSIndexPath *rowToSelect = [self.tableView indexPathForSelectedRow];
-        //Playlist *playlistQuery = (self.playlistArray)[rowToSelect.row];
+        NSIndexPath *rowSelected = [self.tableView indexPathForSelectedRow];
+        Song *song = (Song*)[self.fetchedResultsController objectAtIndexPath:rowSelected];
+        NSLog(@"songInPlaylist: %@", song);
+        NSLog(@"songInPlaylist.title: %@", song.title);
+        NSLog(@"songInPlaylist.persistentID: %@", song.persistentID);
+        
+        MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:song.title forProperty:MPMediaItemPropertyTitle];
+        
+        MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
+        [mySongQuery addFilterPredicate:predicate];
+        [MPMediaQuery songsQuery];
+        
+        NSArray *songsList = [mySongQuery items];
+        NSLog(@"count: %lu", (unsigned long)[songsList count]);
+        MPMediaItem *selectedItem = [[songsList objectAtIndex:0] representativeItem];
+        
+        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        //[musicPlayer setQueueWithQuery:mySongQuery];
+        NSLog(@"mySongQuery = %@", mySongQuery);
+        
+        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[mySongQuery items]]];
+        [musicPlayer setNowPlayingItem:selectedItem];
+        
+        [musicPlayer play];
+        
+        /*
+        Song *song = [self.fetchedResultsController objectAtIndexPath:rowSelected];
+        NSLog(@"persistant id for song: %@", song.persistentID);
+        NSLog(@"name for song: %@", song.title);
+        
+        MPMediaQuery *query = [MPMediaQuery songsQuery];
+        MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:song.persistentID forProperty:MPMediaItemPropertyPersistentID];
+        [query addFilterPredicate:predicate];
+        NSArray *songsList = [query items];
+        
+        MPMediaItemCollection *col = [[MPMediaItemCollection alloc] initWithItems:songsList];
+        
+        NSUInteger indexOfTheObject = [songsList indexOfObject:predicate];
+        
+        MPMediaItem *selectedItem = [[songsList objectAtIndex:indexOfTheObject] representativeItem];
+        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        
+        [musicPlayer setQueueWithItemCollection:col];
+        [musicPlayer setNowPlayingItem:selectedItem];
+        
+        [musicPlayer play];
+        */
+    
+        /*
+        for (son in songsList) {
+            if (song.persistentID == )
+        }
+        */
+        
+        //MPMediaItem *selectedItem = [[songsList.array.]]
+        /*
+        
         MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
         NSArray *songsList = [songsQuery items];
         
@@ -172,6 +227,7 @@
         [musicPlayer setNowPlayingItem:selectedItem];
         
         [musicPlayer play];
+        */
     }
 }
 
