@@ -90,19 +90,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    /*
     NSInteger count = [[self.fetchedResultsController sections] count];
-    
-	if (count == 0) {
-		count = 1;
-	}
-	
-    return count;
+        
+        if (count == 0) {
+            count = 1;
+        }
+        
+        return count;
+     */
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [secInfo numberOfObjects];
+    return [secInfo numberOfObjects] + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

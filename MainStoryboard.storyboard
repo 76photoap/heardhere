@@ -454,7 +454,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="120" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0EH-yt-G9T">
+                                        <imageView userInteractionEnabled="NO" tag="120" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ddme_binocs.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="0EH-yt-G9T">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -508,6 +508,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ddme_binocs.jpg" width="93.913040161132812" height="31.304347991943359"/>
         <image name="ddplayer-button-back.png" width="208" height="151"/>
         <image name="ddplayer-button-forward.png" width="208" height="151"/>
         <image name="ddplayer-button-play.png" width="208" height="151"/>
