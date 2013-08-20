@@ -163,10 +163,13 @@
         NSLog(@"songInPlaylist.title: %@", song.title);
         NSLog(@"songInPlaylist.persistentID: %@", song.persistentID);
         
-        MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:song.title forProperty:MPMediaItemPropertyTitle];
+        MPMediaPropertyPredicate *predicateTitle = [MPMediaPropertyPredicate predicateWithValue:song.title forProperty:MPMediaItemPropertyTitle];
+        
+        MPMediaPropertyPredicate *predicateArtist = [MPMediaPropertyPredicate predicateWithValue:song.artist forProperty:MPMediaItemPropertyArtist];
         
         MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
-        [mySongQuery addFilterPredicate:predicate];
+        [mySongQuery addFilterPredicate:predicateTitle];
+        [mySongQuery addFilterPredicate:predicateArtist];
         [MPMediaQuery songsQuery];
         
         NSArray *songsList = [mySongQuery items];
