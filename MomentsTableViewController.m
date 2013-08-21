@@ -55,8 +55,6 @@
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Playlist *playlistSelected = (Playlist *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-        NSLog(@"playlistSelected: %@", playlistSelected);
-        NSLog(@"playlistSelected songs: %@", playlistSelected.songs);
         
         DetailTableViewController *detailcontroller = [segue destinationViewController];
         detailcontroller.currentPlaylist = playlistSelected;
@@ -177,6 +175,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
+    fetchRequest.fetchBatchSize = 20;
         
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];

@@ -90,22 +90,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    /*
+    
     NSInteger count = [[self.fetchedResultsController sections] count];
         
         if (count == 0) {
             count = 1;
         }
-        
+    
+    NSLog(@"numberofsectionsinttableview: %ld", (long)count);
         return count;
-     */
-    return 1;
+     
+    //return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [secInfo numberOfObjects] + 1;
+    NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
+    return [secInfo numberOfObjects];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -167,9 +169,12 @@
         
         MPMediaPropertyPredicate *predicateArtist = [MPMediaPropertyPredicate predicateWithValue:song.artist forProperty:MPMediaItemPropertyArtist];
         
+       // MPMediaPropertyPredicate *predicatePersistentID = [MPMediaPropertyPredicate predicateWithValue:song.persistentID forProperty:MPMediaItemPropertyPersistentID];
+        
         MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
         [mySongQuery addFilterPredicate:predicateTitle];
         [mySongQuery addFilterPredicate:predicateArtist];
+        //[mySongQuery addFilterPredicate:predicatePersistentID];
         [MPMediaQuery songsQuery];
         
         NSArray *songsList = [mySongQuery items];
@@ -177,60 +182,13 @@
         MPMediaItem *selectedItem = [[songsList objectAtIndex:0] representativeItem];
         
         MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-        //[musicPlayer setQueueWithQuery:mySongQuery];
+    
         NSLog(@"mySongQuery = %@", mySongQuery);
         
         [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[mySongQuery items]]];
         [musicPlayer setNowPlayingItem:selectedItem];
         
         [musicPlayer play];
-        
-        /*
-        Song *song = [self.fetchedResultsController objectAtIndexPath:rowSelected];
-        NSLog(@"persistant id for song: %@", song.persistentID);
-        NSLog(@"name for song: %@", song.title);
-        
-        MPMediaQuery *query = [MPMediaQuery songsQuery];
-        MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:song.persistentID forProperty:MPMediaItemPropertyPersistentID];
-        [query addFilterPredicate:predicate];
-        NSArray *songsList = [query items];
-        
-        MPMediaItemCollection *col = [[MPMediaItemCollection alloc] initWithItems:songsList];
-        
-        NSUInteger indexOfTheObject = [songsList indexOfObject:predicate];
-        
-        MPMediaItem *selectedItem = [[songsList objectAtIndex:indexOfTheObject] representativeItem];
-        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-        
-        [musicPlayer setQueueWithItemCollection:col];
-        [musicPlayer setNowPlayingItem:selectedItem];
-        
-        [musicPlayer play];
-        */
-    
-        /*
-        for (son in songsList) {
-            if (song.persistentID == )
-        }
-        */
-        
-        //MPMediaItem *selectedItem = [[songsList.array.]]
-        /*
-        
-        MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-        NSArray *songsList = [songsQuery items];
-        
-        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
-        
-        MPMediaItem *selectedItem = [[songsList objectAtIndex:selectedIndex] representativeItem];
-        
-        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-        
-        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
-        [musicPlayer setNowPlayingItem:selectedItem];
-        
-        [musicPlayer play];
-        */
     }
 }
 
@@ -248,8 +206,9 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
+    fetchRequest.fetchBatchSize = 20;
     
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"title" cacheName:@"Root"];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
     _fetchedResultsController.delegate = self;
     
