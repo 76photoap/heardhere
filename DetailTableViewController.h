@@ -19,7 +19,8 @@
 
 @property (nonatomic, strong) Playlist *currentPlaylist;
 @property (nonatomic, strong) Song *songInPlaylist;
-@property (nonatomic, strong) NSMutableArray *songsInPlaylistMutableArray;
+@property (nonatomic, strong) NSArray *songsInPlaylistArrayTitles;
+@property (nonatomic, strong) NSArray *songsInPlaylistArrayArtists;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 

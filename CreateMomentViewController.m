@@ -67,6 +67,8 @@
     self.fetchedResultsController = nil;
 }
 
+#pragma DatePicker methods
+
 -(void)setupDatePicker
 {
     // Date Picker
@@ -122,6 +124,12 @@
 -(void)donePressedFromDate {
     self.fromDateLabel.text = [fromDatePicker dateHasChanged:fromDatePicker.myDateString];
     
+    NSDateFormatter *dateFormatterFromDate = [[NSDateFormatter alloc] init];
+    [dateFormatterFromDate setDateStyle:NSDateFormatterMediumStyle];
+    self.fromDate = [dateFormatterFromDate dateFromString:self.fromDateLabel.text];
+    
+    [self.currentPlaylist setFromDatePlaylist:fromDate];
+    
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
     self.fromDatePicker.transform = CGAffineTransformMakeTranslation(0, 216);
@@ -141,6 +149,12 @@
 
 -(void)donePressedFromTime {
     self.fromTimeLabel.text = [fromTimePicker dateHasChanged:fromTimePicker.myDateString];
+    
+    NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
+    [dateFormatterFromTime setDateFormat:@"h:mm a"];
+    self.fromTime = [dateFormatterFromTime dateFromString:self.fromTimeLabel.text];
+    
+    [self.currentPlaylist setFromTimePlaylist:fromTime];
     
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
@@ -163,6 +177,12 @@
 -(void)donePressedUntilTime {
     self.untilTimeLabel.text = [untilTimePicker dateHasChanged:untilTimePicker.myDateString];
     
+    NSDateFormatter *dateFormatterUntilTime = [[NSDateFormatter alloc] init];
+    [dateFormatterUntilTime setDateFormat:@"h:mm a"];
+    self.untilTime = [dateFormatterUntilTime dateFromString:self.untilTimeLabel.text];
+    
+    [self.currentPlaylist setUntilTimePlaylist:untilTime];
+    
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
     self.untilTimePicker.transform = CGAffineTransformMakeTranslation(0, 216);
@@ -184,6 +204,12 @@
 -(void)donePressedUntilDate {
     self.untilDateLabel.text = [untilDatePicker dateHasChanged:untilDatePicker.myDateString];
     
+    NSDateFormatter *dateFormatterUntilDate = [[NSDateFormatter alloc] init];
+    [dateFormatterUntilDate setDateStyle:NSDateFormatterMediumStyle];
+    self.untilDate = [dateFormatterUntilDate dateFromString:self.untilDateLabel.text];
+    
+    [self.currentPlaylist setUntilDatePlaylist:untilDate];
+    
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
     self.untilDatePicker.transform = CGAffineTransformMakeTranslation(0, 216);
@@ -202,6 +228,8 @@
     [UIView commitAnimations];
 }
 
+#pragma Fetched Results Controller
+
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (_fetchedResultsController != nil) {
@@ -216,11 +244,16 @@
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
+    NSPredicate *pred;
+    pred = [NSPredicate predicateWithFormat:@"listenDate >= %@", self.currentPlaylist.fromDatePlaylist];
+    [fetchRequest setPredicate:pred];
+    
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.currentPlaylist.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
     self.fetchedResultsController = aFetchedResultsController;
     
     NSError *error = nil;
+    
     if (![self.fetchedResultsController performFetch:&error]) {
         NSLog(@"Core data error %@, %@", error, [error userInfo]);
         abort();
@@ -228,9 +261,7 @@
     
     NSArray *objects = [self.songObject.managedObjectContext executeFetchRequest:fetchRequest  error:&error];
     self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[objects valueForKey:@"title"]];
-    [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
-     
-    NSLog(@"%@", _fetchedResultsController);
+
     return _fetchedResultsController;
 }
 
@@ -240,49 +271,20 @@
 }
 
 - (IBAction)save:(id)sender
-{    
-
+{
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
         NSLog(@"Error! %@",error);
         abort();
     }
-    NSLog(@"fetched results controller: %@", self.fetchedResultsController);
-
-    NSDateFormatter *dateFormatterFromDate = [[NSDateFormatter alloc] init];
-    [dateFormatterFromDate setDateStyle:NSDateFormatterMediumStyle];
-    self.fromDate = [dateFormatterFromDate dateFromString:self.fromDateLabel.text];
-    
-    NSDateFormatter *dateFormatterUntilDate = [[NSDateFormatter alloc] init];
-    [dateFormatterUntilDate setDateStyle:NSDateFormatterMediumStyle];
-    self.untilDate = [dateFormatterUntilDate dateFromString:self.untilDateLabel.text];
-    
-    NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
-    [dateFormatterFromTime setDateFormat:@"h:mm a"];
-    self.fromTime = [dateFormatterFromTime dateFromString:self.fromTimeLabel.text];
-    
-    NSDateFormatter *dateFormatterUntilTime = [[NSDateFormatter alloc] init];
-    [dateFormatterUntilTime setDateFormat:@"h:mm a"];
-    self.untilTime = [dateFormatterUntilTime dateFromString:self.untilTimeLabel.text];
-    
-    NSLog(@"%@", [self.fetchedResultsController fetchedObjects]);
     
     self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[self.fetchedResultsController fetchedObjects]];
-
     
     [self.currentPlaylist setName:momentNameTextField.text];
-    [self.currentPlaylist setPhoto:playlistImageViewThumb.image];
-    [self.currentPlaylist setFromDatePlaylist:fromDate];
-    [self.currentPlaylist setFromTimePlaylist:fromTime];
-    [self.currentPlaylist setUntilDatePlaylist:untilDate];
-    [self.currentPlaylist setUntilTimePlaylist:untilTime];
     [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
+    NSLog(@"currentPlaylist info: %@", self.currentPlaylist);
     
-    NSLog(@"songs: %@", self.currentPlaylist.songs);
-
     [self.momentDelegate createMomentViewControllerDidSave];
 }
-
-
 
 @end

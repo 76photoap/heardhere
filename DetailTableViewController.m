@@ -17,7 +17,8 @@
 
 @synthesize currentPlaylist;
 @synthesize songInPlaylist;
-@synthesize songsInPlaylistMutableArray;
+@synthesize songsInPlaylistArrayArtists;
+@synthesize songsInPlaylistArrayTitles;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 
@@ -32,6 +33,16 @@
 
 - (void)viewDidLoad
 {
+    /*
+    NSSortDescriptor *sortDescriptorTitle = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSArray *sortDescriptorsTitles = [[NSArray alloc] initWithObjects:sortDescriptorTitle, nil];
+    self.songsInPlaylistArrayTitles = [self.currentPlaylist.songs sortedArrayUsingDescriptors:sortDescriptorsTitles];
+
+    NSSortDescriptor *sortDescriptorArtist = [[NSSortDescriptor alloc] initWithKey:@"artist" ascending:NO];
+    NSArray *sortDescriptorsArtists = [[NSArray alloc] initWithObjects:sortDescriptorArtist, nil];
+    self.songsInPlaylistArrayArtists = [self.currentPlaylist.songs sortedArrayUsingDescriptors:sortDescriptorsArtists];
+    */
+    
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = delegate.managedObjectContext;
     
@@ -90,7 +101,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     NSInteger count = [[self.fetchedResultsController sections] count];
         
         if (count == 0) {
@@ -99,8 +109,8 @@
     
     NSLog(@"numberofsectionsinttableview: %ld", (long)count);
         return count;
-     
-    //return 2;
+
+    return [self.songsInPlaylistArrayArtists count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -137,6 +147,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
         
         Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
         cell.textLabel.text = [song title];
         cell.detailTextLabel.text = [song artist];
         
@@ -192,12 +203,13 @@
     }
 }
 
+
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    
+
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song" inManagedObjectContext:self.currentPlaylist.managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -208,10 +220,17 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     fetchRequest.fetchBatchSize = 20;
     
+    NSLog(@"self.currentPlaylist.songs:::: %@", self.currentPlaylist.songs);
+    NSPredicate *pred;
+    pred = [NSPredicate predicateWithFormat:@"playlist CONTAINS[c] %@", self.currentPlaylist];
+    [fetchRequest setPredicate:pred];
+    
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
+     
 }
+
 @end
