@@ -14,7 +14,7 @@
 
 @implementation CreateMomentViewController
 
-@synthesize momentNameTextField, momentDelegate, playlistImageViewThumb, fromDateLabel, untilDateLabel, fromTimeLabel, untilTimeLabel, fromDatePicker, fromTimePicker, untilTimePicker, untilDatePicker, managedObjectContext, untilDate, untilTime, fromDate, fromTime,fetchedResultsController = _fetchedResultsController;
+@synthesize momentNameTextField, momentDelegate, playlistImageViewThumb, fromDateLabel, untilDateLabel, fromTimeLabel, untilTimeLabel, fromDatePicker, fromTimePicker, untilTimePicker, untilDatePicker, managedObjectContext,fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad
 {
@@ -51,11 +51,6 @@
     self.fromTimePicker = nil;
     self.untilTimePicker = nil;
     
-    self.fromDate = nil;
-    self.untilDate = nil;
-    self.fromTime = nil;
-    self.untilTime = nil;
-    
     self.songsToBeInNewPlaylistSet = nil;
     
     self.momentDelegate = nil;
@@ -74,18 +69,12 @@
     // Date Picker
     self.fromDateLabel.userInteractionEnabled = YES;
     self.untilDateLabel.userInteractionEnabled = YES;
-    self.fromTimeLabel.userInteractionEnabled = YES;
-    self.untilTimeLabel.userInteractionEnabled = YES;
     
     UITapGestureRecognizer *fromDateTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressedFromDate:)];
     UITapGestureRecognizer *untilDateTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressedUntilDate:)];
-    UITapGestureRecognizer *fromTimeTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressedFromTime:)];
-    UITapGestureRecognizer *untilTimeTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressedUntilTime:)];
     
     [self.fromDateLabel addGestureRecognizer:fromDateTapRecognizer];
-    [self.fromTimeLabel addGestureRecognizer:fromTimeTapRecognizer];
     [self.untilDateLabel addGestureRecognizer:untilDateTapRecognizer];
-    [self.untilTimeLabel addGestureRecognizer:untilTimeTapRecognizer];
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
@@ -115,25 +104,25 @@
     untilTimePicker.hidden = YES;
     [untilTimePicker setMode:UIDatePickerModeTime];
     
-    self.fromDateLabel.text = @"From Date";
-    self.fromTimeLabel.text = @"From Time";
-    self.untilDateLabel.text = @"Until Date";
-    self.untilTimeLabel.text = @"Until Time";
+    self.fromDateLabel.text = @"From ";
+    self.fromTimeLabel.text = @"";
+    self.untilDateLabel.text = @"Until";
+    self.untilTimeLabel.text = @"";
 }
 
 -(void)donePressedFromDate {
     self.fromDateLabel.text = [fromDatePicker dateHasChanged:fromDatePicker.myDateString];
+    NSLog(@"self.fromDateLabel.text: %@", self.fromDateLabel.text);
     
     NSDateFormatter *dateFormatterFromDate = [[NSDateFormatter alloc] init];
-    [dateFormatterFromDate setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatterFromDate setDateFormat:@"yyyy-MM-dd"];
     self.fromDate = [dateFormatterFromDate dateFromString:self.fromDateLabel.text];
-    
-    [self.currentPlaylist setFromDatePlaylist:fromDate];
-    
+
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
     self.fromDatePicker.transform = CGAffineTransformMakeTranslation(0, 216);
     [UIView commitAnimations];
+    [self buttonPressedFromTime:self];
 }
 
 -(void)buttonPressedFromDate:(id)sender {
@@ -150,16 +139,30 @@
 -(void)donePressedFromTime {
     self.fromTimeLabel.text = [fromTimePicker dateHasChanged:fromTimePicker.myDateString];
     
+    NSArray *fromStringsArray = [[NSArray alloc] initWithObjects: self.fromDateLabel.text, self.fromTimeLabel.text, nil];
+    NSString *fromStrings = [fromStringsArray componentsJoinedByString:@" "];
+    NSLog(@"fromStrings %@", fromStrings);
+
     NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
-    [dateFormatterFromTime setDateFormat:@"h:mm a"];
-    self.fromTime = [dateFormatterFromTime dateFromString:self.fromTimeLabel.text];
+    [dateFormatterFromTime setDateFormat:@"yyyy-MM-dd HH:mm"];
+    self.fromTime = [dateFormatterFromTime dateFromString:fromStrings];
+    NSLog(@"self.fromTime: %@", self.fromTime);
     
-    [self.currentPlaylist setFromTimePlaylist:fromTime];
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:self.fromTime];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:self.fromTime];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:self.fromTime];
+    NSLog(@"destinationDate: %@", destinationDate);
+    
+    [self.currentPlaylist setFromDatePlaylist:destinationDate];
     
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
     self.fromTimePicker.transform = CGAffineTransformMakeTranslation(0, 216);
     [UIView commitAnimations];
+    
 }
 
 -(void)buttonPressedFromTime:(id)sender {
@@ -174,14 +177,54 @@
     [UIView commitAnimations];
 }
 
+-(void)donePressedUntilDate {
+    self.untilDateLabel.text = [untilDatePicker dateHasChanged:untilDatePicker.myDateString];
+    
+    NSDateFormatter *dateFormatterUntilDate = [[NSDateFormatter alloc] init];
+    [dateFormatterUntilDate setDateFormat:@"yyyy-MM-dd"];
+    self.untilDate = [dateFormatterUntilDate dateFromString:self.untilDateLabel.text];
+
+    [UIView beginAnimations:@"SlideOutPicker" context:nil];
+    [UIView setAnimationDuration:0.5];
+    self.untilDatePicker.transform = CGAffineTransformMakeTranslation(0, 216);
+    [UIView commitAnimations];
+    
+    [self buttonPressedUntilTime:self];
+}
+
+-(void)buttonPressedUntilDate:(id)sender {
+    if (momentNameTextField) {
+        [self.momentNameTextField resignFirstResponder];
+    }
+    
+    untilDatePicker.hidden = NO;
+    [UIView beginAnimations:@"SlideInPicker" context:nil];
+    [UIView setAnimationDuration:0.5];
+    untilDatePicker.transform = CGAffineTransformMakeTranslation(0, -216);
+    [UIView commitAnimations];
+}
+
 -(void)donePressedUntilTime {
     self.untilTimeLabel.text = [untilTimePicker dateHasChanged:untilTimePicker.myDateString];
     
-    NSDateFormatter *dateFormatterUntilTime = [[NSDateFormatter alloc] init];
-    [dateFormatterUntilTime setDateFormat:@"h:mm a"];
-    self.untilTime = [dateFormatterUntilTime dateFromString:self.untilTimeLabel.text];
+    NSArray *untilStringsArray = [[NSArray alloc] initWithObjects: self.untilDateLabel.text, self.untilTimeLabel.text, nil];
+    NSString *untilStrings = [untilStringsArray componentsJoinedByString:@" "];
+    NSLog(@"untilStrings %@", untilStrings);
     
-    [self.currentPlaylist setUntilTimePlaylist:untilTime];
+    NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
+    [dateFormatterFromTime setDateFormat:@"yyyy-MM-dd HH:mm"];
+    self.untilTime = [dateFormatterFromTime dateFromString:untilStrings];
+    NSLog(@"self.untilTime: %@", self.untilTime);
+    
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:self.untilTime];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:self.untilTime];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:self.untilTime];
+    NSLog(@"destinationDate: %@", destinationDate);
+    
+    [self.currentPlaylist setUntilDatePlaylist:destinationDate];
     
     [UIView beginAnimations:@"SlideOutPicker" context:nil];
     [UIView setAnimationDuration:0.5];
@@ -198,33 +241,6 @@
     [UIView beginAnimations:@"SlideInPicker" context:nil];
     [UIView setAnimationDuration:0.5];
     untilTimePicker.transform = CGAffineTransformMakeTranslation(0, -216);
-    [UIView commitAnimations];
-}
-
--(void)donePressedUntilDate {
-    self.untilDateLabel.text = [untilDatePicker dateHasChanged:untilDatePicker.myDateString];
-    
-    NSDateFormatter *dateFormatterUntilDate = [[NSDateFormatter alloc] init];
-    [dateFormatterUntilDate setDateStyle:NSDateFormatterMediumStyle];
-    self.untilDate = [dateFormatterUntilDate dateFromString:self.untilDateLabel.text];
-    
-    [self.currentPlaylist setUntilDatePlaylist:untilDate];
-    
-    [UIView beginAnimations:@"SlideOutPicker" context:nil];
-    [UIView setAnimationDuration:0.5];
-    self.untilDatePicker.transform = CGAffineTransformMakeTranslation(0, 216);
-    [UIView commitAnimations];
-}
-
--(void)buttonPressedUntilDate:(id)sender {
-    if (momentNameTextField) {
-    [self.momentNameTextField resignFirstResponder];
-    }
-    
-    untilDatePicker.hidden = NO;
-    [UIView beginAnimations:@"SlideInPicker" context:nil];
-    [UIView setAnimationDuration:0.5];
-    untilDatePicker.transform = CGAffineTransformMakeTranslation(0, -216);
     [UIView commitAnimations];
 }
 
@@ -245,7 +261,8 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     NSPredicate *pred;
-    pred = [NSPredicate predicateWithFormat:@"listenDate >= %@", self.currentPlaylist.fromDatePlaylist];
+    pred = [NSPredicate predicateWithFormat:@"(listenDate >= %@) AND (listenDate <= %@)", self.currentPlaylist.fromDatePlaylist, self.currentPlaylist.untilDatePlaylist];
+    //pred = [NSPredicate predicateWithFormat:@"listenDate >= %@", self.currentPlaylist.fromDatePlaylist];
     [fetchRequest setPredicate:pred];
     
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.currentPlaylist.managedObjectContext sectionNameKeyPath:nil cacheName:nil];

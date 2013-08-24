@@ -135,24 +135,57 @@
         
         AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
         Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
-    
+        
+        // Date
+        NSDate* sourceDate = [NSDate date];
+        NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+        NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+        NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+        NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+        NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+        
+        /*
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *stringFromDate = [dateFormatter stringFromDate:destinationDate];
+        
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd"];
+        NSDate *dateFromStrin = [dateFormat dateFromString:stringFromDate];
+        NSLog(@"dateFromStrin %@", dateFromStrin);
+
+        // Time
+        unsigned hourAndMinuteFlags = NSHourCalendarUnit | NSMinuteCalendarUnit;
+        NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        [calendar setTimeZone:sourceTimeZone];
+        NSDateComponents* travelDateTimeComponents = [calendar components:hourAndMinuteFlags fromDate:destinationDate];
+        NSString *hours = [NSString stringWithFormat:@"%02i", [travelDateTimeComponents hour]];
+        NSString *minutes = [NSString stringWithFormat:@"%02i", [travelDateTimeComponents minute]];
+        NSString *time = [NSString stringWithFormat:@"%@:%@", hours, minutes];
+         */
+        
+        // send to DB
         [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
         [songToSaveInDB setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
         [songToSaveInDB setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
         [songToSaveInDB setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
         //[self.songToSaveInDB setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
         //[self.songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
-        [songToSaveInDB setListenDate:[NSDate date]];
+        [songToSaveInDB setListenDate:destinationDate];
+        //[songToSaveInDB setListenTime:time];
         [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
         [songToSaveInDB.managedObjectContext save:nil];
     
+        // Log
         NSLog(@"artist %@", [songToSaveInDB artist]);
         NSLog(@"album %@", [songToSaveInDB album]);
         NSLog(@"genre %@", [songToSaveInDB genre]);
         NSLog(@"title %@", [songToSaveInDB title]);
         NSLog(@"date %@", [songToSaveInDB listenDate]);
+        NSLog(@"time %@", [songToSaveInDB listenTime]);
         NSLog(@"persistent id %@", [songToSaveInDB persistentID]);
-        
     }
 }
 

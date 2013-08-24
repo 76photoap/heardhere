@@ -33,16 +33,6 @@
 
 - (void)viewDidLoad
 {
-    /*
-    NSSortDescriptor *sortDescriptorTitle = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-    NSArray *sortDescriptorsTitles = [[NSArray alloc] initWithObjects:sortDescriptorTitle, nil];
-    self.songsInPlaylistArrayTitles = [self.currentPlaylist.songs sortedArrayUsingDescriptors:sortDescriptorsTitles];
-
-    NSSortDescriptor *sortDescriptorArtist = [[NSSortDescriptor alloc] initWithKey:@"artist" ascending:NO];
-    NSArray *sortDescriptorsArtists = [[NSArray alloc] initWithObjects:sortDescriptorArtist, nil];
-    self.songsInPlaylistArrayArtists = [self.currentPlaylist.songs sortedArrayUsingDescriptors:sortDescriptorsArtists];
-    */
-    
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = delegate.managedObjectContext;
     
@@ -116,7 +106,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
+        NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
     return [secInfo numberOfObjects];
 }
 
@@ -220,7 +210,6 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     fetchRequest.fetchBatchSize = 20;
     
-    NSLog(@"self.currentPlaylist.songs:::: %@", self.currentPlaylist.songs);
     NSPredicate *pred;
     pred = [NSPredicate predicateWithFormat:@"playlist CONTAINS[c] %@", self.currentPlaylist];
     [fetchRequest setPredicate:pred];
@@ -230,7 +219,6 @@
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
-     
 }
 
 @end

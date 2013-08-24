@@ -50,6 +50,7 @@
         
         self.picker = picker;
         picker.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
+        self.picker.timeZone = [NSTimeZone localTimeZone];
         
         self.autoresizesSubviews = YES;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
@@ -66,10 +67,11 @@
     self.myDateString = [[NSString alloc] init];
     
     if (self.picker.datePickerMode == UIDatePickerModeDate) {
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        //[formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
 
     } else if (self.picker.datePickerMode == UIDatePickerModeTime) {
-        [formatter setDateFormat:@"h:mm a"];
+        [formatter setDateFormat:@"HH:mm"];
     }
     self.myDateString = [formatter stringFromDate:self.picker.date];
     
