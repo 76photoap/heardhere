@@ -1,11 +1,3 @@
-//
-//  Detail.m
-//  Music
-//
-//  Created by Dianna Mertz on 11/5/12.
-//  Copyright (c) 2012 Dianna Mertz. All rights reserved.
-//
-
 #import "DetailTableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "AppDelegate.h"
@@ -81,10 +73,10 @@
     [super didReceiveMemoryWarning];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
-													name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-												  object: [MPMusicPlayerController iPodMusicPlayer]];
+                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                                                  object: [MPMusicPlayerController iPodMusicPlayer]];
     
-	[[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
+    [[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
 #pragma mark - Table view data source
@@ -92,21 +84,21 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger count = [[self.fetchedResultsController sections] count];
-        
-        if (count == 0) {
-            count = 1;
-        }
+    
+    if (count == 0) {
+        count = 1;
+    }
     
     NSLog(@"numberofsectionsinttableview: %ld", (long)count);
-        return count;
-
+    return count;
+    
     return [self.songsInPlaylistArrayArtists count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-        NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
+    NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
     return [secInfo numberOfObjects] + 1;
 }
 
@@ -121,13 +113,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   if ([indexPath row] == 0) {
+    if ([indexPath row] == 0) {
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         return cell;
         
     } else {
-    
+        
         static NSString *SongsCellIdentifier = @"SongsCell";
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier forIndexPath:indexPath];
@@ -158,34 +150,33 @@
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
-        NSIndexPath *rowSelected = [self.tableView indexPathForSelectedRow];
-        NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(rowSelected.row - 1) inSection:0];
-        Song *song = (Song*)[self.fetchedResultsController objectAtIndexPath:indexPathNew];
-        NSLog(@"songInPlaylist: %@", song);
-        NSLog(@"songInPlaylist.title: %@", song.title);
-        NSLog(@"songInPlaylist.persistentID: %@", song.persistentID);
+        //NSIndexPath *rowSelected = [self.tableView indexPathForSelectedRow];
+        //NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(rowSelected.row-1) inSection:0];
+        //Song *song = (Song*)[self.fetchedResultsController objectAtIndexPath:indexPathNew];
+        NSArray *allSongs = [self.fetchedResultsController fetchedObjects];
+        NSMutableArray *allSongsMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         
-        MPMediaPropertyPredicate *predicateTitle = [MPMediaPropertyPredicate predicateWithValue:song.title forProperty:MPMediaItemPropertyTitle];
+        for (songInPlaylist in allSongs) {
+            MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
+            MPMediaPropertyPredicate *predicateTitle = [MPMediaPropertyPredicate predicateWithValue:songInPlaylist.title forProperty:MPMediaItemPropertyTitle];
+            MPMediaPropertyPredicate *predicateArtist = [MPMediaPropertyPredicate predicateWithValue:songInPlaylist.artist forProperty:MPMediaItemPropertyArtist];
+            [mySongQuery addFilterPredicate:predicateTitle];
+            [mySongQuery addFilterPredicate:predicateArtist];
+            NSArray *songsList = [mySongQuery items];
+            [allSongsMutable addObject:[songsList objectAtIndex:0]];
+        }
         
-        MPMediaPropertyPredicate *predicateArtist = [MPMediaPropertyPredicate predicateWithValue:song.artist forProperty:MPMediaItemPropertyArtist];
+        NSLog(@"allSongsMutable outside: %@", allSongsMutable);
         
-       // MPMediaPropertyPredicate *predicatePersistentID = [MPMediaPropertyPredicate predicateWithValue:song.persistentID forProperty:MPMediaItemPropertyPersistentID];
+        MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
         
-        MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
-        [mySongQuery addFilterPredicate:predicateTitle];
-        [mySongQuery addFilterPredicate:predicateArtist];
-        //[mySongQuery addFilterPredicate:predicatePersistentID];
-        [MPMediaQuery songsQuery];
+        int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         
-        NSArray *songsList = [mySongQuery items];
-        NSLog(@"count: %lu", (unsigned long)[songsList count]);
-        MPMediaItem *selectedItem = [[songsList objectAtIndex:0] representativeItem];
+        MPMediaItem *selectedItem = [[allSongsMutable objectAtIndex:selectedIndex-1] representativeItem];
         
         MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-    
-        NSLog(@"mySongQuery = %@", mySongQuery);
-        
-        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[mySongQuery items]]];
+
+        [musicPlayer setQueueWithItemCollection:moment];
         [musicPlayer setNowPlayingItem:selectedItem];
         
         [musicPlayer play];
@@ -198,7 +189,7 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song" inManagedObjectContext:self.currentPlaylist.managedObjectContext];
     [fetchRequest setEntity:entity];
