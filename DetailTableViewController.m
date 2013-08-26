@@ -107,7 +107,7 @@
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
         NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
-    return [secInfo numberOfObjects];
+    return [secInfo numberOfObjects] + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,19 +124,17 @@
    if ([indexPath row] == 0) {
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        UIImageView *playlistImage = (UIImageView *)[cell viewWithTag:120];
-        //playlistImage.image = playlist.photo;
-        playlistImage.image = [UIImage imageNamed:@"ddme_binocs.jpg"];
         return cell;
         
     } else {
     
         static NSString *SongsCellIdentifier = @"SongsCell";
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SongsCellIdentifier forIndexPath:indexPath];
         
-        Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(indexPath.row - 1) inSection:0];
+        
+        Song *song = [self.fetchedResultsController objectAtIndexPath:indexPathNew];
         
         cell.textLabel.text = [song title];
         cell.detailTextLabel.text = [song artist];

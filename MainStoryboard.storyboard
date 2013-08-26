@@ -445,7 +445,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="x6c-S3-SFp" kind="push" identifier="NewSong" id="bCV-dx-nkL"/>
                                 </connections>
