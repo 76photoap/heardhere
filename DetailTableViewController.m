@@ -159,7 +159,8 @@
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
         NSIndexPath *rowSelected = [self.tableView indexPathForSelectedRow];
-        Song *song = (Song*)[self.fetchedResultsController objectAtIndexPath:rowSelected];
+        NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(rowSelected.row - 1) inSection:0];
+        Song *song = (Song*)[self.fetchedResultsController objectAtIndexPath:indexPathNew];
         NSLog(@"songInPlaylist: %@", song);
         NSLog(@"songInPlaylist.title: %@", song.title);
         NSLog(@"songInPlaylist.persistentID: %@", song.persistentID);
