@@ -88,8 +88,6 @@
     if (count == 0) {
         count = 1;
     }
-    
-    NSLog(@"numberofsectionsinttableview: %ld", (long)count);
     return count;
     
     return [self.songsInPlaylistArrayArtists count];
@@ -98,7 +96,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"numberofrowsinsection: %lu", (unsigned long)[secInfo numberOfObjects]);
     return [secInfo numberOfObjects] + 1;
 }
 
@@ -145,14 +142,12 @@
 }
 
 #pragma mark - Segue
+// help from http://de.softuses.com/216719
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
-        //NSIndexPath *rowSelected = [self.tableView indexPathForSelectedRow];
-        //NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(rowSelected.row-1) inSection:0];
-        //Song *song = (Song*)[self.fetchedResultsController objectAtIndexPath:indexPathNew];
         NSArray *allSongs = [self.fetchedResultsController fetchedObjects];
         NSMutableArray *allSongsMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         
@@ -165,15 +160,9 @@
             NSArray *songsList = [mySongQuery items];
             [allSongsMutable addObject:[songsList objectAtIndex:0]];
         }
-        
-        NSLog(@"allSongsMutable outside: %@", allSongsMutable);
-        
         MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
-        
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
-        
         MPMediaItem *selectedItem = [[allSongsMutable objectAtIndex:selectedIndex-1] representativeItem];
-        
         MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
 
         [musicPlayer setQueueWithItemCollection:moment];
