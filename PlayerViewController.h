@@ -15,7 +15,7 @@
 @interface PlayerViewController : UIViewController <MKMapViewDelegate>
 {
     IBOutlet UIButton *playPauseButton;
-    IBOutlet UISlider *volumeSlider;
+    IBOutlet UIView *volumeView;
     
     IBOutlet UILabel *artistLabel;
     IBOutlet UILabel *titleLabel;
@@ -29,7 +29,6 @@
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;
 - (IBAction)previousSong:(id)sender;
-- (IBAction)volumeSliderChanged:(id)sender;
 
 - (void) registerMediaPlayerNotifications;
 

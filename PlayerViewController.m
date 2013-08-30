@@ -25,7 +25,6 @@
     [super viewDidLoad];
     
     // Music player setup
-    
     _musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [self registerMediaPlayerNotifications];
     
@@ -36,7 +35,6 @@
     }
     
     // Back Button
-    
     UIImage *backImage = [UIImage imageNamed:@"ddplayer-back.png"];
     backButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,backImage.size.width*.5, backImage.size.height*.5) ];
     [backButton setImage:backImage forState:UIControlStateNormal];
@@ -46,12 +44,16 @@
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
     
     // Custom UI
-    
     artistLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
     artistLabel.font = [UIFont fontWithName:@"Arial" size:16.0];
     
     titleLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
     titleLabel.font = [UIFont fontWithName:@"Arial" size:16.0];
+    
+    // Volume View
+    //volumeSlider.backgroundColor = [UIColor clearColor];
+    MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeView.bounds];
+    [volumeView addSubview:myVolumeView];
     
     [self showNWLocation];
 }
@@ -72,15 +74,9 @@
 	} else {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
-    
-    // Update volume slider
-    
-    [volumeSlider setValue:[_musicPlayer volume]];
-    
+
     // Update now playing info
-    
     MPMediaItem *currentItem = [_musicPlayer nowPlayingItem];
-    
     NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
     if (titleString) {
         titleLabel.text = titleString;
@@ -112,12 +108,7 @@
 						   selector: @selector (handle_PlaybackStateChanged:)
 							   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
 							 object: _musicPlayer];
-    
-    [notificationCenter addObserver: self
-						   selector: @selector (handle_VolumeChanged:)
-							   name: MPMusicPlayerControllerVolumeDidChangeNotification
-							 object: _musicPlayer];
-    
+
 	[_musicPlayer beginGeneratingPlaybackNotifications];
 }
 
@@ -151,27 +142,6 @@
         NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
         NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
         NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
-        
-        /*
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString *stringFromDate = [dateFormatter stringFromDate:destinationDate];
-        
-        
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd"];
-        NSDate *dateFromStrin = [dateFormat dateFromString:stringFromDate];
-        NSLog(@"dateFromStrin %@", dateFromStrin);
-
-        // Time
-        unsigned hourAndMinuteFlags = NSHourCalendarUnit | NSMinuteCalendarUnit;
-        NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        [calendar setTimeZone:sourceTimeZone];
-        NSDateComponents* travelDateTimeComponents = [calendar components:hourAndMinuteFlags fromDate:destinationDate];
-        NSString *hours = [NSString stringWithFormat:@"%02i", [travelDateTimeComponents hour]];
-        NSString *minutes = [NSString stringWithFormat:@"%02i", [travelDateTimeComponents minute]];
-        NSString *time = [NSString stringWithFormat:@"%@:%@", hours, minutes];
-         */
         
         // send to DB
         [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
@@ -212,12 +182,6 @@
 	}
 }
 
-- (void) handle_VolumeChanged: (id) notification
-{
-    [volumeSlider setValue:[_musicPlayer volume]];
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -229,11 +193,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
 												  object: _musicPlayer];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-													name: MPMusicPlayerControllerVolumeDidChangeNotification
-												  object: _musicPlayer];
-    
+
 	[self.musicPlayer endGeneratingPlaybackNotifications];
 }
 
@@ -257,12 +217,6 @@
 - (IBAction)previousSong:(id)sender
 {
     [_musicPlayer skipToPreviousItem];
-}
-
-- (IBAction)volumeSliderChanged:(id)sender
-{
-    [_musicPlayer setVolume:volumeSlider.value];
-    //[self.musicPlayer v]
 }
 
 #pragma Map
