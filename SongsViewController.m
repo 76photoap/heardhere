@@ -28,15 +28,32 @@
     [super viewDidLoad];
     
     // Tab bar
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    //UITabBarItem *item1 = [[self.tabBarController.tabBar items] objectAtIndex:0];
+    //[item1 initWithTitle:item1 image:[UIImage imageNamed:@"Songs-tab-bar-icon.png"] selectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"]];
     
-    UITabBarItem *item1 = [[self.tabBarController.tabBar items] objectAtIndex:0];
-    [item1 setFinishedSelectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"]];
+   // [item1 setFinishedSelectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"]];
     
-    UITabBarItem *item2 = [[self.tabBarController.tabBar items] objectAtIndex:1];
-    [item2 setFinishedSelectedImage:[UIImage imageNamed:@"Albums-tab-bar-icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"Albums-tab-bar-icon.png"]];
+    //UITabBarItem *item2 = [[self.tabBarController.tabBar items] objectAtIndex:1];
+    //[item2 setFinishedSelectedImage:[UIImage imageNamed:@"Albums-tab-bar-icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"Albums-tab-bar-icon.png"]];
+    
+    // UI
+    self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
+    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    
+    // Nav Bar Title
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"Songs";
+    label.frame = CGRectMake(0, 0, 100, 35);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
+    label.font = [UIFont fontWithName:@"Arial" size:25.0];
+    label.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithCustomView:label];
+    self.navigationItem.titleView = customButton.customView;
     
     // Now playing button
-    
     nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"NP" style:UIBarButtonItemStyleBordered target:self action:@selector(goToNowPlaying)];
     
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
@@ -114,10 +131,8 @@
     cell.textLabel.text = [rowItem valueForProperty:MPMediaItemPropertyTitle];
     cell.detailTextLabel.text = [rowItem valueForProperty:MPMediaItemPropertyArtist];
     
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
     cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
-    
-    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-selected-background.png"]];
+    cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
     
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];

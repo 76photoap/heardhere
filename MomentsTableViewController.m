@@ -77,13 +77,38 @@
     
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = delegate.managedObjectContext;
-
+    
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
         NSLog(@"Error! %@",error);
         abort();
     }
     
+    // UI
+    self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
+    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+
+    // Nav Bar Title
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"Moments";
+    label.frame = CGRectMake(0, 0, 100, 35);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
+    label.font = [UIFont fontWithName:@"Arial" size:25.0];
+    label.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithCustomView:label];
+    self.navigationItem.titleView = customButton.customView;
+    
+    /*
+    // Nav Bar Edit Button
+    UIImage *addMomentIcon = [UIImage imageNamed:@"ddplus-sign.png"];
+    UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,addMomentIcon.size.width, addMomentIcon.size.height) ];
+    addMomentIcon = [addMomentIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [editButton setImage:addMomentIcon forState:UIControlStateNormal];
+    UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    self.navigationItem.rightBarButtonItem = editPlaylist;
+    */
     [super viewDidLoad];
 }
 
@@ -129,10 +154,11 @@
     Playlist *playlist = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [playlist name];
     
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
+    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
+    cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
     cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
     
-    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
+    //cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
     
     cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
     cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];

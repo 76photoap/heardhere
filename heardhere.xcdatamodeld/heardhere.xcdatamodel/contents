@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3389" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Photo" representedClassName="Photo" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Playlist" inverseName="photo" inverseEntity="Playlist" syncable="YES"/>
+    </entity>
     <entity name="Playlist" representedClassName="Playlist" syncable="YES">
         <attribute name="fromDatePlaylist" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="fromTimePlaylist" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="untilDatePlaylist" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="untilTimePlaylist" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="photo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="playlist" inverseEntity="Photo" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="playlist" inverseEntity="Song" syncable="YES"/>
     </entity>
     <entity name="Song" representedClassName="Song" syncable="YES">
@@ -24,5 +28,6 @@
     <elements>
         <element name="Playlist" positionX="-11" positionY="-70" width="128" height="148"/>
         <element name="Song" positionX="196" positionY="-27" width="128" height="193"/>
+        <element name="Photo" positionX="-164" positionY="-25" width="128" height="73"/>
     </elements>
 </model>

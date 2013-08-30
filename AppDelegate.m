@@ -87,20 +87,8 @@
 
 - (void) createCustomUI
 {
-    // Navigation bar
-    
-    UIImage *navBarImage = [UIImage imageNamed:@"ddnavigation-bar-black.png"];
-    [[UINavigationBar appearance] setBackgroundImage:navBarImage forBarMetrics:UIBarMetricsDefault];
-    
-    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-        [UIColor colorWithRed:1.0 green:0.4863 blue:0.3647 alpha:1.0], NSForegroundColorAttributeName,
-        [UIFont fontWithName:@"Arial" size:25.0], NSForegroundColorAttributeName, nil]];
-    
-    // Table 
-    
-    [[UITableView appearance] setBackgroundColor: [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
-    
-    [[UITableView appearance] setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    self.window.tintColor = [UIColor colorWithRed:199.0/255.0 green:1.0/255.0 blue:81.0/255.0 alpha:1.0];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -113,8 +101,6 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
-    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

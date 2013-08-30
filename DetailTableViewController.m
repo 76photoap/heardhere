@@ -33,10 +33,17 @@
         NSLog(@"Error! %@",error);
         abort();
     }
+    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    
+    // UI
+    self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
+    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
     // Nav Bar Edit Button
     UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
     UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,editImage.size.width*.5, editImage.size.height*.5) ];
+    editImage = [editImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [editButton setImage:editImage forState:UIControlStateNormal];
     UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
     self.navigationItem.rightBarButtonItem = editPlaylist;
@@ -54,6 +61,7 @@
     
     // Nav Bar Back Button
     UIImage *backImage = [UIImage imageNamed:@"dddetail-back.png"];
+    backImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     backButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,backImage.size.width*.5, backImage.size.height*.5) ];
     [backButton setImage:backImage forState:UIControlStateNormal];
     self.navigationItem.hidesBackButton = TRUE;
@@ -128,10 +136,8 @@
         cell.textLabel.text = [song title];
         cell.detailTextLabel.text = [song artist];
         
-        cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
+        cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
         cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
-        
-        cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ddTable-view-background.png"]];
         
         cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
         cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
@@ -148,6 +154,7 @@
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
+        
         NSArray *allSongs = [self.fetchedResultsController fetchedObjects];
         NSMutableArray *allSongsMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         
@@ -164,7 +171,7 @@
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         MPMediaItem *selectedItem = [[allSongsMutable objectAtIndex:selectedIndex-1] representativeItem];
         MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-
+        
         [musicPlayer setQueueWithItemCollection:moment];
         [musicPlayer setNowPlayingItem:selectedItem];
         

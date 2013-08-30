@@ -39,6 +39,12 @@
     self.navigationItem.leftBarButtonItem = barBackItem;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
     
+    if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
+	} else {
+        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
+    }
+    
     // Custom UI
     
     artistLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
@@ -88,6 +94,7 @@
     } else {
         artistLabel.text = @"Unknown Artist";
     }
+    
 }
 
 #pragma mark - Register media player notifications
@@ -255,6 +262,7 @@
 - (IBAction)volumeSliderChanged:(id)sender
 {
     [self.musicPlayer setVolume:volumeSlider.value];
+    //[self.musicPlayer v]
 }
 
 #pragma Map
