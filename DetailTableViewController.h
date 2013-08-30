@@ -26,5 +26,7 @@
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 @property (nonatomic, strong) MPMediaQuery *mySongQuery;
+@property (nonatomic, retain) UIButton *doneButton;
+@property (nonatomic, retain) UIButton *editButton;
 
 @end

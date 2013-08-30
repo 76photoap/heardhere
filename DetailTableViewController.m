@@ -3,6 +3,7 @@
 #import "AppDelegate.h"
 
 @interface DetailTableViewController ()
+
 @end
 
 @implementation DetailTableViewController
@@ -52,18 +53,24 @@
     editPlaylist = self.editButtonItem;
     */
     
-
-    
+    //This is it
     UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editButton addTarget:self action:@selector(startEditing) forControlEvents:UIControlEventTouchUpInside];
-    //[editButton setTitle:@"title" forState:UIControlStateNormal];
-    editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
-    [editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[self.editButton addTarget:self action:@selector(setEditing:animated:) forControlEvents:UIControlEventTouchUpInside];
+    [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
+    self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
+    [self.editButton setBackgroundImage:editImage forState:UIControlStateNormal];
     
-    UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
     self.navigationItem.rightBarButtonItem = dEditButtonItem;
-    
+     /*
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditing)];
+    self.navigationItem.rightBarButtonItem = editButton;
+     */
+    /*
+    UIBarButtonItem *dFinishedEditingButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIButtonTypeSystem target:self action:@selector(finishedEditing)];
+    self.navigationItem.rightBarButtonItem = dFinishedEditingButtonItem;
+    */
     
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
@@ -89,12 +96,6 @@
     [super viewDidLoad];
 }
 
--(void)startEditing
-{
-    //[self startEditing:YES
-    self.tableView.editing = YES;
-}
-
 -(void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -112,44 +113,50 @@
 
 #pragma mark - Table view data source
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleDelete;
-}
-
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
 
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the managed object for the given index path
-		NSManagedObjectContext *context = [self managedObjectContext];
-        Playlist *playlistItemToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [context deleteObject:playlistItemToDelete];
-		
-		NSError *error = nil;
+        NSManagedObjectContext *context = [self managedObjectContext];
+        Song *songToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [context deleteObject:songToDelete];
+        
+        NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Error! %@",error);
         }
-	}
+    }
 }
 
+-(void)toggleEditing
+{
+    [self setEditing:!self.isEditing animated:YES];
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    if (editing) {
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(toggleEditing)];
+        self.navigationItem.rightBarButtonItem = doneButton;
+        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonSystemItemDone];
+        self.navigationItem.title = @"Done";
+    } else {
+        UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+        self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
+        self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
+        [self.editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+        
+        UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+        self.navigationItem.rightBarButtonItem = dEditButtonItem;
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -267,6 +274,57 @@
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
+}
+
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
+-(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate: {
+            Song *changedSong = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.textLabel.text = changedSong.title;
+            cell.detailTextLabel.text = changedSong.artist;
+        }
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+-(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
 }
 
 @end
