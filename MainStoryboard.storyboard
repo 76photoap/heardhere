@@ -49,7 +49,7 @@
                                 <rect key="frame" x="135" y="368" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Button" image="0A4E6FB2-E194-407B-82EE-315F0C58DEED"/>
+                                <state key="normal" title="Button" image="0B58CBC0-FCF6-45C9-B88B-B3D81E001C6B"/>
                                 <connections>
                                     <action selector="playPause:" destination="x6c-S3-SFp" eventType="touchUpInside" id="gj4-Z3-R6Y"/>
                                 </connections>
@@ -79,27 +79,30 @@
                             <rect key="frame" x="62" y="4" width="196" height="36"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJG-BR-U78">
-                                    <rect key="frame" x="0.0" y="1" width="196" height="18"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJG-BR-U78">
+                                    <rect key="frame" x="0.0" y="-4" width="196" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="oT1-ge-Hx4"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Irc-Bx-4IX">
-                                    <rect key="frame" x="0.0" y="16" width="196" height="18"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Irc-Bx-4IX">
+                                    <rect key="frame" x="0.0" y="19" width="196" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="LJG-BR-U78" firstAttribute="bottom" secondItem="qAx-ls-NUC" secondAttribute="bottom" id="Ao9-Nt-5M8"/>
+                                <constraint firstItem="Irc-Bx-4IX" firstAttribute="top" secondItem="LJG-BR-U78" secondAttribute="bottom" constant="5" id="H1P-Ga-n6I"/>
+                                <constraint firstItem="Irc-Bx-4IX" firstAttribute="trailing" secondItem="LJG-BR-U78" secondAttribute="trailing" id="Uzb-fk-SuK"/>
                                 <constraint firstItem="LJG-BR-U78" firstAttribute="trailing" secondItem="qAx-ls-NUC" secondAttribute="trailing" id="YmA-jg-2oZ"/>
+                                <constraint firstItem="Irc-Bx-4IX" firstAttribute="leading" secondItem="LJG-BR-U78" secondAttribute="leading" id="b7I-aT-ce7"/>
+                                <constraint firstItem="LJG-BR-U78" firstAttribute="top" secondItem="qAx-ls-NUC" secondAttribute="top" constant="-4" id="iQF-v0-tmT"/>
                                 <constraint firstItem="LJG-BR-U78" firstAttribute="leading" secondItem="qAx-ls-NUC" secondAttribute="leading" id="zCR-yn-NSn"/>
                             </constraints>
                         </view>
@@ -454,7 +457,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="0A4E6FB2-E194-407B-82EE-315F0C58DEED" width="24" height="24">
+        <image name="0B58CBC0-FCF6-45C9-B88B-B3D81E001C6B" width="24" height="24">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

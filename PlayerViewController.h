@@ -22,7 +22,7 @@
 }
 
 @property (nonatomic, weak) IBOutlet MKMapView *map;
-@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
+@property (nonatomic, retain) MPMusicPlayerController *musicPlayer;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) Song *songObject;
 

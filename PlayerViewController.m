@@ -26,8 +26,14 @@
     
     // Music player setup
     
-    self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    _musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [self registerMediaPlayerNotifications];
+    
+    if ([_musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
+	} else {
+        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
+    }
     
     // Back Button
     
@@ -39,19 +45,13 @@
     self.navigationItem.leftBarButtonItem = barBackItem;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
     
-    if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
-	} else {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
-    }
-    
     // Custom UI
     
     artistLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
-    artistLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
+    artistLabel.font = [UIFont fontWithName:@"Arial" size:16.0];
     
     titleLabel.textColor = [UIColor colorWithRed:1.0 green:0.9176 blue:0.5843 alpha:1.0];
-    titleLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:16.0];
     
     [self showNWLocation];
 }
@@ -67,7 +67,7 @@
     
     // update control button
 	
-	if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+	if ([_musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
 	} else {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
@@ -75,11 +75,11 @@
     
     // Update volume slider
     
-    [volumeSlider setValue:[self.musicPlayer volume]];
+    [volumeSlider setValue:[_musicPlayer volume]];
     
     // Update now playing info
     
-    MPMediaItem *currentItem = [self.musicPlayer nowPlayingItem];
+    MPMediaItem *currentItem = [_musicPlayer nowPlayingItem];
     
     NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
     if (titleString) {
@@ -106,25 +106,25 @@
 	[notificationCenter addObserver: self
 						   selector: @selector (handle_NowPlayingItemChanged:)
 							   name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-							 object: self.musicPlayer];
+							 object: _musicPlayer];
 	
 	[notificationCenter addObserver: self
 						   selector: @selector (handle_PlaybackStateChanged:)
 							   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-							 object: self.musicPlayer];
+							 object: _musicPlayer];
     
     [notificationCenter addObserver: self
 						   selector: @selector (handle_VolumeChanged:)
 							   name: MPMusicPlayerControllerVolumeDidChangeNotification
-							 object: self.musicPlayer];
+							 object: _musicPlayer];
     
-	[self.musicPlayer beginGeneratingPlaybackNotifications];
+	[_musicPlayer beginGeneratingPlaybackNotifications];
 }
 
 - (void) handle_NowPlayingItemChanged: (id) notification
 {
-    if ([self.musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
-        MPMediaItem *currentItem = [self.musicPlayer nowPlayingItem];
+    if ([_musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
+        MPMediaItem *currentItem = [_musicPlayer nowPlayingItem];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {
@@ -198,7 +198,7 @@
 
 - (void) handle_PlaybackStateChanged: (id) notification
 {
-    MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
+    MPMusicPlaybackState playbackState = [_musicPlayer playbackState];
 	
 	if (playbackState == MPMusicPlaybackStatePaused) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
@@ -208,13 +208,13 @@
         
 	} else if (playbackState == MPMusicPlaybackStateStopped) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
-		[self.musicPlayer stop];
+		[_musicPlayer stop];
 	}
 }
 
 - (void) handle_VolumeChanged: (id) notification
 {
-    [volumeSlider setValue:[self.musicPlayer volume]];
+    [volumeSlider setValue:[_musicPlayer volume]];
 }
 
 
@@ -224,15 +224,15 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-												  object: self.musicPlayer];
+												  object: _musicPlayer];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-												  object: self.musicPlayer];
+												  object: _musicPlayer];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
 													name: MPMusicPlayerControllerVolumeDidChangeNotification
-												  object: self.musicPlayer];
+												  object: _musicPlayer];
     
 	[self.musicPlayer endGeneratingPlaybackNotifications];
 }
@@ -241,27 +241,27 @@
 
 - (IBAction)playPause:(id)sender
 {
-    if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
-        [self.musicPlayer pause];
+    if ([_musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+        [_musicPlayer pause];
         
     } else {
-        [self.musicPlayer play];
+        [_musicPlayer play];
     }
 }
 
 - (IBAction)nextSong:(id)sender
 {
-    [self.musicPlayer skipToNextItem];
+    [_musicPlayer skipToNextItem];
 }
 
 - (IBAction)previousSong:(id)sender
 {
-    [self.musicPlayer skipToPreviousItem];
+    [_musicPlayer skipToPreviousItem];
 }
 
 - (IBAction)volumeSliderChanged:(id)sender
 {
-    [self.musicPlayer setVolume:volumeSlider.value];
+    [_musicPlayer setVolume:volumeSlider.value];
     //[self.musicPlayer v]
 }
 
@@ -280,7 +280,7 @@
              annotation.subtitle = placemark.locality;
              annotation.coordinate = placemark.location.coordinate;
              [self.map addAnnotation:annotation];
-             [self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
+             //[self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
          }
      }];
 }

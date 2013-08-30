@@ -23,7 +23,7 @@
 -(void)createMomentViewControllerDidCancel:(Playlist*)playlistToDelete
 {
     NSManagedObjectContext *context = self.managedObjectContext;
-   
+    
     [context deleteObject:playlistToDelete];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -88,7 +88,7 @@
     self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
     self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-
+    
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
     label.text = @"Moments";
@@ -101,14 +101,14 @@
     self.navigationItem.titleView = customButton.customView;
     
     /*
-    // Nav Bar Edit Button
-    UIImage *addMomentIcon = [UIImage imageNamed:@"ddplus-sign.png"];
-    UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,addMomentIcon.size.width, addMomentIcon.size.height) ];
-    addMomentIcon = [addMomentIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [editButton setImage:addMomentIcon forState:UIControlStateNormal];
-    UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
-    self.navigationItem.rightBarButtonItem = editPlaylist;
-    */
+     // Nav Bar Edit Button
+     UIImage *addMomentIcon = [UIImage imageNamed:@"ddplus-sign.png"];
+     UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,addMomentIcon.size.width, addMomentIcon.size.height) ];
+     addMomentIcon = [addMomentIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+     [editButton setImage:addMomentIcon forState:UIControlStateNormal];
+     UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+     self.navigationItem.rightBarButtonItem = editPlaylist;
+     */
     [super viewDidLoad];
 }
 
@@ -116,28 +116,28 @@
 {
     [super didReceiveMemoryWarning];
     [[NSNotificationCenter defaultCenter] removeObserver: self
-													name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-												  object: [MPMusicPlayerController iPodMusicPlayer]];
-	[[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
+                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                                                  object: [MPMusicPlayerController iPodMusicPlayer]];
+    [[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-     NSInteger count = [[self.fetchedResultsController sections] count];
+    NSInteger count = [[self.fetchedResultsController sections] count];
     
-	if (count == 0) {
-		count = 1;
-	}
-	NSLog(@"count: %ld", (long)count);
+    if (count == 0) {
+        count = 1;
+    }
+    NSLog(@"count: %ld", (long)count);
     return count;
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-     id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     if (![sectionInfo numberOfObjects]) {
         return 1;
     } else {
@@ -177,15 +177,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the managed object for the given index path
-		NSManagedObjectContext *context = [self managedObjectContext];
+        NSManagedObjectContext *context = [self managedObjectContext];
         Playlist *playlistToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [context deleteObject:playlistToDelete];
-		
-		NSError *error = nil;
+        
+        NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Error! %@",error);
         }
-	}
+    }
 }
 
 #pragma mark - Fetched results controller
@@ -200,14 +200,14 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
     fetchRequest.fetchBatchSize = 20;
-        
+    
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-        
+    
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"name" cacheName:@"Root"];
-        
+    
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;

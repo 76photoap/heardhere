@@ -33,6 +33,7 @@
         NSLog(@"Error! %@",error);
         abort();
     }
+    
     self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
     
     // UI
@@ -41,12 +42,28 @@
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
     // Nav Bar Edit Button
+    /*
     UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
     UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,editImage.size.width*.5, editImage.size.height*.5) ];
     editImage = [editImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [editButton setImage:editImage forState:UIControlStateNormal];
     UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
     self.navigationItem.rightBarButtonItem = editPlaylist;
+    editPlaylist = self.editButtonItem;
+    */
+    
+
+    
+    UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [editButton addTarget:self action:@selector(startEditing) forControlEvents:UIControlEventTouchUpInside];
+    //[editButton setTitle:@"title" forState:UIControlStateNormal];
+    editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
+    [editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+    
+    UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    self.navigationItem.rightBarButtonItem = dEditButtonItem;
+    
     
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
@@ -72,6 +89,12 @@
     [super viewDidLoad];
 }
 
+-(void)startEditing
+{
+    //[self startEditing:YES
+    self.tableView.editing = YES;
+}
+
 -(void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -88,6 +111,45 @@
 }
 
 #pragma mark - Table view data source
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the managed object for the given index path
+		NSManagedObjectContext *context = [self managedObjectContext];
+        Playlist *playlistItemToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [context deleteObject:playlistItemToDelete];
+		
+		NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Error! %@",error);
+        }
+	}
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
