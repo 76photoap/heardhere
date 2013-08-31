@@ -209,12 +209,10 @@
     
     NSArray *untilStringsArray = [[NSArray alloc] initWithObjects: self.untilDateLabel.text, self.untilTimeLabel.text, nil];
     NSString *untilStrings = [untilStringsArray componentsJoinedByString:@" "];
-    NSLog(@"untilStrings %@", untilStrings);
     
     NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
     [dateFormatterFromTime setDateFormat:@"yyyy-MM-dd HH:mm"];
     self.untilTime = [dateFormatterFromTime dateFromString:untilStrings];
-    NSLog(@"self.untilTime: %@", self.untilTime);
     
     NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
@@ -222,7 +220,6 @@
     NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:self.untilTime];
     NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
     NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:self.untilTime];
-    NSLog(@"destinationDate: %@", destinationDate);
     
     [self.currentPlaylist setUntilDatePlaylist:destinationDate];
     
@@ -256,7 +253,7 @@
     [fetchRequest setEntity:entity];
     [fetchRequest setFetchBatchSize:20];
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"listenDate" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -277,7 +274,7 @@
     }
     
     NSArray *objects = [self.songObject.managedObjectContext executeFetchRequest:fetchRequest  error:&error];
-    self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[objects valueForKey:@"title"]];
+    self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[objects valueForKey:@"listenDate"]];
 
     return _fetchedResultsController;
 }

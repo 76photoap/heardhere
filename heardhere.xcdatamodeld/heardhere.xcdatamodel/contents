@@ -5,6 +5,7 @@
         <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Playlist" inverseName="photo" inverseEntity="Playlist" syncable="YES"/>
     </entity>
     <entity name="Playlist" representedClassName="Playlist" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="fromDatePlaylist" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="fromTimePlaylist" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,8 +27,8 @@
         <relationship name="playlist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Playlist" inverseName="songs" inverseEntity="Playlist" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Playlist" positionX="-11" positionY="-70" width="128" height="148"/>
-        <element name="Song" positionX="196" positionY="-27" width="128" height="193"/>
         <element name="Photo" positionX="-164" positionY="-25" width="128" height="73"/>
+        <element name="Playlist" positionX="-11" positionY="-70" width="128" height="163"/>
+        <element name="Song" positionX="196" positionY="-27" width="128" height="193"/>
     </elements>
 </model>
