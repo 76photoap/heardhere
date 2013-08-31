@@ -93,4 +93,12 @@
     self.doneSelector = action;
 }
 
+-(void)dealloc
+{
+    self.picker = nil;
+    self.myDateString = nil;
+    self.doneTarget = nil;
+    self.doneSelector = nil;
+}
+
 @end

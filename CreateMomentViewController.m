@@ -45,19 +45,18 @@
     self.untilTimeLabel = nil;
     self.photoButton = nil;
     self.playlistImageViewThumb = nil;
-    
     self.fromDatePicker = nil;
     self.untilDatePicker = nil;
     self.fromTimePicker = nil;
     self.untilTimePicker = nil;
-    
+    self.fromDate = nil;
+    self.untilDate = nil;
+    self.fromTime = nil;
+    self.untilTime = nil;
     self.songsToBeInNewPlaylistSet = nil;
-    
     self.momentDelegate = nil;
-    
     self.songObject = nil;
     self.currentPlaylist = nil;
-    
     self.managedObjectContext = nil;
     self.fetchedResultsController = nil;
 }
@@ -112,7 +111,6 @@
 
 -(void)donePressedFromDate {
     self.fromDateLabel.text = [fromDatePicker dateHasChanged:fromDatePicker.myDateString];
-    NSLog(@"self.fromDateLabel.text: %@", self.fromDateLabel.text);
     
     NSDateFormatter *dateFormatterFromDate = [[NSDateFormatter alloc] init];
     [dateFormatterFromDate setDateFormat:@"yyyy-MM-dd"];
@@ -300,11 +298,9 @@
     NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
     NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
     
-    NSLog(@"current date: %@", destinationDate);
     [self.currentPlaylist setCreationDate:destinationDate];
     [self.currentPlaylist setName:momentNameTextField.text];
     [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
-    NSLog(@"currentPlaylist info: %@", self.currentPlaylist);
     
     [self.momentDelegate createMomentViewControllerDidSave];
 }

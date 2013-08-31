@@ -120,6 +120,15 @@
     [[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
+-(void)dealloc
+{
+    self.fetchedResultsController = nil;
+    self.managedObjectContext = nil;
+    self.currentPlaylist = nil;
+    self.doneButton = nil;
+    self.editButton = nil;
+}
+
 #pragma mark - Table view data source
 
 -(void)toggleEditing

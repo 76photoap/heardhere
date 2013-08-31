@@ -18,6 +18,6 @@
 
 - (void) setMode: (UIDatePickerMode) mode;
 - (void) addTargetForDoneButton: (id) target action: (SEL) action;
--(NSString *)dateHasChanged:(id)sender;
+- (NSString *)dateHasChanged:(id)sender;
 
 @end

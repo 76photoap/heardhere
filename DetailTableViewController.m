@@ -97,6 +97,19 @@
     [[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
+-(void)dealloc
+{
+    self.playlistTitle = nil;
+    self.currentPlaylist = nil;
+    self.songInPlaylist = nil;
+    self.managedObjectContext = nil;
+    self.fetchedResultsController = nil;
+    self.musicPlayer = nil;
+    self.mySongQuery = nil;
+    self.doneButton = nil;
+    self.editButton = nil;
+}
+
 #pragma mark - Table view data source
 
 -(void)toggleEditing
@@ -131,14 +144,12 @@
     if (count == 0) {
         count = 1;
     }
-    NSLog(@"number of sections count %ld", (long)count);
     return count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"rows count %u", [secInfo numberOfObjects] + 1);
     return [secInfo numberOfObjects] + 1;
 }
 

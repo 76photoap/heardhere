@@ -93,6 +93,11 @@
 	[[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
+-(void)dealloc
+{
+    nowPlayingButton = nil;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

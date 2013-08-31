@@ -17,7 +17,6 @@
 }
 
 @property NSString *playlistTitle;
-
 @property (nonatomic, strong) Playlist *currentPlaylist;
 @property (nonatomic, strong) Song *songInPlaylist;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
