@@ -10,8 +10,6 @@
 
 @synthesize currentPlaylist;
 @synthesize songInPlaylist;
-@synthesize songsInPlaylistArrayArtists;
-@synthesize songsInPlaylistArrayTitles;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 
@@ -42,36 +40,6 @@
     self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
-    // Nav Bar Edit Button
-    /*
-    UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
-    UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,editImage.size.width*.5, editImage.size.height*.5) ];
-    editImage = [editImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [editButton setImage:editImage forState:UIControlStateNormal];
-    UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
-    self.navigationItem.rightBarButtonItem = editPlaylist;
-    editPlaylist = self.editButtonItem;
-    */
-    
-    //This is it
-    UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
-    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[self.editButton addTarget:self action:@selector(setEditing:animated:) forControlEvents:UIControlEventTouchUpInside];
-    [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
-    self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
-    [self.editButton setBackgroundImage:editImage forState:UIControlStateNormal];
-    
-    UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
-    self.navigationItem.rightBarButtonItem = dEditButtonItem;
-     /*
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditing)];
-    self.navigationItem.rightBarButtonItem = editButton;
-     */
-    /*
-    UIBarButtonItem *dFinishedEditingButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIButtonTypeSystem target:self action:@selector(finishedEditing)];
-    self.navigationItem.rightBarButtonItem = dFinishedEditingButtonItem;
-    */
-    
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
     label.text = self.playlistTitle;
@@ -93,6 +61,16 @@
     self.navigationItem.leftBarButtonItem = barBackItem;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
     
+    // Nav Bar Edit Button
+    UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
+    self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
+    [self.editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+    
+    UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+    self.navigationItem.rightBarButtonItem = dEditButtonItem;
+    
     [super viewDidLoad];
 }
 
@@ -112,26 +90,6 @@
 }
 
 #pragma mark - Table view data source
-
--(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the managed object for the given index path
-        NSManagedObjectContext *context = [self managedObjectContext];
-        Song *songToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [context deleteObject:songToDelete];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Error! %@",error);
-        }
-    }
-}
 
 -(void)toggleEditing
 {
@@ -165,14 +123,14 @@
     if (count == 0) {
         count = 1;
     }
+    NSLog(@"number of sections count %ld", (long)count);
     return count;
-    
-    return [self.songsInPlaylistArrayArtists count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    NSLog(@"rows count %u", [secInfo numberOfObjects] + 1);
     return [secInfo numberOfObjects] + 1;
 }
 
@@ -213,6 +171,28 @@
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         return cell;
+    }
+}
+
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the managed object for the given index path
+        NSManagedObjectContext *context = [self.currentPlaylist managedObjectContext];
+        NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(indexPath.row - 1) inSection:0];
+        Song *songToDeleteInPlaylist = [self.fetchedResultsController objectAtIndexPath:indexPathNew];
+        
+        [self.currentPlaylist removeSongsObject:songToDeleteInPlaylist];
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Error! %@",error);
+        }
     }
 }
 
@@ -289,18 +269,19 @@
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
     UITableView *tableView = self.tableView;
+    NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:(indexPath.row - 1) inSection:0];
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPathNew] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate: {
-            Song *changedSong = [self.fetchedResultsController objectAtIndexPath:indexPath];
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            Song *changedSong = [self.fetchedResultsController objectAtIndexPath:indexPathNew];
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPathNew];
             cell.textLabel.text = changedSong.title;
             cell.detailTextLabel.text = changedSong.artist;
         }

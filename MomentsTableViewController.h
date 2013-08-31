@@ -18,4 +18,7 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) Playlist *currentPlaylist;
+@property (nonatomic, retain) UIButton *doneButton;
+@property (nonatomic, retain) UIButton *editButton;
+
 @end

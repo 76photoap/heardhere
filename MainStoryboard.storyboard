@@ -42,7 +42,7 @@
                                 <rect key="frame" x="135" y="368" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Button" image="77559B76-3FF2-4C64-B31B-234CDC28F9E6"/>
+                                <state key="normal" title="Button" image="E37DE6B0-F65A-46E2-A244-1F068C78D73B"/>
                                 <connections>
                                     <action selector="playPause:" destination="x6c-S3-SFp" eventType="touchUpInside" id="gj4-Z3-R6Y"/>
                                 </connections>
@@ -216,7 +216,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="M5y-c3-yXY">
-                        <barButtonItem key="rightBarButtonItem" image="ddplus-sign" id="tFv-b6-ZdJ">
+                        <barButtonItem key="leftBarButtonItem" image="ddplus-sign" id="tFv-b6-ZdJ">
                             <connections>
                                 <segue destination="KzP-38-urT" kind="modal" identifier="createMomentSegue" modalTransitionStyle="flipHorizontal" id="RLX-78-8kB"/>
                             </connections>
@@ -455,7 +455,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="77559B76-3FF2-4C64-B31B-234CDC28F9E6" width="24" height="24">
+        <image name="E37DE6B0-F65A-46E2-A244-1F068C78D73B" width="24" height="24">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

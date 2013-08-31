@@ -71,7 +71,7 @@
 
 - (void)viewDidLoad
 {
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = delegate.managedObjectContext;
@@ -98,15 +98,16 @@
     UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.navigationItem.titleView = customButton.customView;
     
-    /*
-     // Nav Bar Edit Button
-     UIImage *addMomentIcon = [UIImage imageNamed:@"ddplus-sign.png"];
-     UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,addMomentIcon.size.width, addMomentIcon.size.height) ];
-     addMomentIcon = [addMomentIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-     [editButton setImage:addMomentIcon forState:UIControlStateNormal];
-     UIBarButtonItem *editPlaylist = [[UIBarButtonItem alloc] initWithCustomView:editButton];
-     self.navigationItem.rightBarButtonItem = editPlaylist;
-     */
+    // Nav Bar Edit Button
+    UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
+    self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
+    [self.editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+    
+    UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+    self.navigationItem.rightBarButtonItem = dEditButtonItem;
+    
     [super viewDidLoad];
 }
 
@@ -121,6 +122,31 @@
 
 #pragma mark - Table view data source
 
+-(void)toggleEditing
+{
+    [self setEditing:!self.isEditing animated:YES];
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    if (editing) {
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(toggleEditing)];
+        self.navigationItem.rightBarButtonItem = doneButton;
+        [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonSystemItemDone];
+        self.navigationItem.title = @"Done";
+    } else {
+        UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+        self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
+        self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
+        [self.editButton setBackgroundImage:editImage forState:UIControlStateNormal];
+        
+        UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+        self.navigationItem.rightBarButtonItem = dEditButtonItem;
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger count = [[self.fetchedResultsController sections] count];
@@ -128,9 +154,7 @@
     if (count == 0) {
         count = 1;
     }
-    NSLog(@"count: %ld", (long)count);
     return count;
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
