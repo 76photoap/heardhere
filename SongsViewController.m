@@ -47,12 +47,19 @@
     self.navigationItem.titleView = customButton.customView;
     
     // Now playing button
-    nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"NP" style:UIBarButtonItemStyleBordered target:self action:@selector(goToNowPlaying)];
+    UIImage *nowPlayingImage = [UIImage imageNamed:@"songs-nowplaying.png"];
+    self.nowPlayingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.nowPlayingButton addTarget:self action:@selector(goToNowPlaying) forControlEvents:UIControlEventTouchUpInside ];
+    self.nowPlayingButton.frame = CGRectMake(0,0, nowPlayingImage.size.width*.5, nowPlayingImage.size.height*.5);
+    [self.nowPlayingButton setBackgroundImage:nowPlayingImage forState:UIControlStateNormal];
     
+    self.nowPlayingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.nowPlayingButton];
+    self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
+
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
         self.navigationItem.rightBarButtonItem = nil;
     } else {
-        self.navigationItem.rightBarButtonItem = nowPlayingButton;
+        self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
     }
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -76,7 +83,7 @@
 	if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
         self.navigationItem.rightBarButtonItem = nil;
     } else {
-        self.navigationItem.rightBarButtonItem = nowPlayingButton;
+        self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
     }
     
 }
@@ -95,7 +102,7 @@
 
 -(void)dealloc
 {
-    nowPlayingButton = nil;
+    self.nowPlayingButton = nil;
 }
 
 #pragma mark - Table view data source

@@ -10,8 +10,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface SongsViewController : UITableViewController
-{
-    UIBarButtonItem *nowPlayingButton;
-}
+
+@property (nonatomic, retain) UIButton *nowPlayingButton;
+@property (nonatomic, retain) UIBarButtonItem *nowPlayingBarButtonItem;
 
 @end
