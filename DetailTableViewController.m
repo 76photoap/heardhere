@@ -1,3 +1,11 @@
+//
+//  Detail.m
+//  Heard Here
+//
+//  Created by Dianna Mertz on 11/5/12.
+//  Copyright (c) 2012 Dianna Mertz. All rights reserved.
+//
+
 #import "DetailTableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "AppDelegate.h"
@@ -162,12 +170,10 @@
         
         cell.textLabel.text = [song title];
         cell.detailTextLabel.text = [song artist];
-        
-        cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+
         cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
         
-        cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
-        cell.detailTextLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         return cell;

@@ -29,13 +29,6 @@
     
     // Tab bar
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-    //UITabBarItem *item1 = [[self.tabBarController.tabBar items] objectAtIndex:0];
-    //[item1 initWithTitle:item1 image:[UIImage imageNamed:@"Songs-tab-bar-icon.png"] selectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"]];
-    
-   // [item1 setFinishedSelectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"Songs-tab-bar-icon.png"]];
-    
-    //UITabBarItem *item2 = [[self.tabBarController.tabBar items] objectAtIndex:1];
-    //[item2 setFinishedSelectedImage:[UIImage imageNamed:@"Albums-tab-bar-icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"Albums-tab-bar-icon.png"]];
     
     // UI
     self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
