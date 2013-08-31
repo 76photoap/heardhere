@@ -174,15 +174,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     Playlist *playlist = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [playlist name];
-    
     cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    cell.textLabel.text = [playlist name];
     cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
-    
     cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
-    cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
