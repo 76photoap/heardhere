@@ -141,12 +141,10 @@
     
     NSArray *fromStringsArray = [[NSArray alloc] initWithObjects: self.fromDateLabel.text, self.fromTimeLabel.text, nil];
     NSString *fromStrings = [fromStringsArray componentsJoinedByString:@" "];
-    NSLog(@"fromStrings %@", fromStrings);
 
     NSDateFormatter *dateFormatterFromTime = [[NSDateFormatter alloc] init];
     [dateFormatterFromTime setDateFormat:@"yyyy-MM-dd HH:mm"];
     self.fromTime = [dateFormatterFromTime dateFromString:fromStrings];
-    NSLog(@"self.fromTime: %@", self.fromTime);
     
     NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
@@ -154,7 +152,6 @@
     NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:self.fromTime];
     NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
     NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:self.fromTime];
-    NSLog(@"destinationDate: %@", destinationDate);
     
     [self.currentPlaylist setFromDatePlaylist:destinationDate];
     
@@ -294,6 +291,17 @@
     
     self.songsToBeInNewPlaylistSet = [NSSet setWithArray:[self.fetchedResultsController fetchedObjects]];
     
+    // Get Playlist creationDate
+    NSDate* sourceDate = [NSDate date];
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    
+    NSLog(@"current date: %@", destinationDate);
+    [self.currentPlaylist setCreationDate:destinationDate];
     [self.currentPlaylist setName:momentNameTextField.text];
     [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
     NSLog(@"currentPlaylist info: %@", self.currentPlaylist);

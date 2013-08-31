@@ -13,6 +13,7 @@
 
 @interface Playlist : NSManagedObject
 
+@property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSDate * fromDatePlaylist;
 @property (nonatomic, retain) NSDate * fromTimePlaylist;
 @property (nonatomic, retain) NSString * name;

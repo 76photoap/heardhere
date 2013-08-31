@@ -20,5 +20,6 @@
 @dynamic untilTimePlaylist;
 @dynamic songs;
 @dynamic photo;
+@dynamic creationDate;
 
 @end
