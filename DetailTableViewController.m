@@ -45,15 +45,16 @@
     
     // UI
     self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
-    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    self.tableView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+
     
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
     label.text = self.playlistTitle;
     label.frame = CGRectMake(0, 0, 100, 35);
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor colorWithRed:0.2549 green:0.8 blue:0.70589 alpha:1.0];
+    label.textColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
     label.font = [UIFont fontWithName:@"Arial" size:25.0];
     label.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithCustomView:label];
@@ -61,13 +62,13 @@
     
     // Nav Bar Back Button
     UIImage *backImage = [UIImage imageNamed:@"dddetail-back.png"];
-    backImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     backButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,backImage.size.width*.5, backImage.size.height*.5) ];
     [backButton setImage:backImage forState:UIControlStateNormal];
     self.navigationItem.hidesBackButton = TRUE;
     UIBarButtonItem *barBackItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = barBackItem;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
+    backButton.tintColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
     
     // Nav Bar Edit Button
     UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
@@ -78,6 +79,8 @@
     
     UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
     self.navigationItem.rightBarButtonItem = dEditButtonItem;
+    
+    self.navigationController.navigationItem.backBarButtonItem.customView.tintColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
     
     [super viewDidLoad];
 }
@@ -183,7 +186,7 @@
         cell.detailTextLabel.text = [song artist];
 
         cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
-        cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
         
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];

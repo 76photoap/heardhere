@@ -42,7 +42,7 @@
                                 <rect key="frame" x="135" y="368" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Button" image="E56F3369-D63E-4833-8D7C-27BF5340CE25"/>
+                                <state key="normal" title="Button" image="F5B01A27-84D8-4C02-91AB-2790F28EC199"/>
                                 <connections>
                                     <action selector="playPause:" destination="x6c-S3-SFp" eventType="touchUpInside" id="gj4-Z3-R6Y"/>
                                 </connections>
@@ -165,11 +165,11 @@
             </objects>
             <point key="canvasLocation" x="1390" y="-565"/>
         </scene>
-        <!--Navigation Controller - Songs-->
+        <!--Navigation Controller - Music Library-->
         <scene sceneID="nch-zS-wg7">
             <objects>
                 <navigationController definesPresentationContext="YES" id="3Uf-gd-Ajs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Songs" id="jLV-K1-rri"/>
+                    <tabBarItem key="tabBarItem" title="Music Library" image="songs" id="jLV-K1-rri"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NaM-hP-L1p">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -190,15 +190,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MomentCell" textLabel="fQS-Sg-hOE" style="IBUITableViewCellStyleDefault" id="Swt-6K-xpH">
+                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MomentCell" textLabel="fQS-Sg-hOE" style="IBUITableViewCellStyleDefault" id="Swt-6K-xpH">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="Swt-6K-xpH" id="hB7-1l-iGq">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fQS-Sg-hOE">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -217,6 +217,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="M5y-c3-yXY">
                         <barButtonItem key="leftBarButtonItem" image="ddplus-sign" id="tFv-b6-ZdJ">
+                            <color key="tintColor" red="0.7803921568627451" green="0.0039215686274509803" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="KzP-38-urT" kind="modal" identifier="createMomentSegue" modalTransitionStyle="flipHorizontal" id="RLX-78-8kB"/>
                             </connections>
@@ -250,7 +251,7 @@
         <scene sceneID="4dh-jF-7ic">
             <objects>
                 <navigationController definesPresentationContext="YES" id="W82-qz-etJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Moments" id="aZD-Pm-kwo"/>
+                    <tabBarItem key="tabBarItem" title="Moments" image="pin" id="aZD-Pm-kwo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JWf-aX-IuO">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -447,7 +448,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="E56F3369-D63E-4833-8D7C-27BF5340CE25" width="24" height="24">
+        <image name="F5B01A27-84D8-4C02-91AB-2790F28EC199" width="24" height="24">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -1189,6 +1190,8 @@ A
         <image name="ddplayer-button-back" width="24" height="24"/>
         <image name="ddplayer-button-forward" width="24" height="24"/>
         <image name="ddplus-sign" width="7.6802563667297363" height="7.6802563667297363"/>
+        <image name="pin" width="7.2002401351928711" height="7.2002401351928711"/>
+        <image name="songs" width="7.2002401351928711" height="7.2002401351928711"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

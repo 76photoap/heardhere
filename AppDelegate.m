@@ -25,7 +25,6 @@
                                                inManagedObjectContext:self.managedObjectContext];
     
     playlist.name = playlistName;
-    
     [self.managedObjectContext save:nil];
 }
 
@@ -72,23 +71,17 @@
     }
     
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-    /*
-    UINavigationController *nav = (UINavigationController*)self.window.rootViewController;
-     */
+    
     UINavigationController *nav = (UINavigationController *)[[tabController viewControllers] objectAtIndex:1];
+    
     MomentsTableViewController *mtvc = (MomentsTableViewController *)[[nav viewControllers]objectAtIndex:0];
     mtvc.managedObjectContext = self.managedObjectContext;
 
-    [self createCustomUI];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    self.window.tintColor = [UIColor colorWithRed:255.0/255.0 green:234.0/255.0 blue:149.0/255.0 alpha:1.0];
     
     return YES;
-     
-}
-
-- (void) createCustomUI
-{
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    self.window.tintColor = [UIColor colorWithRed:199.0/255.0 green:1.0/255.0 blue:81.0/255.0 alpha:1.0];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

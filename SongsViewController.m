@@ -29,18 +29,21 @@
     
     // Tab bar
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    self.tabBarController.tabBar.selectedImageTintColor = [UIColor colorWithRed:65.0/255.0 green:204.0/255.0 blue:180.0/255.0 alpha:1.0];
     
     // UI
     self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
-    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    
+    self.tableView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
+
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
-    label.text = @"Songs";
+    label.text = @"Music Library";
     label.frame = CGRectMake(0, 0, 100, 35);
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
+    label.textColor = [UIColor colorWithRed:65.0/255.0 green:204.0/255.0 blue:180.0/255.0 alpha:1.0];
     label.font = [UIFont fontWithName:@"Arial" size:25.0];
     label.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithCustomView:label];
@@ -137,7 +140,7 @@
     cell.detailTextLabel.text = [rowItem valueForProperty:MPMediaItemPropertyArtist];
     
     cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
-    cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    cell.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];

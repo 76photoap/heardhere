@@ -27,9 +27,10 @@
     // Music player setup
     _musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [self registerMediaPlayerNotifications];
+    self.view.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     
     // Back Button
-    UIImage *backImage = [UIImage imageNamed:@"ddplayer-back.png"];
+    UIImage *backImage = [UIImage imageNamed:@"player-back.png"];
     backButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,backImage.size.width*.5, backImage.size.height*.5) ];
     [backButton setImage:backImage forState:UIControlStateNormal];
     self.navigationItem.hidesBackButton = TRUE;
@@ -45,6 +46,7 @@
     titleLabel.font = [UIFont fontWithName:@"Arial" size:16.0];
     
     // Volume View
+    volumeView.backgroundColor = [UIColor clearColor];
     MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeView.bounds];
     [volumeView addSubview:myVolumeView];
     

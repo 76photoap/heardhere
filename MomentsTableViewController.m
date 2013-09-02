@@ -84,7 +84,7 @@
     
     // UI
     self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
-    self.tableView.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    self.tableView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
     // Nav Bar Title
@@ -92,14 +92,14 @@
     label.text = @"Moments";
     label.frame = CGRectMake(0, 0, 100, 35);
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
+    label.textColor = [UIColor colorWithRed:199.0/255.0 green:1.0/255.0 blue:81.0/255.0 alpha:1.0];
     label.font = [UIFont fontWithName:@"Arial" size:25.0];
     label.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     UIBarButtonItem *customButton = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.navigationItem.titleView = customButton.customView;
     
     // Nav Bar Edit Button
-    UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+    UIImage *editImage = [UIImage imageNamed:@"moments-edit.png"];
     self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
     self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);
@@ -183,7 +183,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     Playlist *playlist = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithRed:125.0/255.0 green:153.0/255.0 blue:148.0/255.0 alpha:1.0];
+    cell.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     cell.textLabel.text = [playlist name];
     cell.textLabel.textColor = [UIColor colorWithRed:0.278 green:0.278 blue:0.278 alpha:1.0];
     cell.textLabel.font = [UIFont fontWithName:@"Arial" size:20.0];
