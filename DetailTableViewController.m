@@ -11,6 +11,9 @@
 #import "AppDelegate.h"
 
 @interface DetailTableViewController ()
+{
+    UIButton *backButton;
+}
 
 @end
 

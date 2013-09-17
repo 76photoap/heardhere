@@ -12,26 +12,13 @@
 #import "Song.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface PlayerViewController : UIViewController <MKMapViewDelegate>
-{
-    IBOutlet UIButton *playPauseButton;
-    IBOutlet UIView *volumeView;
-    
-    IBOutlet UILabel *artistLabel;
-    IBOutlet UILabel *titleLabel;
-}
+@interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic, weak) IBOutlet MKMapView *map;
-@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
-@property (nonatomic, strong) Song *songObject;
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;
 - (IBAction)previousSong:(id)sender;
-
-- (void)registerMediaPlayerNotifications;
-
-- (void)showNWLocation;
 
 @end
 

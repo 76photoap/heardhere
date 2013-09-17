@@ -12,9 +12,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface DetailTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
-{
-    UIButton *backButton;
-}
 
 @property NSString *playlistTitle;
 @property (nonatomic, strong) Playlist *currentPlaylist;

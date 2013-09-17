@@ -12,7 +12,17 @@
 @interface PlayerViewController ()
 {
     UIButton *backButton;
+    IBOutlet UIView *volumeView;
+    
+    IBOutlet UILabel *artistLabel;
+    IBOutlet UILabel *titleLabel;
 }
+
+@property (nonatomic, weak) IBOutlet MKMapView *map;
+@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
+@property (nonatomic, strong) Song *songObject;
+@property (nonatomic, strong) IBOutlet UIButton *playPauseButton;
+
 
 @end
 
@@ -48,6 +58,8 @@
     volumeView.backgroundColor = [UIColor clearColor];
     MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeView.bounds];
     [volumeView addSubview:myVolumeView];
+    
+    [[self locationManager] startUpdatingLocation];
 
 }
 
@@ -63,9 +75,9 @@
     
     // update control button
     if ([_musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
+        [self.playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
     } else {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
+        [self.playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
     
     // Update now playing info
@@ -156,6 +168,13 @@
         AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
         Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
         
+        // Location
+        CLLocation *location = [_locationManager location];
+        if (!location) {
+            return;
+        }
+        CLLocationCoordinate2D coordinate = [location coordinate];
+        
         // Date
         NSDate* sourceDate = [NSDate date];
         NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
@@ -170,11 +189,14 @@
         [songToSaveInDB setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
         [songToSaveInDB setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
         [songToSaveInDB setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
-        //[self.songToSaveInDB setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
-        //[self.songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+        [songToSaveInDB setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+        [songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
         [songToSaveInDB setListenDate:destinationDate];
         [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
         [songToSaveInDB.managedObjectContext save:nil];
+        
+        NSLog(@"latitude: %@", [songToSaveInDB latitude]);
+        NSLog(@"long: %@", [songToSaveInDB longitude]);
     }
 }
 
@@ -183,13 +205,13 @@
     MPMusicPlaybackState playbackState = [_musicPlayer playbackState];
     
     if (playbackState == MPMusicPlaybackStatePaused) {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
+        [self.playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
         
     } else if (playbackState == MPMusicPlaybackStatePlaying) {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
+        [self.playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
         
     } else if (playbackState == MPMusicPlaybackStateStopped) {
-        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
+        [self.playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
         [_musicPlayer stop];
     }
 }
@@ -231,7 +253,7 @@
              annotation.subtitle = placemark.locality;
              annotation.coordinate = placemark.location.coordinate;
              [self.map addAnnotation:annotation];
-             //[self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
+             [self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
          }
      }];
 }
@@ -253,5 +275,21 @@
     return nil;
 }
 
+// Saving location of played song
+
+#pragma mark Location manager
+
+- (CLLocationManager *)locationManager {
+	
+    if (_locationManager != nil) {
+		return _locationManager;
+	}
+	
+	_locationManager = [[CLLocationManager alloc] init];
+	[_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+	[_locationManager setDelegate:self];
+	
+	return _locationManager;
+}
 
 @end
