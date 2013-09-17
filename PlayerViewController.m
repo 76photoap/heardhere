@@ -18,15 +18,14 @@
 
 @implementation PlayerViewController
 
-#pragma mark - UI Setup
+#pragma mark - View Controller
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // Music player setup
     _musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-    [self registerMediaPlayerNotifications];
+    
     self.view.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     
     // Back Button
@@ -49,8 +48,7 @@
     volumeView.backgroundColor = [UIColor clearColor];
     MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeView.bounds];
     [volumeView addSubview:myVolumeView];
-    
-    [self showNWLocation];
+
 }
 
 -(void)back {
@@ -58,12 +56,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self registerMediaPlayerNotifications];
     
     // update control button
-    
     if ([_musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
     } else {
@@ -85,19 +83,41 @@
     } else {
         artistLabel.text = @"Unknown Artist";
     }
+    
+    [self showNWLocation];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                                                  object: _musicPlayer];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                                                  object: _musicPlayer];
+    
+    [_musicPlayer endGeneratingPlaybackNotifications];
+    
+    [super viewWillDisappear:YES];
 }
 
 -(void)dealloc
 {
     backButton = nil;
     self.map = nil;
-    self.musicPlayer = nil;
+    _musicPlayer = nil;
     self.songObject = nil;
 }
 
 #pragma mark - Register media player notifications
 
-- (void) registerMediaPlayerNotifications
+- (void)registerMediaPlayerNotifications
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
@@ -114,7 +134,7 @@
     [_musicPlayer beginGeneratingPlaybackNotifications];
 }
 
-- (void) handle_NowPlayingItemChanged: (id) notification
+- (void)handle_NowPlayingItemChanged:(id)notification
 {
     if ([_musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
         MPMediaItem *currentItem = [_musicPlayer nowPlayingItem];
@@ -158,7 +178,7 @@
     }
 }
 
-- (void) handle_PlaybackStateChanged: (id) notification
+- (void)handle_PlaybackStateChanged:(id)notification
 {
     MPMusicPlaybackState playbackState = [_musicPlayer playbackState];
     
@@ -172,21 +192,6 @@
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
         [_musicPlayer stop];
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                                  object: _musicPlayer];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                  object: _musicPlayer];
-    
-    [_musicPlayer endGeneratingPlaybackNotifications];
 }
 
 #pragma mark - Controls

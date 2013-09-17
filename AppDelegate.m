@@ -58,6 +58,7 @@
                                                                                    cacheName:nil];
     [self.fetchedResultsController performFetch:nil];
 }
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setupFetchedResultsController];
@@ -76,7 +77,7 @@
     
     MomentsTableViewController *mtvc = (MomentsTableViewController *)[[nav viewControllers]objectAtIndex:0];
     mtvc.managedObjectContext = self.managedObjectContext;
-
+     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.window.tintColor = [UIColor colorWithRed:255.0/255.0 green:234.0/255.0 blue:149.0/255.0 alpha:1.0];

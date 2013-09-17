@@ -19,14 +19,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view.
     
     if (self.managedObjectContext == nil) {
         self.managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     }
+
     
     [momentNameTextField becomeFirstResponder];
     
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self setupDatePicker];
 }
 
@@ -84,24 +87,28 @@
     [self.view addSubview:fromDatePicker];
     fromDatePicker.hidden = YES;
     [fromDatePicker setMode:UIDatePickerModeDate];
+    fromDatePicker.backgroundColor = [UIColor whiteColor];
     
     untilDatePicker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 35, screenWidth, screenHeight + 35)];
     [untilDatePicker addTargetForDoneButton:self action:@selector(donePressedUntilDate)];
     [self.view addSubview:untilDatePicker];
     untilDatePicker.hidden = YES;
     [untilDatePicker setMode:UIDatePickerModeDate];
+    untilDatePicker.backgroundColor = [UIColor whiteColor];
     
     fromTimePicker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 35, screenWidth, screenHeight + 35)];
     [fromTimePicker addTargetForDoneButton:self action:@selector(donePressedFromTime)];
     [self.view addSubview:fromTimePicker];
     fromTimePicker.hidden = YES;
     [fromTimePicker setMode:UIDatePickerModeTime];
+    fromTimePicker.backgroundColor = [UIColor whiteColor];
     
     untilTimePicker = [[DateTimePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 35, screenWidth, screenHeight + 35)];
     [untilTimePicker addTargetForDoneButton:self action:@selector(donePressedUntilTime)];
     [self.view addSubview:untilTimePicker];
     untilTimePicker.hidden = YES;
     [untilTimePicker setMode:UIDatePickerModeTime];
+    untilTimePicker.backgroundColor = [UIColor whiteColor];
     
     self.fromDateLabel.text = @"From ";
     self.fromTimeLabel.text = @"";
@@ -243,6 +250,7 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song" inManagedObjectContext:self.currentPlaylist.managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:entity];
@@ -254,7 +262,6 @@
     
     NSPredicate *pred;
     pred = [NSPredicate predicateWithFormat:@"(listenDate >= %@) AND (listenDate <= %@)", self.currentPlaylist.fromDatePlaylist, self.currentPlaylist.untilDatePlaylist];
-    //pred = [NSPredicate predicateWithFormat:@"listenDate >= %@", self.currentPlaylist.fromDatePlaylist];
     [fetchRequest setPredicate:pred];
     
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.currentPlaylist.managedObjectContext sectionNameKeyPath:nil cacheName:nil];

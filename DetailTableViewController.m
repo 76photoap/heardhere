@@ -32,6 +32,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = delegate.managedObjectContext;
     
@@ -81,8 +83,6 @@
     self.navigationItem.rightBarButtonItem = dEditButtonItem;
     
     self.navigationController.navigationItem.backBarButtonItem.customView.tintColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
-    
-    [super viewDidLoad];
 }
 
 -(void)back {
@@ -92,12 +92,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                  object: [MPMusicPlayerController iPodMusicPlayer]];
-    
-    [[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
+
 }
 
 -(void)dealloc

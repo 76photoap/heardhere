@@ -22,14 +22,14 @@
 }
 
 @property (nonatomic, weak) IBOutlet MKMapView *map;
-@property (nonatomic, retain) MPMusicPlayerController *musicPlayer;
+@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 @property (nonatomic, strong) Song *songObject;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;
 - (IBAction)previousSong:(id)sender;
 
-- (void) registerMediaPlayerNotifications;
+- (void)registerMediaPlayerNotifications;
 
 - (void)showNWLocation;
 

@@ -71,6 +71,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
@@ -107,17 +109,11 @@
     
     UIBarButtonItem *dEditButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
     self.navigationItem.rightBarButtonItem = dEditButtonItem;
-    
-    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                  object: [MPMusicPlayerController iPodMusicPlayer]];
-    [[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
 }
 
 -(void)dealloc
@@ -145,7 +141,7 @@
         [self.navigationItem.rightBarButtonItem setStyle:UIBarButtonSystemItemDone];
         self.navigationItem.title = @"Done";
     } else {
-        UIImage *editImage = [UIImage imageNamed:@"dddetail-edit.png"];
+        UIImage *editImage = [UIImage imageNamed:@"moments-edit.png"];
         self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.editButton addTarget:self action:@selector(toggleEditing) forControlEvents:UIControlEventTouchUpInside];
         self.editButton.frame = CGRectMake(0,0, editImage.size.width*.5, editImage.size.height*.5);

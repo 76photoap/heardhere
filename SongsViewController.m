@@ -23,6 +23,33 @@
     return self;
 }
 
+- (void) goToNowPlaying
+{
+    [self performSegueWithIdentifier:@"NowPlaying" sender:self];
+}
+
+/*
+- (void) handle_PlaybackStateChanged: (id) notification
+{
+	if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
+        self.navigationItem.rightBarButtonItem = nil;
+    } else {
+        self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
+    }
+}
+*/
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+
+}
+
+-(void)dealloc
+{
+    self.nowPlayingButton = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -35,7 +62,7 @@
     self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
     
     self.tableView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
-
+    
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     
     // Nav Bar Title
@@ -58,55 +85,14 @@
     
     self.nowPlayingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.nowPlayingButton];
     self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
-
+    
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
         self.navigationItem.rightBarButtonItem = nil;
     } else {
         self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
     }
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    
-	[notificationCenter addObserver: self
-						   selector: @selector (handle_PlaybackStateChanged:)
-							   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-							 object: [MPMusicPlayerController iPodMusicPlayer]];
-    
-    [[MPMusicPlayerController iPodMusicPlayer] beginGeneratingPlaybackNotifications];
-    
 }
 
-- (void) goToNowPlaying
-{
-    [self performSegueWithIdentifier:@"NowPlaying" sender:self];
-}
-
-- (void) handle_PlaybackStateChanged: (id) notification
-{
-	if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
-        self.navigationItem.rightBarButtonItem = nil;
-    } else {
-        self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
-    }
-    
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-													name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-												  object: [MPMusicPlayerController iPodMusicPlayer]];
-    
-	[[MPMusicPlayerController iPodMusicPlayer] endGeneratingPlaybackNotifications];
-}
-
--(void)dealloc
-{
-    self.nowPlayingButton = nil;
-}
 
 #pragma mark - Table view data source
 
