@@ -26,7 +26,6 @@
         self.managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     }
 
-    
     [momentNameTextField becomeFirstResponder];
     
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];

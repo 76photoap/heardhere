@@ -7,6 +7,7 @@
 //
 
 #import "SongsViewController.h"
+#import "PlayerViewController.h"
 
 @interface SongsViewController ()
 
@@ -147,12 +148,17 @@
         
         MPMediaItem *selectedItem = [[songs objectAtIndex:selectedIndex] representativeItem];
         
-        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        PlayerViewController *pvc = [[PlayerViewController alloc] init];
+        if (pvc.musicPlayer == nil) {
+            pvc.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        }
+    
+        [pvc.musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
+        [pvc.musicPlayer setNowPlayingItem:selectedItem];
         
-        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
-        [musicPlayer setNowPlayingItem:selectedItem];
+        [pvc.musicPlayer play];
         
-        [musicPlayer play];
+        NSLog(@"playback state from songsviewcontroller: %ld", (long)[pvc.musicPlayer playbackState]);
     }
 }
 

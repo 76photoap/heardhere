@@ -11,10 +11,19 @@
 #import <MapKit/MapKit.h>
 #import "Song.h"
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h> // for CALayer support
 
-@interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic, strong) Song *currentSong;
+@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
+
+-(NSString *)title;
+
+-(id)initWithPlacemark:(CLPlacemark *)placemark preferCoord:(BOOL)shouldPreferCoord;
+-(id)initWithPlacemark:(CLPlacemark *)placemark;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;

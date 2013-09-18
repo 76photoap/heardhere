@@ -237,12 +237,20 @@
         MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         MPMediaItem *selectedItem = [[allSongsMutable objectAtIndex:selectedIndex-1] representativeItem];
-        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
         
-        [musicPlayer setQueueWithItemCollection:moment];
-        [musicPlayer setNowPlayingItem:selectedItem];
+        PlayerViewController *pvc = [[PlayerViewController alloc] init];
+        if (pvc.musicPlayer == nil) {
+            pvc.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        }
         
-        [musicPlayer play];
+        //MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        
+        [pvc.musicPlayer setQueueWithItemCollection:moment];
+        [pvc.musicPlayer setNowPlayingItem:selectedItem];
+        
+        [pvc.musicPlayer play];
+        
+        NSLog(@"playback state from detailviewcontroller: %ld", (long)[pvc.musicPlayer playbackState]);
     }
 }
 
