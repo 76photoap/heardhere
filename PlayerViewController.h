@@ -22,8 +22,11 @@
 
 -(NSString *)title;
 
--(id)initWithPlacemark:(CLPlacemark *)placemark preferCoord:(BOOL)shouldPreferCoord;
--(id)initWithPlacemark:(CLPlacemark *)placemark;
+//-(id)init;
+//-(id)initWithPlacemark:(CLPlacemark *)placemark preferCoord:(BOOL)shouldPreferCoord;
+//-(id)initWithPlacemark:(CLPlacemark *)placemark;
+- (void)handle_NowPlayingItemChanged; //:(id)notification;
+- (void)handle_PlaybackStateChanged; //:(id)notification;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;

@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import "PlayerViewController.h"
 
 @interface AppDelegate ()
 
@@ -59,8 +61,42 @@
     [self.fetchedResultsController performFetch:nil];
 }
 
+- (void)registerMediaPlayerNotifications
+{
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    
+    
+    [notificationCenter addObserver: self
+                           selector: @selector (test1)
+                               name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                             object: musicPlayer];
+    
+    [notificationCenter addObserver: self
+                           selector: @selector (test2)
+                               name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                             object: musicPlayer];
+    
+    
+    [musicPlayer beginGeneratingPlaybackNotifications];
+}
+
+-(void)test1
+{
+    PlayerViewController *pvc = [[PlayerViewController alloc] init];
+    [pvc handle_NowPlayingItemChanged];
+}
+
+-(void)test2
+{
+    PlayerViewController *pvc = [[PlayerViewController alloc] init];
+    [pvc handle_PlaybackStateChanged];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self registerMediaPlayerNotifications];
     [self setupFetchedResultsController];
     
     if (![[self.fetchedResultsController fetchedObjects] count] > 0 ) {
@@ -111,6 +147,19 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                                                  object: musicPlayer];
+    
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                                                  object: musicPlayer];
+    
+    [musicPlayer endGeneratingPlaybackNotifications];
 }
 
 -(void)saveContext

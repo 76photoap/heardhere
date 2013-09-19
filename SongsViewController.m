@@ -7,7 +7,6 @@
 //
 
 #import "SongsViewController.h"
-#import "PlayerViewController.h"
 
 @interface SongsViewController ()
 
@@ -23,14 +22,27 @@
     }
     return self;
 }
-
+/*
+- (void)registerMediaPlayerNotifications
+{
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    
+    [notificationCenter addObserver: self
+                           selector: @selector (handle_PlaybackStateChanged:)
+                               name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                             object: musicPlayer];
+    
+    [musicPlayer beginGeneratingPlaybackNotifications];
+}
+*/
 - (void) goToNowPlaying
 {
     [self performSegueWithIdentifier:@"NowPlaying" sender:self];
 }
 
 /*
-- (void) handle_PlaybackStateChanged: (id) notification
+- (void)handle_PlaybackStateChanged:(id)notification
 {
 	if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
         self.navigationItem.rightBarButtonItem = nil;
@@ -54,6 +66,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //[self registerMediaPlayerNotifications];
     
     // Tab bar
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
@@ -87,11 +101,13 @@
     self.nowPlayingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.nowPlayingButton];
     self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
     
+    /*
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
         self.navigationItem.rightBarButtonItem = nil;
     } else {
         self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
     }
+    */
 }
 
 
@@ -148,17 +164,12 @@
         
         MPMediaItem *selectedItem = [[songs objectAtIndex:selectedIndex] representativeItem];
         
-        PlayerViewController *pvc = [[PlayerViewController alloc] init];
-        if (pvc.musicPlayer == nil) {
-            pvc.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-        }
+        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     
-        [pvc.musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
-        [pvc.musicPlayer setNowPlayingItem:selectedItem];
+        [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
+        [musicPlayer setNowPlayingItem:selectedItem];
         
-        [pvc.musicPlayer play];
-        
-        NSLog(@"playback state from songsviewcontroller: %ld", (long)[pvc.musicPlayer playbackState]);
+        [musicPlayer play];
     }
 }
 
