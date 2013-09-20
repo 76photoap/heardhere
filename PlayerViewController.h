@@ -18,15 +18,8 @@
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) Song *currentSong;
-@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 
--(NSString *)title;
-
-//-(id)init;
-//-(id)initWithPlacemark:(CLPlacemark *)placemark preferCoord:(BOOL)shouldPreferCoord;
-//-(id)initWithPlacemark:(CLPlacemark *)placemark;
-- (void)handle_NowPlayingItemChanged; //:(id)notification;
-- (void)handle_PlaybackStateChanged; //:(id)notification;
+- (void)registerMediaPlayerNotifications;
 
 - (IBAction)playPause:(id)sender;
 - (IBAction)nextSong:(id)sender;

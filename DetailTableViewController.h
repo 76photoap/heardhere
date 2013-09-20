@@ -18,7 +18,6 @@
 @property (nonatomic, strong) Song *songInPlaylist;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 @property (nonatomic, strong) MPMediaQuery *mySongQuery;
 @property (nonatomic, retain) UIButton *doneButton;
 @property (nonatomic, retain) UIButton *editButton;

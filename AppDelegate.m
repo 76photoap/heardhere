@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "PlayerViewController.h"
+//#import "PlayerViewController.h"
 
 @interface AppDelegate ()
 
@@ -32,16 +32,16 @@
 
 - (void)importCoreDataDefaultRoles {
     
-    NSLog(@"Importing Core Data Default Values for Roles...");
+    //NSLog(@"Importing Core Data Default Values for Roles...");
     [self insertPlaylistWithPlaylistName:@"Sample"];
 
-    NSLog(@"Importing Core Data Default Values for Roles Completed!");
+    //NSLog(@"Importing Core Data Default Values for Roles Completed!");
 }
 - (void)setupFetchedResultsController
 {
     // 1 - Decide what Entity you want
     NSString *entityName = @"Playlist"; // Put your entity name here
-    NSLog(@"Setting up a Fetched Results Controller for the Entity named %@", entityName);
+    //NSLog(@"Setting up a Fetched Results Controller for the Entity named %@", entityName);
     
     // 2 - Request that Entity
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
@@ -60,7 +60,7 @@
                                                                                    cacheName:nil];
     [self.fetchedResultsController performFetch:nil];
 }
-
+/*
 - (void)registerMediaPlayerNotifications
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -93,18 +93,18 @@
     PlayerViewController *pvc = [[PlayerViewController alloc] init];
     [pvc handle_PlaybackStateChanged];
 }
-
+*/
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self registerMediaPlayerNotifications];
+    //[self registerMediaPlayerNotifications];
     [self setupFetchedResultsController];
     
     if (![[self.fetchedResultsController fetchedObjects] count] > 0 ) {
-        NSLog(@"!!!!! ~~> There's nothing in the database so defaults will be inserted");
+        //NSLog(@"!!!!! ~~> There's nothing in the database so defaults will be inserted");
         [self importCoreDataDefaultRoles];
     }
     else {
-        NSLog(@"There's stuff in the database so skipping the import of default data");
+        //NSLog(@"There's stuff in the database so skipping the import of default data");
     }
     
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
@@ -147,7 +147,7 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
-    
+    /*
     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
@@ -160,6 +160,7 @@
                                                   object: musicPlayer];
     
     [musicPlayer endGeneratingPlaybackNotifications];
+     */
 }
 
 -(void)saveContext

@@ -16,7 +16,7 @@
     IBOutlet UIButton *playPauseButton;
     IBOutlet UILabel *artistLabel;
     IBOutlet UILabel *titleLabel;
-
+    MPMusicPlayerController *musicPlayer;
     BOOL _preferCoord;
 }
 
@@ -46,24 +46,13 @@
 {
     return [self initWithPlacemark:placemark preferCoord:NO];
 }
-
--(id)init
-{
-    self = [super init];
-    if (self) {
-        
-        NSLog(@"init");
-    }
-    NSLog(@"init");
-    return self;
-}
 */
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-    //[self registerMediaPlayerNotifications];
+    musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    [self registerMediaPlayerNotifications];
     
     self.view.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     
@@ -99,16 +88,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-    if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+
+    if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
     } else {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
     
     // Update now playing info
-    MPMediaItem *currentItem = [self.musicPlayer nowPlayingItem];
-    NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
+    MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
+    NSString *titleString = [[musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyTitle];
     if (titleString) {
         titleLabel.text = titleString;
     } else {
@@ -132,51 +121,49 @@
 
 -(void)dealloc
 {
-    /*
+    
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                                  object: self.musicPlayer];
+                                                  object: musicPlayer];
     
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                  object: self.musicPlayer];
+                                                  object: musicPlayer];
     
-    [self.musicPlayer endGeneratingPlaybackNotifications];
-    */
+    [musicPlayer endGeneratingPlaybackNotifications];
     
     self.songObject = nil;
     backButton = nil;
     self.map = nil;
-    self.musicPlayer = nil;
+    //musicPlayer = nil;
 }
 
 #pragma mark - Register media player notifications
-/*
+
 - (void)registerMediaPlayerNotifications
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
-    [notificationCenter addObserver: self
-                           selector: @selector (handle_NowPlayingItemChanged:)
-                               name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                             object: self.musicPlayer];
     
     [notificationCenter addObserver: self
                            selector: @selector (handle_PlaybackStateChanged:)
                                name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                             object: self.musicPlayer];
-   
+                             object: musicPlayer];
     
-    [self.musicPlayer beginGeneratingPlaybackNotifications];
+    [notificationCenter addObserver: self
+                           selector: @selector (handle_NowPlayingItemChanged:)
+                               name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                             object: musicPlayer];
+    
+    [musicPlayer beginGeneratingPlaybackNotifications];
 }
-*/
-
-- (void)handle_NowPlayingItemChanged //:(id)notification
+ 
+- (void)handle_NowPlayingItemChanged:(id)notification
 {
-    if ([self.musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
+    if ([musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
         
-        MPMediaItem *currentItem = [self.musicPlayer nowPlayingItem];
+        MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {
@@ -193,7 +180,7 @@
         }
         
         [self showLocation];
-        /*
+        
         AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
         Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
         
@@ -223,50 +210,51 @@
         [songToSaveInDB setListenDate:destinationDate];
         [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
         [songToSaveInDB.managedObjectContext save:nil];
-        */
     }
 }
 
-- (void)handle_PlaybackStateChanged //:(id)notification
+
+- (void)handle_PlaybackStateChanged:(id)notification
 {
-    MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
+    MPMusicPlaybackState playbackState = [musicPlayer playbackState];
     NSLog(@"playbackState: %ld", (long)playbackState);
     if (playbackState == MPMusicPlaybackStatePaused) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     } else if (playbackState == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
     } else if (playbackState == MPMusicPlaybackStateInterrupted) {
-        //[playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
-        NSLog(@"playback state is interrupted");
+        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
+        
     } else if (playbackState == MPMusicPlaybackStateStopped) {
-        NSLog(@"playback state is stopped");
+        [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
+ 
 }
 
 #pragma mark - Controls
 
 - (IBAction)playPause:(id)sender
 {
-    MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
+    MPMusicPlaybackState playbackState = [musicPlayer playbackState];
     
     if (playbackState == MPMusicPlaybackStateStopped || playbackState == MPMusicPlaybackStatePaused || playbackState == MPMusicPlaybackStateInterrupted) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
-        [self.musicPlayer play];
+        [musicPlayer play];
         
     } else if (playbackState == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
-        [self.musicPlayer pause];
+        [musicPlayer pause];
     }
 }
 
 - (IBAction)nextSong:(id)sender
 {
-    [self.musicPlayer skipToNextItem];
+    [musicPlayer skipToNextItem];
 }
 
 - (IBAction)previousSong:(id)sender
 {
-    [self.musicPlayer skipToPreviousItem];
+    [musicPlayer skipToPreviousItem];
 }
 
 #pragma Map
@@ -282,7 +270,7 @@
              annotation.subtitle = placemark.locality;
              annotation.coordinate = placemark.location.coordinate;
              [self.map addAnnotation:annotation];
-             [self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
+             //[self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
          }
      }];
 }

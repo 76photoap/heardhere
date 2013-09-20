@@ -169,6 +169,8 @@
         [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
         [musicPlayer setNowPlayingItem:selectedItem];
         
+        //[(PlayerViewController *)segue.destinationViewController registerMediaPlayerNotifications];
+       
         [musicPlayer play];
     }
 }

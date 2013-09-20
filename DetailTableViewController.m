@@ -105,7 +105,6 @@
     self.songInPlaylist = nil;
     self.managedObjectContext = nil;
     self.fetchedResultsController = nil;
-    self.musicPlayer = nil;
     self.mySongQuery = nil;
     self.doneButton = nil;
     self.editButton = nil;
@@ -237,7 +236,7 @@
         MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         MPMediaItem *selectedItem = [[allSongsMutable objectAtIndex:selectedIndex-1] representativeItem];
-                
+        
         MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
         
         [musicPlayer setQueueWithItemCollection:moment];
