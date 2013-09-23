@@ -244,6 +244,7 @@
         PlayerViewController *pvc = [segue destinationViewController];
         pvc.latitudeArray = latitudeMutable;
         pvc.longitudeArray = longitudeMutable;
+        pvc.previousController = YES;
         
         MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];

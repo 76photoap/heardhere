@@ -15,11 +15,13 @@
 
 @interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
+
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) Song *currentSong;
 @property (nonatomic, strong) NSMutableArray *latitudeArray;
 @property (nonatomic, strong) NSMutableArray *longitudeArray;
+@property (assign) BOOL previousController;
 
 - (void)registerMediaPlayerNotifications;
 

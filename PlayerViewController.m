@@ -112,8 +112,11 @@
         artistLabel.text = @"Unknown Artist";
     }
     
-    //[self showLocation];
-    [self showMap];
+    if (self.previousController == YES) {
+        [self showMap];
+    } else if (self.previousController == NO) {
+        [self showCurrentLocation];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -180,9 +183,12 @@
         } else {
             artistLabel.text = @"Unknown artist";
         }
-        
-        //[self showLocation];
-        //[self showMap];
+
+        if (self.previousController == YES) {
+            [self showMap];
+        } else if (self.previousController == NO) {
+            [self showCurrentLocation];
+        }
         
         [self storeSong];
     }
@@ -277,20 +283,33 @@
     NSLog(@"lat for currentSong: %@", [self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
     NSLog(@"long for currentSong: %@", [self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
     
+    self.map.mapType = MKMapTypeStandard;
     double lati = [[self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
     double longi = [[self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
     
     CLLocationCoordinate2D coord = {.latitude = lati, .longitude = longi};
-    MKCoordinateSpan span = {.latitudeDelta =  0.005, .longitudeDelta =  0.005};
+    MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
     MKCoordinateRegion region = {coord, span};
     
     [self.map setRegion:region];
     
 }
 
-- (void)showLocation {
+- (void)showCurrentLocation {
     
+    self.map.mapType = MKMapTypeStandard;
+    CLLocation *location = [_locationManager location];
+    if (!location) {
+        return;
+    }
+    CLLocationCoordinate2D coordinate = [location coordinate];
     
+    MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
+    MKCoordinateRegion region = {coordinate, span};
+    
+    [self.map setRegion:region];
+    
+    /*
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:@"86 Pike Street, Seattle, WA" completionHandler:^(NSArray *placemarks, NSError *error)
      {
@@ -303,6 +322,7 @@
              //[self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
          }
      }];
+     */
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {

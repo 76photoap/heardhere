@@ -7,6 +7,7 @@
 //
 
 #import "SongsViewController.h"
+#import "PlayerViewController.h"
 
 @interface SongsViewController ()
 
@@ -157,6 +158,9 @@
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
+        PlayerViewController *pvc = [segue destinationViewController];
+        pvc.previousController = NO;
+        
         MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
         NSArray *songs = [songsQuery items];
         
@@ -168,8 +172,6 @@
     
         [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[songsQuery items]]];
         [musicPlayer setNowPlayingItem:selectedItem];
-        
-        //[(PlayerViewController *)segue.destinationViewController registerMediaPlayerNotifications];
        
         [musicPlayer play];
     }
