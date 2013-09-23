@@ -18,6 +18,7 @@
     IBOutlet UILabel *titleLabel;
     MPMusicPlayerController *musicPlayer;
     BOOL _preferCoord;
+    MPMediaItem *currentItem;
 }
 
 @property (nonatomic, weak) IBOutlet MKMapView *map;
@@ -96,7 +97,7 @@
     }
     
     // Update now playing info
-    MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
+    currentItem = [musicPlayer nowPlayingItem];
     NSString *titleString = [[musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyTitle];
     if (titleString) {
         titleLabel.text = titleString;
@@ -111,7 +112,8 @@
         artistLabel.text = @"Unknown Artist";
     }
     
-    [self showLocation];
+    //[self showLocation];
+    [self showMap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,7 +165,7 @@
 {
     if ([musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
         
-        MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
+        currentItem = [musicPlayer nowPlayingItem];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {
@@ -179,37 +181,10 @@
             artistLabel.text = @"Unknown artist";
         }
         
-        [self showLocation];
+        //[self showLocation];
+        //[self showMap];
         
-        AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
-        Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
-        
-        // Grab Location
-        CLLocation *location = [_locationManager location];
-        if (!location) {
-            return;
-        }
-        CLLocationCoordinate2D coordinate = [location coordinate];
-        
-        // Grab Date
-        NSDate* sourceDate = [NSDate date];
-        NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-        NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
-        NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
-        NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
-        NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-        NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
-        
-        // send to DB
-        [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
-        [songToSaveInDB setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
-        [songToSaveInDB setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
-        [songToSaveInDB setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
-        [songToSaveInDB setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
-        [songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
-        [songToSaveInDB setListenDate:destinationDate];
-        [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
-        [songToSaveInDB.managedObjectContext save:nil];
+        [self storeSong];
     }
 }
 
@@ -229,6 +204,41 @@
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
  
+}
+
+-(void)storeSong
+{
+    currentItem = [musicPlayer nowPlayingItem];
+    
+    AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
+    Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
+    
+    // Grab Location
+    CLLocation *location = [_locationManager location];
+    if (!location) {
+        return;
+    }
+    CLLocationCoordinate2D coordinate = [location coordinate];
+    
+    // Grab Date
+    NSDate* sourceDate = [NSDate date];
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    
+    // send to DB
+    [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
+    [songToSaveInDB setArtist:[currentItem valueForProperty:MPMediaItemPropertyArtist]];
+    [songToSaveInDB setGenre:[currentItem valueForProperty:MPMediaItemPropertyGenre]];
+    [songToSaveInDB setTitle:[currentItem valueForProperty:MPMediaItemPropertyTitle]];
+    [songToSaveInDB setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+    [songToSaveInDB setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+    [songToSaveInDB setListenDate:destinationDate];
+    [songToSaveInDB setPersistentID:[currentItem valueForProperty:MPMediaItemPropertyPersistentID]];
+    [songToSaveInDB.managedObjectContext save:nil];
 }
 
 #pragma mark - Controls
@@ -259,7 +269,27 @@
 
 #pragma Map
 
+-(void)showMap
+{
+    NSLog(@"%lu", (unsigned long)musicPlayer.indexOfNowPlayingItem);
+    NSLog(@"latitudeArray: %@", self.latitudeArray);
+    NSLog(@"longitudeArray: %@", self.longitudeArray);
+    NSLog(@"lat for currentSong: %@", [self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
+    NSLog(@"long for currentSong: %@", [self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
+    
+    double lati = [[self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
+    double longi = [[self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
+    
+    CLLocationCoordinate2D coord = {.latitude = lati, .longitude = longi};
+    MKCoordinateSpan span = {.latitudeDelta =  0.005, .longitudeDelta =  0.005};
+    MKCoordinateRegion region = {coord, span};
+    
+    [self.map setRegion:region];
+    
+}
+
 - (void)showLocation {
+    
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:@"86 Pike Street, Seattle, WA" completionHandler:^(NSArray *placemarks, NSError *error)

@@ -46,7 +46,7 @@
                                 <rect key="frame" x="135" y="371" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Button" image="EBCACB1F-F81F-4E9E-B364-3F51C691BC1A"/>
+                                <state key="normal" title="Button" image="3A616A70-8055-4697-856D-309AE5420BB6"/>
                                 <connections>
                                     <action selector="playPause:" destination="x6c-S3-SFp" eventType="touchUpInside" id="gj4-Z3-R6Y"/>
                                 </connections>
@@ -454,7 +454,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="EBCACB1F-F81F-4E9E-B364-3F51C691BC1A" width="24" height="24">
+        <image name="3A616A70-8055-4697-856D-309AE5420BB6" width="24" height="24">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

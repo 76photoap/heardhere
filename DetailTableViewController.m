@@ -223,6 +223,8 @@
         
         NSArray *allSongs = [self.fetchedResultsController fetchedObjects];
         NSMutableArray *allSongsMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
+        NSMutableArray *latitudeMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
+        NSMutableArray *longitudeMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         
         for (songInPlaylist in allSongs) {
             MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
@@ -232,7 +234,17 @@
             [mySongQuery addFilterPredicate:predicateArtist];
             NSArray *songsList = [mySongQuery items];
             [allSongsMutable addObject:[songsList objectAtIndex:0]];
+            [latitudeMutable addObject:songInPlaylist.latitude];
+            [longitudeMutable addObject:songInPlaylist.longitude];
         }
+
+        NSLog(@"latitudes:::: @%@", latitudeMutable);
+        NSLog(@"longitudes::: @%@", longitudeMutable);
+        
+        PlayerViewController *pvc = [segue destinationViewController];
+        pvc.latitudeArray = latitudeMutable;
+        pvc.longitudeArray = longitudeMutable;
+        
         MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
         int selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         MPMediaItem *selectedItem = [[allSongsMutable objectAtIndex:selectedIndex-1] representativeItem];

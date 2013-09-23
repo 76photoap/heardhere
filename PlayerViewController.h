@@ -18,6 +18,8 @@
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) Song *currentSong;
+@property (nonatomic, strong) NSMutableArray *latitudeArray;
+@property (nonatomic, strong) NSMutableArray *longitudeArray;
 
 - (void)registerMediaPlayerNotifications;
 
