@@ -283,7 +283,7 @@
     NSLog(@"lat for currentSong: %@", [self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
     NSLog(@"long for currentSong: %@", [self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
     
-    self.map.mapType = MKMapTypeStandard;
+    self.map.mapType = MKMapTypeHybrid;
     double lati = [[self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
     double longi = [[self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
     
@@ -297,7 +297,7 @@
 
 - (void)showCurrentLocation {
     
-    self.map.mapType = MKMapTypeStandard;
+    self.map.mapType = MKMapTypeHybrid;
     CLLocation *location = [_locationManager location];
     if (!location) {
         return;
