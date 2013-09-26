@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "CreateMomentViewController.h"
 #import "PlayerViewController.h"
 #import "Playlist.h"

@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
+@import MediaPlayer;
 #import "DetailTableViewController.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import "AppDelegate.h"
 
 @interface DetailTableViewController ()

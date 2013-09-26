@@ -8,7 +8,7 @@
 
 // From http://stackoverflow.com/questions/6231587/iphone-adding-a-done-button-within-a-pop-up-datepicker-frame
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface DateTimePicker : UIView {
 }

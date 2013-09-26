@@ -6,11 +6,10 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-
+@import MediaPlayer;
 #import "MomentsTableViewController.h"
 #import "DetailTableViewController.h"
 #import "Song.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import "AppDelegate.h"
 
 @interface MomentsTableViewController ()

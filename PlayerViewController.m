@@ -291,6 +291,12 @@
     MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
     MKCoordinateRegion region = {coord, span};
     
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.title = @"You heard this here.";
+    //annotation.subtitle = placemark.locality;
+    annotation.coordinate = coord;
+    [self.map addAnnotation:annotation];
+    
     [self.map setRegion:region];
     
 }
@@ -307,22 +313,15 @@
     MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
     MKCoordinateRegion region = {coordinate, span};
     
+
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.title = @"You are hearing this here.";
+    //annotation.subtitle = placemark.locality;
+    annotation.coordinate = coordinate;
+    [self.map addAnnotation:annotation];
+    
     [self.map setRegion:region];
     
-    /*
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:@"86 Pike Street, Seattle, WA" completionHandler:^(NSArray *placemarks, NSError *error)
-     {
-         for(CLPlacemark* placemark in placemarks) {
-             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-             annotation.title = @"Pikes Place Market";
-             annotation.subtitle = placemark.locality;
-             annotation.coordinate = placemark.location.coordinate;
-             [self.map addAnnotation:annotation];
-             //[self.map setRegion:MKCoordinateRegionMake(placemark.region.center, MKCoordinateSpanMake(0.01, 0.01))];
-         }
-     }];
-     */
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -331,7 +330,7 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:view.annotation.title
-                                                    message:@"You were here, at Pike's Place Market"
+                                                    message:@"At this place..."
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

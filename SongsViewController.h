@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <MediaPlayer/MediaPlayer.h>
+@import UIKit;
+@import MediaPlayer;
 
 @interface SongsViewController : UITableViewController
 

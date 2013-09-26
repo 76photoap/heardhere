@@ -6,9 +6,8 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
+@import MediaPlayer;
 #import "AppDelegate.h"
-#import <MediaPlayer/MediaPlayer.h>
-//#import "PlayerViewController.h"
 
 @interface AppDelegate ()
 

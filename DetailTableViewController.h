@@ -6,10 +6,11 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import MediaPlayer;
 #import "Playlist.h"
 #import "Song.h"
-#import <MediaPlayer/MediaPlayer.h>
+
 
 @interface DetailTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 

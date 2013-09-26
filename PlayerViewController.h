@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 Dianna Mertz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <MediaPlayer/MediaPlayer.h>
-#import <MapKit/MapKit.h>
+@import UIKit;
+@import MediaPlayer;
+@import MapKit;
+@import CoreLocation;
+@import QuartzCore;
 #import "Song.h"
-#import <CoreLocation/CoreLocation.h>
-#import <QuartzCore/QuartzCore.h> // for CALayer support
 
 @interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 

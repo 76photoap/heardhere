@@ -5,7 +5,7 @@
 //  Created by Dianna Mertz on 7/22/13.
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "DetailTableViewController.h"
 #import "DateTimePicker.h"
 #import "Playlist.h"
