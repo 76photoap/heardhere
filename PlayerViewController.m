@@ -16,9 +16,9 @@
     IBOutlet UIButton *playPauseButton;
     IBOutlet UILabel *artistLabel;
     IBOutlet UILabel *titleLabel;
-    MPMusicPlayerController *musicPlayer;
     BOOL _preferCoord;
     MPMediaItem *currentItem;
+    NSMutableArray *animationCameras;
 }
 
 @property (nonatomic, weak) IBOutlet MKMapView *map;
@@ -52,7 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [self registerMediaPlayerNotifications];
     
     self.view.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
@@ -90,15 +90,15 @@
 {
     [super viewWillAppear:YES];
 
-    if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+    if ([self.musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
     } else {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
     
     // Update now playing info
-    currentItem = [musicPlayer nowPlayingItem];
-    NSString *titleString = [[musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyTitle];
+    currentItem = [self.musicPlayer nowPlayingItem];
+    NSString *titleString = [[self.musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyTitle];
     if (titleString) {
         titleLabel.text = titleString;
     } else {
@@ -129,14 +129,14 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                                  object: musicPlayer];
+                                                  object: self.musicPlayer];
     
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                  object: musicPlayer];
+                                                  object: self.musicPlayer];
     
-    [musicPlayer endGeneratingPlaybackNotifications];
+    [self.musicPlayer endGeneratingPlaybackNotifications];
     
     self.songObject = nil;
     backButton = nil;
@@ -148,27 +148,28 @@
 
 - (void)registerMediaPlayerNotifications
 {
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     [notificationCenter addObserver: self
                            selector: @selector (handle_PlaybackStateChanged:)
                                name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                             object: musicPlayer];
+                             object: self.musicPlayer];
     
     [notificationCenter addObserver: self
                            selector: @selector (handle_NowPlayingItemChanged:)
                                name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                             object: musicPlayer];
+                             object: self.musicPlayer];
     
-    [musicPlayer beginGeneratingPlaybackNotifications];
+    [self.musicPlayer beginGeneratingPlaybackNotifications];
+
 }
- 
+
 - (void)handle_NowPlayingItemChanged:(id)notification
 {
-    if ([musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
+    if ([self.musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
         
-        currentItem = [musicPlayer nowPlayingItem];
+        currentItem = [self.musicPlayer nowPlayingItem];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {
@@ -197,7 +198,7 @@
 
 - (void)handle_PlaybackStateChanged:(id)notification
 {
-    MPMusicPlaybackState playbackState = [musicPlayer playbackState];
+    MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
     NSLog(@"playbackState: %ld", (long)playbackState);
     if (playbackState == MPMusicPlaybackStatePaused) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
@@ -214,7 +215,7 @@
 
 -(void)storeSong
 {
-    currentItem = [musicPlayer nowPlayingItem];
+    currentItem = [self.musicPlayer nowPlayingItem];
     
     AppDelegate *myApp = (AppDelegate *) [[UIApplication sharedApplication]delegate];
     Song *songToSaveInDB = (Song *) [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:myApp.managedObjectContext];
@@ -251,41 +252,64 @@
 
 - (IBAction)playPause:(id)sender
 {
-    MPMusicPlaybackState playbackState = [musicPlayer playbackState];
+    MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
     
     if (playbackState == MPMusicPlaybackStateStopped || playbackState == MPMusicPlaybackStatePaused || playbackState == MPMusicPlaybackStateInterrupted) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-pause.png"] forState:UIControlStateNormal];
-        [musicPlayer play];
+        [self.musicPlayer play];
         
     } else if (playbackState == MPMusicPlaybackStatePlaying) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
-        [musicPlayer pause];
+        [self.musicPlayer pause];
     }
 }
 
 - (IBAction)nextSong:(id)sender
 {
-    [musicPlayer skipToNextItem];
+    [self.musicPlayer skipToNextItem];
 }
 
 - (IBAction)previousSong:(id)sender
 {
-    [musicPlayer skipToPreviousItem];
+    [self.musicPlayer skipToPreviousItem];
 }
 
 #pragma Map
 
+-(void)updateCameraProperties
+{
+    if ([self.map respondsToSelector:@selector(camera)]) {
+        [self.map setShowsBuildings:YES];
+        MKMapCamera *newCamera = [[self.map camera] copy];
+        [newCamera setPitch:45.0];
+        [newCamera setHeading:90.0];
+        [newCamera setAltitude:500.0];
+        
+        [self.map setCamera:newCamera animated:YES];
+    }
+}
+/*
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    if (animated)
+        [self goToNextCamera];
+}
+
+-(void)goToNextCamera
+{
+    if (animationCameras.count == 0) {
+        return;
+    }
+    
+    MKMapCamera *nextCamera = [animationCameras firstObject];
+    [animationCameras removeObjectAtIndex:0];
+    [UIView animateWithDuration:<#(NSTimeInterval)#> animations:<#^(void)animations#> completion:<#^(BOOL finished)completion#>]
+}
+*/
 -(void)showMap
 {
-    NSLog(@"%lu", (unsigned long)musicPlayer.indexOfNowPlayingItem);
-    NSLog(@"latitudeArray: %@", self.latitudeArray);
-    NSLog(@"longitudeArray: %@", self.longitudeArray);
-    NSLog(@"lat for currentSong: %@", [self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
-    NSLog(@"long for currentSong: %@", [self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]]);
-    
-    self.map.mapType = MKMapTypeHybrid;
-    double lati = [[self.latitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
-    double longi = [[self.longitudeArray objectAtIndex:[musicPlayer indexOfNowPlayingItem]] doubleValue];
+    double lati = [[self.latitudeArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]] doubleValue];
+    double longi = [[self.longitudeArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]] doubleValue];
     
     CLLocationCoordinate2D coord = {.latitude = lati, .longitude = longi};
     MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
@@ -299,11 +323,11 @@
     
     [self.map setRegion:region];
     
+    [self updateCameraProperties];
 }
 
 - (void)showCurrentLocation {
     
-    self.map.mapType = MKMapTypeHybrid;
     CLLocation *location = [_locationManager location];
     if (!location) {
         return;
@@ -321,7 +345,7 @@
     [self.map addAnnotation:annotation];
     
     [self.map setRegion:region];
-    
+    [self updateCameraProperties];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
