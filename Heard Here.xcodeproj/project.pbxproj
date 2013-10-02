@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60056FE717FCAAED000FCF15 /* mappin.png in Resources */ = {isa = PBXBuildFile; fileRef = 60056FE617FCAAED000FCF15 /* mappin.png */; };
 		6017CF821644088F00F9F4FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF811644088F00F9F4FB /* UIKit.framework */; };
 		6017CF841644088F00F9F4FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF831644088F00F9F4FB /* Foundation.framework */; };
 		6017CF861644088F00F9F4FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF851644088F00F9F4FB /* CoreGraphics.framework */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		60056FE617FCAAED000FCF15 /* mappin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mappin.png; sourceTree = "<group>"; };
 		6017CF7D1644088F00F9F4FB /* Heard Here.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heard Here.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6017CF811644088F00F9F4FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6017CF831644088F00F9F4FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -158,6 +160,7 @@
 		60F45422169B0FE800686965 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				60056FE617FCAAED000FCF15 /* mappin.png */,
 				6033457916FB29D2003F59F1 /* ddme_binocs.jpg */,
 			);
 			path = Images;
@@ -221,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6017CFA1164409CF00F9F4FB /* MainStoryboard.storyboard in Resources */,
+				60056FE717FCAAED000FCF15 /* mappin.png in Resources */,
 				60AB8203169FFFF200529DFB /* InfoPlist.strings in Resources */,
 				6033457A16FB29D2003F59F1 /* ddme_binocs.jpg in Resources */,
 				60765FFD17CD6F4D00D290DF /* Images.xcassets in Resources */,

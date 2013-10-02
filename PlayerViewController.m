@@ -336,16 +336,36 @@
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    return nil;
+    static NSString *const identifier = @"MyCustomAnnotation";
+    MKAnnotationView *annotationView = [self.map dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    if (annotationView)
+    {
+        annotationView.annotation = annotation;
+    }
+    else
+    {
+        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+    }
+    
+    annotationView.image = [UIImage imageNamed:@"mappin.png"];
+    annotationView.canShowCallout = YES;
+    
+    return annotationView;
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    
+
+    /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:view.annotation.title
                                                     message:@"At this place..."
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+     */
+    
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
