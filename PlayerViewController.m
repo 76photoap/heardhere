@@ -288,26 +288,13 @@
         [self.map setCamera:newCamera animated:YES];
     }
 }
-/*
--(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    if (animated)
-        [self goToNextCamera];
-}
 
--(void)goToNextCamera
-{
-    if (animationCameras.count == 0) {
-        return;
-    }
-    
-    MKMapCamera *nextCamera = [animationCameras firstObject];
-    [animationCameras removeObjectAtIndex:0];
-    [UIView animateWithDuration:<#(NSTimeInterval)#> animations:<#^(void)animations#> completion:<#^(BOOL finished)completion#>]
-}
-*/
 -(void)showMap
 {
+    if (self.map.annotations > 0) {
+        [self.map removeAnnotations:self.map.annotations];
+    }
+    
     double lati = [[self.latitudeArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]] doubleValue];
     double longi = [[self.longitudeArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]] doubleValue];
     
@@ -337,7 +324,7 @@
     MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
     MKCoordinateRegion region = {coordinate, span};
     
-
+    
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
     annotation.title = @"You are hearing this here.";
     //annotation.subtitle = placemark.locality;
