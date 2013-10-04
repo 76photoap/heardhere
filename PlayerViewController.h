@@ -21,6 +21,7 @@
 @property (nonatomic, strong) Song *currentSong;
 @property (nonatomic, strong) NSMutableArray *latitudeArray;
 @property (nonatomic, strong) NSMutableArray *longitudeArray;
+@property (nonatomic, strong) NSMutableArray *datesArray;
 @property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 @property (assign) BOOL previousController;
 

@@ -19,6 +19,7 @@
     BOOL _preferCoord;
     MPMediaItem *currentItem;
     NSMutableArray *animationCameras;
+    NSDate *destinationDate;
 }
 
 @property (nonatomic, weak) IBOutlet MKMapView *map;
@@ -30,24 +31,6 @@
 @implementation PlayerViewController
 
 #pragma mark - View Controller
-/*
--(id)initWithPlacemark:(CLPlacemark *)placemark preferCoord:(BOOL)shouldPreferCoord
-{
-    self = [super init];
-    if (self) {
-        _placemark = placemark;
-        _preferCoord = shouldPreferCoord;
-        //[self registerMediaPlayerNotifications];
-        //NSLog(@"initwithplacemark");
-    }
-    return self;
-}
-
--(id)initWithPlacemark:(CLPlacemark *)placemark
-{
-    return [self initWithPlacemark:placemark preferCoord:NO];
-}
-*/
 
 - (void)viewDidLoad
 {
@@ -117,6 +100,7 @@
     } else if (self.previousController == NO) {
         [self showCurrentLocation];
     }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,6 +153,8 @@
 {
     if ([self.musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
         
+        [self grabDate];
+        
         currentItem = [self.musicPlayer nowPlayingItem];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
@@ -213,6 +199,18 @@
  
 }
 
+-(void)grabDate
+{
+    // Grab Date
+    NSDate* sourceDate = [NSDate date];
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+}
+
 -(void)storeSong
 {
     currentItem = [self.musicPlayer nowPlayingItem];
@@ -227,14 +225,7 @@
     }
     CLLocationCoordinate2D coordinate = [location coordinate];
     
-    // Grab Date
-    NSDate* sourceDate = [NSDate date];
-    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
-    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
-    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
-    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    [self grabDate];
     
     // send to DB
     [songToSaveInDB setAlbum:[currentItem valueForProperty:MPMediaItemPropertyAlbumTitle]];
@@ -297,13 +288,15 @@
     
     double lati = [[self.latitudeArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]] doubleValue];
     double longi = [[self.longitudeArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]] doubleValue];
+    NSDate *dateOfPlay = [self.datesArray objectAtIndex:[self.musicPlayer indexOfNowPlayingItem]];
     
     CLLocationCoordinate2D coord = {.latitude = lati, .longitude = longi};
     MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
     MKCoordinateRegion region = {coord, span};
     
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    annotation.title = @"You heard this here.";
+    annotation.title = @"You heard this on ";
+    annotation.subtitle = [NSString stringWithFormat:@"%@", dateOfPlay];
     //annotation.subtitle = placemark.locality;
     annotation.coordinate = coord;
     [self.map addAnnotation:annotation];
@@ -311,6 +304,7 @@
     [self.map setRegion:region];
     
     [self updateCameraProperties];
+
 }
 
 - (void)showCurrentLocation {
@@ -324,9 +318,9 @@
     MKCoordinateSpan span = {.latitudeDelta =  0.0005, .longitudeDelta =  0.0005};
     MKCoordinateRegion region = {coordinate, span};
     
-    
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    annotation.title = @"You are hearing this here.";
+    annotation.title = @"You are hearing this on ";
+    annotation.subtitle = [NSString stringWithFormat:@"%@", destinationDate];
     //annotation.subtitle = placemark.locality;
     annotation.coordinate = coordinate;
     [self.map addAnnotation:annotation];
@@ -354,23 +348,6 @@
     return annotationView;
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    
-
-    /*
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:view.annotation.title
-                                                    message:@"At this place..."
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-     */
-    
-}
-
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
-    return nil;
-}
 
 // Saving location of played song
 

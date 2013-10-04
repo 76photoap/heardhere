@@ -225,6 +225,7 @@
         NSMutableArray *allSongsMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         NSMutableArray *latitudeMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         NSMutableArray *longitudeMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
+        NSMutableArray *datesMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         
         for (songInPlaylist in allSongs) {
             MPMediaQuery *mySongQuery = [[MPMediaQuery alloc] init];
@@ -236,14 +237,13 @@
             [allSongsMutable addObject:[songsList objectAtIndex:0]];
             [latitudeMutable addObject:songInPlaylist.latitude];
             [longitudeMutable addObject:songInPlaylist.longitude];
+            [datesMutable addObject:songInPlaylist.listenDate];
         }
-
-        NSLog(@"latitudes:::: @%@", latitudeMutable);
-        NSLog(@"longitudes::: @%@", longitudeMutable);
         
         PlayerViewController *pvc = [segue destinationViewController];
         pvc.latitudeArray = latitudeMutable;
         pvc.longitudeArray = longitudeMutable;
+        pvc.datesArray = datesMutable;
         pvc.previousController = YES;
         
         MPMediaItemCollection *moment = [MPMediaItemCollection collectionWithItems:allSongsMutable];
