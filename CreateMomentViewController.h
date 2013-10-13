@@ -10,10 +10,11 @@
 #import "DateTimePicker.h"
 #import "Playlist.h"
 #import "Song.h"
+#import "Photo.h"
 
 @protocol MomentAddDelegate;
 
-@interface CreateMomentViewController : UIViewController <UITextFieldDelegate, NSFetchedResultsControllerDelegate>
+@interface CreateMomentViewController : UIViewController <UITextFieldDelegate, NSFetchedResultsControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *momentNameTextField;
 @property (strong, nonatomic) IBOutlet UILabel *fromDateLabel;
@@ -39,12 +40,14 @@
 
 @property(nonatomic, strong) Song *songObject;
 @property(nonatomic, strong) Playlist *currentPlaylist;
+@property(nonatomic, strong) Photo *currentPhoto;
 
 @property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
+- (IBAction)cameraRoll:(id)sender;
 
 @end
 

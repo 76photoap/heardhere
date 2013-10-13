@@ -185,7 +185,9 @@
 - (void)handle_PlaybackStateChanged:(id)notification
 {
     MPMusicPlaybackState playbackState = [self.musicPlayer playbackState];
+    
     NSLog(@"playbackState: %ld", (long)playbackState);
+    
     if (playbackState == MPMusicPlaybackStatePaused) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     } else if (playbackState == MPMusicPlaybackStatePlaying) {
@@ -196,7 +198,6 @@
     } else if (playbackState == MPMusicPlaybackStateStopped) {
         [playPauseButton setImage:[UIImage imageNamed:@"ddplayer-button-play.png"] forState:UIControlStateNormal];
     }
- 
 }
 
 -(void)grabDate

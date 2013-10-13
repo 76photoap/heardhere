@@ -12,7 +12,7 @@
 
 @implementation Photo
 
-@dynamic name;
+@dynamic image;
 @dynamic playlist;
 
 @end

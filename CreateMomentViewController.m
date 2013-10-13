@@ -6,10 +6,15 @@
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
+@import MobileCoreServices;
 #import "CreateMomentViewController.h"
 #import "AppDelegate.h"
 
 @interface CreateMomentViewController ()
+{
+    UIImage *selectedImage;
+}
+
 @end
 
 @implementation CreateMomentViewController
@@ -307,8 +312,74 @@
     [self.currentPlaylist setCreationDate:destinationDate];
     [self.currentPlaylist setName:momentNameTextField.text];
     [self.currentPlaylist setSongs:self.songsToBeInNewPlaylistSet];
+    [self.currentPlaylist setPhoto:self.currentPlaylist.photo];
+    NSLog(@"self.currentPlaylist.photo %@", self.currentPlaylist.photo);
     
     [self.momentDelegate createMomentViewControllerDidSave];
+}
+#pragma CameraRoll
+
+- (IBAction)cameraRoll:(id)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.allowsEditing = YES;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        imagePicker.allowsEditing = YES;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
+}
+
+- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    selectedImage = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
+    Playlist *newPlaylist = self.currentPlaylist;
+    NSManagedObjectContext *context = newPlaylist.managedObjectContext;
+    
+    if (newPlaylist.photo) {
+        [context deleteObject:newPlaylist.photo];
+    }
+    
+    Photo *photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
+    photo.image = selectedImage;
+    
+    newPlaylist.photo = photo;
+    
+    NSLog(@"self.currentPhoto.image: %@", self.currentPhoto.image);
+    
+    NSError *error = nil;
+    if (![newPlaylist.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)image:(UIImage *)image finishedSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if (error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Save failed"
+                                                        message: @"Failed to save image"\
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

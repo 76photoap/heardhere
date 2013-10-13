@@ -56,6 +56,11 @@
         DetailTableViewController *detailcontroller = [segue destinationViewController];
         detailcontroller.currentPlaylist = playlistSelected;
         detailcontroller.playlistTitle = playlistSelected.name;
+        detailcontroller.currentPlaylist.photo.image = playlistSelected.photo.image;
+        NSLog(@"momentsviewcontroller playlistSelected.photo.image: %@", playlistSelected.photo);
+        NSLog(@"momentsviewcontroller playlistSelected.photo.image: %@", playlistSelected.photo.image);
+        NSLog(@"momentsviewcontroller playlistSelected.photo.image: %@", detailcontroller.currentPlaylist.photo);
+        
     }
 }
 

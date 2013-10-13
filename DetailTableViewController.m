@@ -88,6 +88,7 @@
     self.navigationController.navigationItem.backBarButtonItem.customView.tintColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
 }
 
+
 -(void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -167,6 +168,13 @@
     if ([indexPath row] == 0) {
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        
+        UIImageView *firstCellImage = (UIImageView *)[cell viewWithTag:100];
+        
+        firstCellImage.image = currentPlaylist.photo.image;
+        NSLog(@"detailViewcontroller currentPlaylist.photo.image");
+        
         return cell;
         
     } else {

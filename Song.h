@@ -2,12 +2,12 @@
 //  Song.h
 //  Heard Here
 //
-//  Created by Dianna Mertz on 8/26/13.
+//  Created by Dianna Mertz on 10/13/13.
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
-@import Foundation;
-@import CoreData;
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @class Playlist;
 

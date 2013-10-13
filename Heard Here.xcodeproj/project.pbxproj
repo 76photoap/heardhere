@@ -27,9 +27,9 @@
 		60AB8193169C91F100529DFB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AB818D169C919500529DFB /* CoreData.framework */; };
 		60AB8203169FFFF200529DFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60AB81FE169FFFF200529DFB /* InfoPlist.strings */; };
 		60AB8204169FFFF200529DFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB8200169FFFF200529DFB /* main.m */; };
-		60BEC95A17CC6231003F9DC5 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BEC95917CC6231003F9DC5 /* Song.m */; };
-		60BEC95D17CC6231003F9DC5 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BEC95C17CC6231003F9DC5 /* Photo.m */; };
-		60BEC96017CC6231003F9DC5 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BEC95F17CC6231003F9DC5 /* Playlist.m */; };
+		60E32145180B0B11007A1BAC /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E32144180B0B11007A1BAC /* Playlist.m */; };
+		60E32148180B0B12007A1BAC /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E32147180B0B12007A1BAC /* Photo.m */; };
+		60E3214B180B0B12007A1BAC /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E3214A180B0B12007A1BAC /* Song.m */; };
 		60F45492169B13B900686965 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F4541B169B0F2500686965 /* AppDelegate.m */; };
 /* End PBXBuildFile section */
 
@@ -63,12 +63,12 @@
 		60AB8200169FFFF200529DFB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		60AB8201169FFFF200529DFB /* Heard Here-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Heard Here-Info.plist"; sourceTree = "<group>"; };
 		60AB8202169FFFF200529DFB /* Heard Here-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Heard Here-Prefix.pch"; sourceTree = "<group>"; };
-		60BEC95817CC6231003F9DC5 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		60BEC95917CC6231003F9DC5 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
-		60BEC95B17CC6231003F9DC5 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
-		60BEC95C17CC6231003F9DC5 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
-		60BEC95E17CC6231003F9DC5 /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playlist.h; sourceTree = "<group>"; };
-		60BEC95F17CC6231003F9DC5 /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playlist.m; sourceTree = "<group>"; };
+		60E32143180B0B11007A1BAC /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playlist.h; sourceTree = "<group>"; };
+		60E32144180B0B11007A1BAC /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playlist.m; sourceTree = "<group>"; };
+		60E32146180B0B12007A1BAC /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		60E32147180B0B12007A1BAC /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		60E32149180B0B12007A1BAC /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		60E3214A180B0B12007A1BAC /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		60F4541A169B0F2500686965 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		60F4541B169B0F2500686965 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,13 +94,13 @@
 		6017CF721644088F00F9F4FB = {
 			isa = PBXGroup;
 			children = (
-				60BEC95E17CC6231003F9DC5 /* Playlist.h */,
-				60BEC95F17CC6231003F9DC5 /* Playlist.m */,
-				60BEC95B17CC6231003F9DC5 /* Photo.h */,
-				60BEC95C17CC6231003F9DC5 /* Photo.m */,
-				60BEC95817CC6231003F9DC5 /* Song.h */,
-				60BEC95917CC6231003F9DC5 /* Song.m */,
 				60387814179D7E57008DCC66 /* heardhere.xcdatamodeld */,
+				60E32143180B0B11007A1BAC /* Playlist.h */,
+				60E32144180B0B11007A1BAC /* Playlist.m */,
+				60E32146180B0B12007A1BAC /* Photo.h */,
+				60E32147180B0B12007A1BAC /* Photo.m */,
+				60E32149180B0B12007A1BAC /* Song.h */,
+				60E3214A180B0B12007A1BAC /* Song.m */,
 				6017CFA0164409CF00F9F4FB /* MainStoryboard.storyboard */,
 				608BCC7817B583C400F98B94 /* SongsViewController.h */,
 				608BCC7917B583C400F98B94 /* SongsViewController.m */,
@@ -238,14 +238,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60BEC95D17CC6231003F9DC5 /* Photo.m in Sources */,
+				60E3214B180B0B12007A1BAC /* Song.m in Sources */,
+				60E32148180B0B12007A1BAC /* Photo.m in Sources */,
 				60387816179D7E58008DCC66 /* heardhere.xcdatamodeld in Sources */,
 				60F45492169B13B900686965 /* AppDelegate.m in Sources */,
 				6017CFD51644317700F9F4FB /* MomentsTableViewController.m in Sources */,
 				6038782B179DB896008DCC66 /* CreateMomentViewController.m in Sources */,
 				6060F48C17BAFA6100B678E2 /* DateTimePicker.m in Sources */,
-				60BEC95A17CC6231003F9DC5 /* Song.m in Sources */,
-				60BEC96017CC6231003F9DC5 /* Playlist.m in Sources */,
+				60E32145180B0B11007A1BAC /* Playlist.m in Sources */,
 				6050DBDD1647B36B00D45395 /* DetailTableViewController.m in Sources */,
 				608BCC7A17B583C400F98B94 /* SongsViewController.m in Sources */,
 				60615B01165694260046840A /* PlayerViewController.m in Sources */,

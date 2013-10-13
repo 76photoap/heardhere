@@ -13,7 +13,7 @@
 
 @interface Photo : NSManagedObject
 
-@property (nonatomic, retain) NSData * name;
+@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, retain) Playlist *playlist;
 
 @end

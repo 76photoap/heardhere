@@ -22,5 +22,6 @@
 @property (nonatomic, strong) MPMediaQuery *mySongQuery;
 @property (nonatomic, retain) UIButton *doneButton;
 @property (nonatomic, retain) UIButton *editButton;
+@property (strong, nonatomic) UIImageView *detailImage;
 
 @end
