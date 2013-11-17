@@ -15,7 +15,6 @@
 
 @interface PlayerViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
-
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) Song *currentSong;

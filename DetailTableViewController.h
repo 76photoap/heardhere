@@ -11,7 +11,6 @@
 #import "Playlist.h"
 #import "Song.h"
 
-
 @interface DetailTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 
 @property NSString *playlistTitle;

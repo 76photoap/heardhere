@@ -60,7 +60,6 @@
         NSLog(@"momentsviewcontroller playlistSelected.photo.image: %@", playlistSelected.photo);
         NSLog(@"momentsviewcontroller playlistSelected.photo.image: %@", playlistSelected.photo.image);
         NSLog(@"momentsviewcontroller playlistSelected.photo.image: %@", detailcontroller.currentPlaylist.photo);
-        
     }
 }
 

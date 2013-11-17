@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Yf7-7m-C5m">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Yf7-7m-C5m">
     <dependencies>
         <deployment version="1792" defaultVersion="1792" identifier="iOS"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Player View Controller-->
@@ -15,24 +15,24 @@
                         <viewControllerLayoutGuide type="bottom" id="LP7-AV-mZB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="huQ-5F-XU1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MRq-f6-ptp">
-                                <rect key="frame" x="0.0" y="-23" width="320" height="503"/>
+                                <rect key="frame" x="0.0" y="58" width="320" height="512"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="503" id="aSc-M4-4Jd"/>
+                                    <constraint firstAttribute="height" constant="512" id="aSc-M4-4Jd"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="x6c-S3-SFp" id="IhD-to-qBJ"/>
                                 </connections>
                             </mapView>
-                            <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.63" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map-mask" translatesAutoresizingMaskIntoConstraints="NO" id="UHE-QL-9L8">
-                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                            <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.63" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map-mask4.png" translatesAutoresizingMaskIntoConstraints="NO" id="UHE-QL-9L8">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVp-4q-Bfi">
-                                <rect key="frame" x="45" y="371" width="50" height="50"/>
+                                <rect key="frame" x="45" y="420" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Button" image="ddplayer-button-back">
@@ -43,16 +43,16 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iO-iH-icx">
-                                <rect key="frame" x="135" y="371" width="50" height="50"/>
+                                <rect key="frame" x="135" y="420" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Button" image="55813EAC-8AF6-46E5-BF1A-A8A6DB01D35D"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Button" image="527D0464-9127-4C7C-8D86-FB69D1076ED3"/>
                                 <connections>
                                     <action selector="playPause:" destination="x6c-S3-SFp" eventType="touchUpInside" id="gj4-Z3-R6Y"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5Y-ez-NR7">
-                                <rect key="frame" x="225" y="371" width="50" height="50"/>
+                                <rect key="frame" x="225" y="420" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Button" image="ddplayer-button-forward">
@@ -63,7 +63,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FUv-ZR-o5e">
-                                <rect key="frame" x="45" y="439" width="230" height="29"/>
+                                <rect key="frame" x="45" y="500" width="230" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -72,7 +72,7 @@
                         <constraints>
                             <constraint firstItem="MRq-f6-ptp" firstAttribute="trailing" secondItem="huQ-5F-XU1" secondAttribute="trailing" id="dMG-rf-2YZ"/>
                             <constraint firstItem="MRq-f6-ptp" firstAttribute="leading" secondItem="huQ-5F-XU1" secondAttribute="leading" id="f6T-MQ-kOk"/>
-                            <constraint firstItem="MRq-f6-ptp" firstAttribute="top" secondItem="huQ-5F-XU1" secondAttribute="top" constant="-23" id="stM-YI-mEk"/>
+                            <constraint firstItem="MRq-f6-ptp" firstAttribute="top" secondItem="huQ-5F-XU1" secondAttribute="top" constant="58" id="stM-YI-mEk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4Tr-zK-IhG">
@@ -127,7 +127,7 @@
             <objects>
                 <tableViewController id="clO-nb-oLw" customClass="SongsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rjD-vt-v20">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -190,7 +190,7 @@
             <objects>
                 <tableViewController id="pnx-D9-1zb" customClass="MomentsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p9M-F7-XMB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -278,7 +278,7 @@
                         <viewControllerLayoutGuide type="bottom" id="d3U-Lr-oml"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3kP-rP-Xsk">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9MJ-1f-oEw">
@@ -310,7 +310,7 @@
                                 </connections>
                             </searchBar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Vmb-YJ-odt">
-                                <rect key="frame" x="0.0" y="235" width="320" height="340"/>
+                                <rect key="frame" x="0.0" y="323" width="320" height="340"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Moment Name" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDg-aS-LRM">
@@ -398,7 +398,7 @@
             <objects>
                 <tableViewController id="gmh-JW-10i" customClass="DetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="skk-EJ-O8h">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -457,7 +457,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="55813EAC-8AF6-46E5-BF1A-A8A6DB01D35D" width="24" height="24">
+        <image name="527D0464-9127-4C7C-8D86-FB69D1076ED3" width="24" height="24">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -1198,7 +1198,7 @@ A
         <image name="ddplayer-button-back" width="100" height="100"/>
         <image name="ddplayer-button-forward" width="100" height="100"/>
         <image name="ddplus-sign" width="32" height="32"/>
-        <image name="map-mask" width="320" height="416"/>
+        <image name="map-mask4.png" width="640" height="1136"/>
         <image name="moments-edit" width="65" height="65"/>
         <image name="pin" width="30" height="30"/>
         <image name="songs" width="30" height="30"/>
@@ -1206,7 +1206,7 @@ A
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="bCV-dx-nkL"/>

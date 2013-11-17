@@ -110,7 +110,6 @@
 
 -(void)dealloc
 {
-    
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
                                                   object: self.musicPlayer];
@@ -180,7 +179,6 @@
         [self storeSong];
     }
 }
-
 
 - (void)handle_PlaybackStateChanged:(id)notification
 {
@@ -305,7 +303,6 @@
     [self.map setRegion:region];
     
     [self updateCameraProperties];
-
 }
 
 - (void)showCurrentLocation {
@@ -378,6 +375,5 @@
 {
     return self.placemark.thoroughfare;
 }
-
 
 @end

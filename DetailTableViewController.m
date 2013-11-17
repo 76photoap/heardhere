@@ -53,7 +53,6 @@
     self.tableView.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
 
-    
     // Nav Bar Title
     UILabel *label = [[UILabel alloc] init];
     label.text = self.playlistTitle;
@@ -88,7 +87,6 @@
     self.navigationController.navigationItem.backBarButtonItem.customView.tintColor = [UIColor colorWithRed:255.0/255.0 green:124.0/255.0 blue:93.0/255.0 alpha:1.0];
 }
 
-
 -(void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -96,7 +94,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
 }
 
 -(void)dealloc
@@ -169,7 +166,6 @@
         static NSString *CellIdentifier = @"PlaylistImageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
-        
         UIImageView *firstCellImage = (UIImageView *)[cell viewWithTag:100];
         
         firstCellImage.image = currentPlaylist.photo.image;
@@ -222,13 +218,11 @@
 }
 
 #pragma mark - Segue
-// help from http://de.softuses.com/216719
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"NewSong"])
     {
-        
         NSArray *allSongs = [self.fetchedResultsController fetchedObjects];
         NSMutableArray *allSongsMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];
         NSMutableArray *latitudeMutable = [[NSMutableArray alloc] initWithCapacity:[allSongs count]];

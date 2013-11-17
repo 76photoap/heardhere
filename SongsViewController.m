@@ -23,35 +23,11 @@
     }
     return self;
 }
-/*
-- (void)registerMediaPlayerNotifications
-{
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-    
-    [notificationCenter addObserver: self
-                           selector: @selector (handle_PlaybackStateChanged:)
-                               name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                             object: musicPlayer];
-    
-    [musicPlayer beginGeneratingPlaybackNotifications];
-}
-*/
+
 - (void) goToNowPlaying
 {
     [self performSegueWithIdentifier:@"NowPlaying" sender:self];
 }
-
-/*
-- (void)handle_PlaybackStateChanged:(id)notification
-{
-	if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
-        self.navigationItem.rightBarButtonItem = nil;
-    } else {
-        self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
-    }
-}
-*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -67,8 +43,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //[self registerMediaPlayerNotifications];
     
     // Tab bar
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
@@ -101,14 +75,6 @@
     
     self.nowPlayingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.nowPlayingButton];
     self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
-    
-    /*
-    if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStateStopped) {
-        self.navigationItem.rightBarButtonItem = nil;
-    } else {
-        self.navigationItem.rightBarButtonItem = self.nowPlayingBarButtonItem;
-    }
-    */
 }
 
 

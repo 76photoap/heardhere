@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Dianna Mertz. All rights reserved.
 //
 
-// From http://stackoverflow.com/questions/6231587/iphone-adding-a-done-button-within-a-pop-up-datepicker-frame
-
 #import "DateTimePicker.h"
 
 #define MyDateTimePickerToolbarHeight 40
@@ -15,7 +13,6 @@
 @interface DateTimePicker()
 
 @property (nonatomic, assign, readwrite) UIDatePicker *picker;
-
 @property (nonatomic, assign) id doneTarget;
 @property (nonatomic, assign) SEL doneSelector;
 

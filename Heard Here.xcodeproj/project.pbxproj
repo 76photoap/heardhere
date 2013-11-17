@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60048D82183966A4005961C6 /* map-mask3.png in Resources */ = {isa = PBXBuildFile; fileRef = 60048D81183966A4005961C6 /* map-mask3.png */; };
+		60048D841839698C005961C6 /* map-mask4.png in Resources */ = {isa = PBXBuildFile; fileRef = 60048D831839698C005961C6 /* map-mask4.png */; };
 		60056FE717FCAAED000FCF15 /* mappin.png in Resources */ = {isa = PBXBuildFile; fileRef = 60056FE617FCAAED000FCF15 /* mappin.png */; };
 		6017CF821644088F00F9F4FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF811644088F00F9F4FB /* UIKit.framework */; };
 		6017CF841644088F00F9F4FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6017CF831644088F00F9F4FB /* Foundation.framework */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		60048D81183966A4005961C6 /* map-mask3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-mask3.png"; sourceTree = "<group>"; };
+		60048D831839698C005961C6 /* map-mask4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-mask4.png"; sourceTree = "<group>"; };
 		60056FE617FCAAED000FCF15 /* mappin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mappin.png; sourceTree = "<group>"; };
 		6017CF7D1644088F00F9F4FB /* Heard Here.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heard Here.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6017CF811644088F00F9F4FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -161,6 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				60056FE617FCAAED000FCF15 /* mappin.png */,
+				60048D81183966A4005961C6 /* map-mask3.png */,
+				60048D831839698C005961C6 /* map-mask4.png */,
 				6033457916FB29D2003F59F1 /* ddme_binocs.jpg */,
 			);
 			path = Images;
@@ -225,8 +231,10 @@
 			files = (
 				6017CFA1164409CF00F9F4FB /* MainStoryboard.storyboard in Resources */,
 				60056FE717FCAAED000FCF15 /* mappin.png in Resources */,
+				60048D841839698C005961C6 /* map-mask4.png in Resources */,
 				60AB8203169FFFF200529DFB /* InfoPlist.strings in Resources */,
 				6033457A16FB29D2003F59F1 /* ddme_binocs.jpg in Resources */,
+				60048D82183966A4005961C6 /* map-mask3.png in Resources */,
 				60765FFD17CD6F4D00D290DF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
